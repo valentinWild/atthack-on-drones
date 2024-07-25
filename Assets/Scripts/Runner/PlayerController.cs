@@ -32,8 +32,11 @@ public class PlayerController : MonoBehaviour
 
     private PlayerInput playerInput;
     private InputAction turnAction; 
+    private InputAction leanAction;
     private InputAction jumpAction;
     private InputAction slideAction;
+
+    private bool turningActive = true;
 
     private CharacterController controller;
 
@@ -44,12 +47,14 @@ public class PlayerController : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         controller = GetComponent<CharacterController>();
         turnAction = playerInput.actions["Turn"];
+        leanAction = playerInput.actions["Lean"];
         jumpAction = playerInput.actions["Jump"];
         slideAction = playerInput.actions["Slide"];
     }
 
     private void OnEnable() {
         turnAction.performed += PlayerTurn;
+        //leanAction.performed += PlayerTurn;
         jumpAction.performed += PlayerJump;
         slideAction.performed += PlayerSlide;
     }
@@ -65,7 +70,9 @@ public class PlayerController : MonoBehaviour
         playerSpeed = initialPlayerSpeed;
     }
 
+    // Method that is called by pressing the left or right arrow key
     private void PlayerTurn(InputAction.CallbackContext context) {
+        Debug.Log("Player Turn: " + context.ReadValue<float>());
         Vector3? turnPosition = CheckTurn(context.ReadValue<float>());
         if (!turnPosition.HasValue)
         {
@@ -82,6 +89,20 @@ public class PlayerController : MonoBehaviour
             playerVelocity.y += Mathf.Sqrt(jumpHeight * gravity * -3f);
             controller.Move(playerVelocity * Time.deltaTime);
         }
+    }
+
+    // Method that is called to turn the Player to another corridor direction
+    public void PlayerLean(float direction) {
+        Vector3? turnPosition = CheckTurn(direction);
+        if (!turnPosition.HasValue || turningActive == false)
+        {
+            return;
+        }
+        Debug.Log("Invoke Player turn by Leaning");
+        Vector3 targetDirection = Quaternion.AngleAxis(90 * direction, Vector3.up) * movementDirection;
+        turnEvent.Invoke(targetDirection);
+        Turn(direction, turnPosition.Value);
+        StartCoroutine(freezeTurning());
     }
 
     private void PlayerSlide(InputAction.CallbackContext context) {
@@ -129,7 +150,7 @@ public class PlayerController : MonoBehaviour
             if ((type == TileType.LEFT && turnValue == -1) ||
                 (type == TileType.RIGHT && turnValue == 1) ||
                 (type == TileType.SIDEWAYS)) {
-                return tile.pivot.position;
+                    return tile.pivot.position;
             }
         }
         return null;
@@ -144,6 +165,12 @@ public class PlayerController : MonoBehaviour
         Quaternion targetRotation = transform.rotation = Quaternion.Euler(0, 90 * turnValue, 0);
         transform.rotation = targetRotation;
         movementDirection = transform.forward.normalized;
+    }
+
+    private IEnumerator freezeTurning() {
+        turningActive = false;
+        yield return new WaitForSeconds(2);
+        turningActive = true;
     }
 
 }
