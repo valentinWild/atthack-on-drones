@@ -16,6 +16,13 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+    "com.unity.device-simulator.devices": {
+      "version": "1.0.0",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
     "com.unity.editorcoroutines": {
       "version": "1.0.0",
       "depth": 1,
@@ -244,6 +251,15 @@
         "com.unity.modules.vr": "1.0.0",
         "com.unity.modules.xr": "1.0.0",
         "com.unity.xr.legacyinputhelpers": "2.1.7"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.xr.mock-hmd": {
+      "version": "1.4.0-preview.2",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.xr.management": "4.0.1"
       },
       "url": "https://packages.unity.com"
     },
