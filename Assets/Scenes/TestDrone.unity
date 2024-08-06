@@ -222,22 +222,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8379564905819527773, guid: d85f79a0e9f2f504194e10d740c94d23, type: 3}
   m_PrefabInstance: {fileID: 3082962057784635680}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1201064244
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1201064243}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f10575e25b24d4042a5c3470925758da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  droneObject: {fileID: 1201064243}
-  speed: 5
-  escapeSpeed: 10
-  destroyDelay: 3
 --- !u!135 &1201064250
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -470,9 +454,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   droneObject: {fileID: 1201064243}
+  bigExplosion: {fileID: 1121192042590650, guid: e1b08032bec16ba4eb1ae23cbd572664, type: 3}
   speed: 5
   escapeSpeed: 10
   destroyDelay: 3
+  explosionDuration: 1.5
 --- !u!1001 &3082962057784635680
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -541,9 +527,6 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8379564905819527773, guid: d85f79a0e9f2f504194e10d740c94d23, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1201064244}
     - targetCorrespondingSourceObject: {fileID: 8379564905819527773, guid: d85f79a0e9f2f504194e10d740c94d23, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1201064250}

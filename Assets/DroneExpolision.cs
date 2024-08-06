@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class DroneExpolision : MonoBehaviour
 {
-    public GameObject droneObject;  // Das Zielobjekt (Sphere)
-    public float speed = 5f;  // Die Geschwindigkeit, mit der die Sphere fliegt
-    private bool shouldMove = false;  // Um zu verfolgen, ob die Sphere sich bewegen soll
-    private bool droneHit = false;  // Um zu verfolgen, ob die Drone getroffen wurde
-    public float escapeSpeed = 10f;  // Die Geschwindigkeit, mit der die Drone aus der Szene fliegt
-    public float destroyDelay = 3f;  // Die Zeit, nach der die Drone zerstört wird
+    public GameObject droneObject;
+    public GameObject bigExplosion;
+    public float speed = 5f;
+    private bool shouldMove = false;
+    private bool droneHit = false;
+    public float escapeSpeed = 10f;
+    public float destroyDelay = 3f;
+    public float explosionDuration = 1.5f;  // Dauer der Explosion
 
     private Vector3 dronePosition;
+
 
     // Start is called before the first frame update
     void Start()
@@ -41,12 +44,6 @@ public class DroneExpolision : MonoBehaviour
             // Bewege die Sphere zur Drone
             MoveTowardsTarget();
         }
-
-        // Wenn die Drone getroffen wurde, bewege sie aus der Szene hinaus
-        if (droneHit)
-        {
-            MoveDroneOutOfScene();
-        }
     }
 
     void MoveTowardsTarget()
@@ -67,10 +64,38 @@ public class DroneExpolision : MonoBehaviour
 
             // Setze droneHit auf true, um die Fluchtbewegung zu starten
             droneHit = true;
+
+            // Starte die Explosion
+            TriggerExplosion();
         }
     }
 
-    void MoveDroneOutOfScene()
+    void TriggerExplosion()
+    {
+        if (droneObject != null)
+        {
+            // Instanziere die Explosion an der Position und Rotation der Drone
+            GameObject explosion = Instantiate(bigExplosion, droneObject.transform.position, droneObject.transform.rotation);
+
+            // Zerstöre die Drone sofort
+            Destroy(droneObject);
+
+            // Zugriff auf das Autofire-Skript und Schießen stoppen
+            Autofire autofire = droneObject.GetComponent<Autofire>();
+            if (autofire != null)
+            {
+                autofire.OnDroneHit();
+            }
+
+            // Zerstöre die Explosion nach einer bestimmten Zeit
+            Destroy(explosion, explosionDuration);
+
+            // Setze droneHit auf true, um weitere Explosionen zu verhindern
+            droneHit = true;
+        }
+    }
+
+    /*void MoveDroneOutOfScene()
     {
 
         if (droneObject == null) return;
@@ -83,22 +108,6 @@ public class DroneExpolision : MonoBehaviour
 
         // Zerstöre die Drone nach einer Verzögerung
         Destroy(droneObject, destroyDelay);
-    }
+    }*/
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject == droneObject)
-        {
-            // Startet die Bewegung aus der Szene
-            droneHit = true;
-
-            // Zugriff auf das Autofire-Skript und Schießen stoppen
-            Autofire autofire = droneObject.GetComponent<Autofire>();
-            if (autofire != null)
-            {
-                autofire.OnDroneHit();
-                autofire.DestroyAllProjectiles(); // Sicherstellen, dass alle Projektile zerstört werden
-            }
-        }
-    }
 }
