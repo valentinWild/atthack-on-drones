@@ -16,6 +16,9 @@ public class Autofire : MonoBehaviour
     public bool useSecondProjectile = false; // Boolean to toggle between projectiles
 
     private int nextSpawnPointIndex = 0;
+    private bool isHit = false;
+
+    private Coroutine fireCoroutine;
 
     private void Start()
     {
@@ -25,7 +28,7 @@ public class Autofire : MonoBehaviour
 
     private IEnumerator FireBullets()
     {
-        while (true)
+        while (!isHit) // Continue shooting only if not hit
         {
             if (fireInBursts)
             {
@@ -60,6 +63,7 @@ public class Autofire : MonoBehaviour
     {
         for (int i = 0; i < 3; i++)
         {
+            if (isHit) yield break; // Stop firing if hit
             FireBulletFromCurrentSpawnPoint();
             yield return new WaitForSeconds(burstInterval);
         }
@@ -70,6 +74,7 @@ public class Autofire : MonoBehaviour
 
     private void FireOnce()
     {
+        if (isHit) return; // Stop firing if hit
         if (alternateFire)
         {
             FireBulletAlternating();
@@ -158,5 +163,33 @@ public class Autofire : MonoBehaviour
                 }
             }
         }
+    }
+
+    // Method to be called when the drone is hit
+    public void OnDroneHit()
+    {
+        isHit = true;
+
+        // Stop the shooting coroutine
+        if (fireCoroutine != null)
+        {
+            StopCoroutine(fireCoroutine);
+        }
+
+        DestroyAllProjectiles();
+    }
+
+    public void DestroyAllProjectiles()
+    {
+        // Finde alle existierenden Projektile in der Szene
+        GameObject[] bullets = GameObject.FindGameObjectsWithTag("Bullet");
+
+        // Zerstöre jedes Projektil
+        foreach (GameObject bullet in bullets)
+        {
+            Destroy(bullet);
+        }
+
+        Debug.Log("All projectiles destroyed."); // Debug-Message zur Überprüfung
     }
 }
