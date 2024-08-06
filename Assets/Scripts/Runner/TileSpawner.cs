@@ -41,7 +41,7 @@ public class TileSpawner : MonoBehaviour
         SpawnTile(SelectRandomGameObjectFromList(turnTiles).GetComponent<Tile>());
     }
 
-    private void SpawnTile(Tile tile, bool spawnObstacle = false) {
+    private void SpawnTile(Tile tile, bool spawnObstacle = true) {
         Quaternion newTileRotation = tile.gameObject.transform.rotation * Quaternion.LookRotation(currentTileDirection, Vector3.up);
         prevTile = GameObject.Instantiate(tile.gameObject, currentTileLocation, newTileRotation);
         currentTiles.Add(prevTile);
