@@ -37,9 +37,9 @@ Material:
     - _BUILTIN_ZTest: 4
     - _BUILTIN_ZWrite: 1
     - _BUILTIN_ZWriteControl: 0
-    - _Fill: 0.53
-    - _wobbleX: 0.24
-    - _wobbleZ: 0.25
+    - _Fill: 0.06
+    - _wobbleX: 0
+    - _wobbleZ: 0
     m_Colors:
     - _SideColor: {r: 0, g: 0.039372325, b: 0.4188679, a: 0}
     - _TopColor: {r: 0.16019222, g: 0.1857206, b: 0.5622641, a: 0}
