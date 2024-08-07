@@ -3,12 +3,20 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - RedParticle
+  - OrangeParticle
+  - YellowParticle
+  - GreenParticle
+  - BlueParticle
+  - PurpleParticle
+  - WhiteParticle
+  - BlackParticle
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Camera
   - Water
   - UI
   - Ground

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 269008121}
   m_Layer: 0
   m_Name: Particle
-  m_TagString: Untagged
+  m_TagString: BlueParticle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3619,9 +3619,9 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 4
-    type: 0
+    type: 1
     collisionMode: 0
     colliderForce: 0
     multiplyColliderForceByParticleSize: 0
@@ -4790,7 +4790,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 5737d44e9f9d52d4da7983cbb7720c81, type: 2}
-  - {fileID: 2100000, guid: 5737d44e9f9d52d4da7983cbb7720c81, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4856,7 +4855,7 @@ GameObject:
   - component: {fileID: 5238570228697279500}
   m_Layer: 0
   m_Name: StreamBlue
-  m_TagString: Untagged
+  m_TagString: BlueParticle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
