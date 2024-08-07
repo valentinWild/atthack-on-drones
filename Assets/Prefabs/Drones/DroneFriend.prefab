@@ -160,6 +160,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DroneFriend
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 5090c1d92c3e3034a85460b495fcf820, type: 3}
+      propertyPath: m_TagString
+      value: Friend
+      objectReference: {fileID: 0}
     - target: {fileID: 3032605083122302280, guid: 5090c1d92c3e3034a85460b495fcf820, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.7071068
@@ -247,10 +251,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 3214281488299296052}
-  radius: 1
-  speed: 0.2
-  heightAmplitude: 0.05
-  heightSpeed: 0.3
+  moveAmplitude: 0.1
+  moveSpeed: 0.2
+  initialHeightOffset: 0
 --- !u!114 &1864996711026392947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,7 +261,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8379564905819527773}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 07b102c9ab748ef4cb11f76ccc0f003d, type: 3}
   m_Name: 
@@ -280,10 +283,10 @@ MonoBehaviour:
   spawnPoints:
   - {fileID: 3710357144960936534}
   - {fileID: 3278100140055920156}
-  fireSpeed1: 50
-  fireSpeed2: 30
+  fireSpeed1: 5
+  fireSpeed2: 3
   fireInterval: 0.5
   alternateFire: 1
   fireInBursts: 1
   burstInterval: 0.1
-  useSecondProjectile: 1
+  useSecondProjectile: 0

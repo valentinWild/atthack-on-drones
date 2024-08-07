@@ -17,11 +17,19 @@ public class Autofire : MonoBehaviour
 
     private int nextSpawnPointIndex = 0;
 
+    
     private void Start()
     {
-        // Start the automatic shooting coroutine
-        StartCoroutine(FireBullets());
+        //Shooting starts 5 seconds later
+        Invoke("StartFiring", 5f);
+
     }
+
+    private void StartFiring()
+        {
+            StartCoroutine(FireBullets());
+        }
+     
 
     private IEnumerator FireBullets()
     {
