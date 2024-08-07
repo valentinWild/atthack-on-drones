@@ -213,6 +213,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -927199367670048503, guid: 5090c1d92c3e3034a85460b495fcf820, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5978076206905505952}
+    - targetCorrespondingSourceObject: {fileID: -927199367670048503, guid: 5090c1d92c3e3034a85460b495fcf820, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -3067649439296369790}
   m_SourcePrefab: {fileID: 100100000, guid: 5090c1d92c3e3034a85460b495fcf820, type: 3}
 --- !u!95 &3214281488299296052 stripped
 Animator:
@@ -247,10 +250,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 3214281488299296052}
-  radius: 1
-  speed: 0.2
-  heightAmplitude: 0.05
-  heightSpeed: 0.3
+  moveAmplitude: 0.1
+  moveSpeed: 0.2
+  initialHeightOffset: 0.5
 --- !u!114 &1864996711026392947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287,3 +289,24 @@ MonoBehaviour:
   fireInBursts: 1
   burstInterval: 0.1
   useSecondProjectile: 1
+--- !u!135 &-3067649439296369790
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8379564905819527773}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 1.6, z: 0}
