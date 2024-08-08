@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8577851126520045735}
   - component: {fileID: 7813474787334987603}
+  - component: {fileID: -2709127795096192188}
   m_Layer: 0
   m_Name: LaserGun
   m_TagString: Untagged
@@ -40,7 +41,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 95465820224440903}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45a2c9b89bf0f2a49b8849fa90ad552f, type: 3}
   m_Name: 
@@ -49,6 +50,20 @@ MonoBehaviour:
   bullet: {fileID: 8346929017216494393, guid: 2dcc04deda22573459930aea53645e7c, type: 3}
   spawnPoint: {fileID: 869942255429176407}
   fireSpeed: 20
+--- !u!114 &-2709127795096192188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 95465820224440903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 563af61a0f89af8479c7e4504a9c6623, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectilePrefab: {fileID: 9110488777593731410, guid: c613e914e0ce48643aeec200b12b1457, type: 3}
+  firePoint: {fileID: 8577851126520045735}
 --- !u!1 &3668909856210904831
 GameObject:
   m_ObjectHideFlags: 0
