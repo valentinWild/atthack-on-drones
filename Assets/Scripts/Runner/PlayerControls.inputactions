@@ -236,8 +236,8 @@
                 {
                     "name": "",
                     "id": "27a70b11-a82e-49dc-808f-f15635f3cebf",
-                    "path": "<OculusTouchController>{RightHand}/triggerPressed",
-                    "interactions": "",
+                    "path": "<XRController>{RightHand}/trigger",
+                    "interactions": "Press",
                     "processors": "",
                     "groups": "",
                     "action": "Shoot",
@@ -247,7 +247,7 @@
                 {
                     "name": "",
                     "id": "3eb0c050-c125-42fc-90f9-0ccaf50a60b2",
-                    "path": "",
+                    "path": "<XRController>{LeftHand}/trigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
