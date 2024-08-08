@@ -13,7 +13,7 @@ public class DroneExplosion2 : MonoBehaviour
     {
         playerInput = GetComponent<PlayerInput>(); // PlayerInput auf demselben GameObject
 
-        // Weisen Sie die Shoot-Aktion zu
+       
         shootAction = playerInput.actions["Shoot"];
         shootAction.performed += OnShoot;
     }

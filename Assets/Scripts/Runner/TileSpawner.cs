@@ -18,7 +18,7 @@ public class TileSpawner : MonoBehaviour
     [SerializeField]
     private List<GameObject> obstacles;
     [SerializeField]
-    private float obstacleFrequency = 0.2f;
+    private float obstacleFrequency = 0.5f;
 
     private Vector3 currentTileLocation = Vector3.zero;
     private Vector3 currentTileDirection = Vector3.forward;
@@ -113,6 +113,12 @@ public class TileSpawner : MonoBehaviour
 
         GameObject obstaclePrefab = SelectRandomGameObjectFromList(obstacles);
         Quaternion newObjectRotation = obstaclePrefab.gameObject.transform.rotation * Quaternion.LookRotation(currentTileDirection, Vector3.up);
+
+        if (obstaclePrefab.CompareTag("Enemy") || obstaclePrefab.CompareTag("Friend"))
+        {
+            newObjectRotation *= Quaternion.Euler(0, 180, 0);
+        }
+
         GameObject obstacle = Instantiate(obstaclePrefab, currentTileLocation, newObjectRotation);
         currentObstacles.Add(obstacle);
     }

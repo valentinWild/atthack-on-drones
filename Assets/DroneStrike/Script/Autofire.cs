@@ -194,7 +194,13 @@ public class Autofire : MonoBehaviour
 
     private void Start()
     {
-        // Start the automatic shooting coroutine
+        //Shooting starts 5 seconds later
+        Invoke("StartFiring", 5f);
+
+    }
+
+    private void StartFiring()
+    {
         StartCoroutine(FireBullets());
     }
 
