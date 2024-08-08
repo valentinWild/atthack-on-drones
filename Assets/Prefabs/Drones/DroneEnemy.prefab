@@ -213,13 +213,13 @@ PrefabInstance:
       addedObject: {fileID: 6972196024496051198}
     - targetCorrespondingSourceObject: {fileID: -927199367670048503, guid: 5090c1d92c3e3034a85460b495fcf820, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1864996711026392947}
-    - targetCorrespondingSourceObject: {fileID: -927199367670048503, guid: 5090c1d92c3e3034a85460b495fcf820, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 5978076206905505952}
     - targetCorrespondingSourceObject: {fileID: -927199367670048503, guid: 5090c1d92c3e3034a85460b495fcf820, type: 3}
       insertIndex: -1
       addedObject: {fileID: -6585092331438486094}
+    - targetCorrespondingSourceObject: {fileID: -927199367670048503, guid: 5090c1d92c3e3034a85460b495fcf820, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1879036841616623806}
   m_SourcePrefab: {fileID: 100100000, guid: 5090c1d92c3e3034a85460b495fcf820, type: 3}
 --- !u!95 &3214281488299296052 stripped
 Animator:
@@ -257,18 +257,6 @@ MonoBehaviour:
   moveAmplitude: 0.1
   moveSpeed: 0.2
   initialHeightOffset: 0.5
---- !u!114 &1864996711026392947
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8379564905819527773}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07b102c9ab748ef4cb11f76ccc0f003d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5978076206905505952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -314,3 +302,16 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 1.6, z: 0}
+--- !u!114 &1879036841616623806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8379564905819527773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5512245c431787e4f8d1fbfd7f1bf7b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  droneExplosion: {fileID: 1121192042590650, guid: e1b08032bec16ba4eb1ae23cbd572664, type: 3}

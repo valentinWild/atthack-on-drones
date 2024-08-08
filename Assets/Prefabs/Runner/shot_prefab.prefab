@@ -16,11 +16,10 @@ GameObject:
   - component: {fileID: 7506748118683619282}
   - component: {fileID: 335072834111738189}
   - component: {fileID: 2427377498423643009}
-  - component: {fileID: -8474846374770446689}
   - component: {fileID: -4169645068917756666}
   m_Layer: 0
   m_Name: shot_prefab
-  m_TagString: Untagged
+  m_TagString: PlayerShot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -232,24 +231,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionPrefab: {fileID: 7000881887911982985, guid: f5cacf8db96e1ce4da57b6a2286deae7, type: 3}
---- !u!114 &-8474846374770446689
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9110488777593731410}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9732dde16ec5afb449fe2685230c4ea4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  droneObject: {fileID: 8379564905819527773, guid: d85f79a0e9f2f504194e10d740c94d23, type: 3}
-  bigExplosion: {fileID: 1121192042590650, guid: e1b08032bec16ba4eb1ae23cbd572664, type: 3}
-  speed: 5
-  escapeSpeed: 10
-  destroyDelay: 3
-  explosionDuration: 1.5
 --- !u!114 &-4169645068917756666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,4 +244,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 20
-  bigExplosion: {fileID: 1121192042590650, guid: e1b08032bec16ba4eb1ae23cbd572664, type: 3}
