@@ -127,12 +127,25 @@ public class TileSpawner : MonoBehaviour
         // Instantiate the obstacle
         GameObject newObstacle = GameObject.Instantiate(obstaclePrefab, obstaclePosition, prevTile.transform.rotation);
 
-        // Adjust rotation if the obstacle is tagged as "Enemy" or "Friend"
+        //when the drone is spawned, it rotates 180 degrees around the Y-axis, face the player
         Quaternion newObjectRotation = newObstacle.transform.rotation;
         if (obstaclePrefab.CompareTag("Enemy") || obstaclePrefab.CompareTag("Friend"))
         {
             newObjectRotation *= Quaternion.Euler(0, 180, 0);
             newObstacle.transform.rotation = newObjectRotation;
+        }
+
+        // If the obstacle is a drone, set its movement boundaries
+        DroneMovement droneMovement = newObstacle.GetComponent<DroneMovement>();
+        if (droneMovement != null)
+        {
+            Renderer tileRenderer = prevTile.GetComponent<Renderer>();
+            if (tileRenderer != null)
+            {
+                Bounds tileBounds = tileRenderer.bounds;
+                droneMovement.tileBoundsMin = tileBounds.min;
+                droneMovement.tileBoundsMax = tileBounds.max;
+            }
         }
 
         currentObstacles.Add(newObstacle);
