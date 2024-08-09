@@ -220,6 +220,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -927199367670048503, guid: 5090c1d92c3e3034a85460b495fcf820, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1879036841616623806}
+    - targetCorrespondingSourceObject: {fileID: -927199367670048503, guid: 5090c1d92c3e3034a85460b495fcf820, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1090891745507634408}
   m_SourcePrefab: {fileID: 100100000, guid: 5090c1d92c3e3034a85460b495fcf820, type: 3}
 --- !u!95 &3214281488299296052 stripped
 Animator:
@@ -315,3 +318,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   droneExplosion: {fileID: 1121192042590650, guid: e1b08032bec16ba4eb1ae23cbd572664, type: 3}
+--- !u!114 &1090891745507634408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8379564905819527773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ea7a2299b0301144a0d73ea85be8319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 2
+  moveDistance: 3

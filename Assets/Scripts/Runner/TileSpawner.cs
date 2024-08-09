@@ -53,7 +53,7 @@ public class TileSpawner : MonoBehaviour
         }
 
         // Spawn obstacle only after the first 4 tiles
-        if (spawnObstacle && currentTiles.Count > 3)
+        if (spawnObstacle && currentTiles.Count > 5)
         {
             SpawnObstacle();
         }
