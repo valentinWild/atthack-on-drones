@@ -274,9 +274,9 @@ MonoBehaviour:
   spawnPoints:
   - {fileID: 3710357144960936534}
   - {fileID: 3278100140055920156}
-  fireSpeed1: 50
-  fireSpeed2: 30
-  fireInterval: 0.5
+  fireSpeed1: 20
+  fireSpeed2: 20
+  fireInterval: 0.8
   alternateFire: 1
   fireInBursts: 1
   burstInterval: 0.1

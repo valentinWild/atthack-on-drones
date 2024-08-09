@@ -195,7 +195,7 @@ public class Autofire : MonoBehaviour
     private void Start()
     {
         //Shooting starts 5 seconds later
-        Invoke("StartFiring", 5f);
+        Invoke("StartFiring", 8f);
 
     }
 

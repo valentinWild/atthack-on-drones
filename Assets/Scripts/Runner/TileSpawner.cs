@@ -52,7 +52,11 @@ public class TileSpawner : MonoBehaviour
             currentTileLocation += Vector3.Scale(prevTile.GetComponent<Renderer>().bounds.size, currentTileDirection);
         }
 
-        if (spawnObstacle) SpawnObstacle();
+        // Spawn obstacle only after the first 4 tiles
+        if (spawnObstacle && currentTiles.Count > 3)
+        {
+            SpawnObstacle();
+        }
     }
 
     // Maybe improve it for performance reasons -> use Object Pools
@@ -109,18 +113,29 @@ public class TileSpawner : MonoBehaviour
 
     private void SpawnObstacle()
     {
-        if (Random.value > obstacleFrequency) return;
-
+        // Select a random obstacle from the list
         GameObject obstaclePrefab = SelectRandomGameObjectFromList(obstacles);
-        Quaternion newObjectRotation = obstaclePrefab.gameObject.transform.rotation * Quaternion.LookRotation(currentTileDirection, Vector3.up);
 
+        // Randomly offset the obstacle position to avoid linear placement
+        Vector3 randomOffset = new Vector3(
+            Random.Range(-1.5f, 1.5f),   // Randomly offset on the X axis
+            Random.Range(-0.8f, 0.8f),   // Randomly offset on the Y axis
+            Random.Range(-1.0f, 1.0f));  // Randomly offset on the Z axis
+
+        Vector3 obstaclePosition = prevTile.transform.position + randomOffset;
+
+        // Instantiate the obstacle
+        GameObject newObstacle = GameObject.Instantiate(obstaclePrefab, obstaclePosition, prevTile.transform.rotation);
+
+        // Adjust rotation if the obstacle is tagged as "Enemy" or "Friend"
+        Quaternion newObjectRotation = newObstacle.transform.rotation;
         if (obstaclePrefab.CompareTag("Enemy") || obstaclePrefab.CompareTag("Friend"))
         {
             newObjectRotation *= Quaternion.Euler(0, 180, 0);
+            newObstacle.transform.rotation = newObjectRotation;
         }
 
-        GameObject obstacle = Instantiate(obstaclePrefab, currentTileLocation, newObjectRotation);
-        currentObstacles.Add(obstacle);
+        currentObstacles.Add(newObstacle);
     }
 
     private GameObject SelectRandomGameObjectFromList(List<GameObject> list)
