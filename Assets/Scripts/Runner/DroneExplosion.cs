@@ -34,6 +34,8 @@ public class DroneExplosion : MonoBehaviour
 
         // Zerstöre die Explosion
         Destroy(explosion, 2f);
-        
+
+        // Increment the counter
+        DroneCounter.IncrementCounter();
     }
 }
