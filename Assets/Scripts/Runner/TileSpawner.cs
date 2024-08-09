@@ -26,6 +26,7 @@ public class TileSpawner : MonoBehaviour
 
     private List<GameObject> currentTiles;
     private List<GameObject> currentObstacles;
+    private Queue<string> lastTwoObstacleTags = new Queue<string>();
 
     private void Start()
     {
@@ -116,6 +117,48 @@ public class TileSpawner : MonoBehaviour
         // Select a random obstacle from the list
         GameObject obstaclePrefab = SelectRandomGameObjectFromList(obstacles);
 
+        // Check last two obstacle tags to enforce "Friend" and "Enemy" spawn limits
+        if (obstaclePrefab.CompareTag("Friend"))
+        {
+            int friendCount = 0;
+            foreach (var tag in lastTwoObstacleTags)
+            {
+                if (tag == "Friend")
+                {
+                    friendCount++;
+                }
+            }
+            if (friendCount >= 2)
+            {
+                // Replace with another obstacle if last two were "Friend"
+                obstaclePrefab = SelectRandomGameObjectFromList(obstacles);
+                while (obstaclePrefab.CompareTag("Friend"))
+                {
+                    obstaclePrefab = SelectRandomGameObjectFromList(obstacles);
+                }
+            }
+        }
+        else if (obstaclePrefab.CompareTag("Enemy"))
+        {
+            int enemyCount = 0;
+            foreach (var tag in lastTwoObstacleTags)
+            {
+                if (tag == "Enemy")
+                {
+                    enemyCount++;
+                }
+            }
+            if (enemyCount >= 2)
+            {
+                // Replace with another obstacle if last two were "Enemy"
+                obstaclePrefab = SelectRandomGameObjectFromList(obstacles);
+                while (obstaclePrefab.CompareTag("Enemy"))
+                {
+                    obstaclePrefab = SelectRandomGameObjectFromList(obstacles);
+                }
+            }
+        }
+
         // Randomly offset the obstacle position to avoid linear placement
         Vector3 randomOffset = new Vector3(
             Random.Range(-1.5f, 1.5f),   // Randomly offset on the X axis
@@ -123,6 +166,13 @@ public class TileSpawner : MonoBehaviour
             Random.Range(-1.0f, 1.0f));  // Randomly offset on the Z axis
 
         Vector3 obstaclePosition = prevTile.transform.position + randomOffset;
+
+        // If the last obstacle was "Friend" and current is "Enemy", ensure they aren't in line
+        if (lastTwoObstacleTags.Count > 0 && lastTwoObstacleTags.Peek() == "Friend" && obstaclePrefab.CompareTag("Enemy"))
+        {
+            // Adjust the position to ensure it's not in line with the last obstacle
+            obstaclePosition += new Vector3(0, 0, Random.Range(1.5f, 2.5f));
+        }
 
         // Instantiate the obstacle
         GameObject newObstacle = GameObject.Instantiate(obstaclePrefab, obstaclePosition, prevTile.transform.rotation);
@@ -146,6 +196,13 @@ public class TileSpawner : MonoBehaviour
                 droneMovement.tileBoundsMin = tileBounds.min;
                 droneMovement.tileBoundsMax = tileBounds.max;
             }
+        }
+
+        // Update the last two obstacles queue
+        lastTwoObstacleTags.Enqueue(obstaclePrefab.tag);
+        if (lastTwoObstacleTags.Count > 2)
+        {
+            lastTwoObstacleTags.Dequeue();
         }
 
         currentObstacles.Add(newObstacle);
