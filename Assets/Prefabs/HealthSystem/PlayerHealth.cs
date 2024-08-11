@@ -84,4 +84,10 @@ public class PlayerHealth : MonoBehaviour
         health += healAmount;
         lerpTimer = 0f;
     }
+
+    public void IncreaseHealth(int level)
+    {
+        maxHealth += (health * 0.01f)* ((100 - level) * 0.1f);
+        health = maxHealth;
+    }
 }

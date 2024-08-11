@@ -17,12 +17,21 @@ public class LevelSystem : MonoBehaviour
     public Image frontXpBar;
     public Image backXpBar;
 
+    [Header("Multipliers")]
+    [Range(1f, 300)]
+    public float additionMultiplier = 300;
+    [Range(2f, 4f)]
+    public float powerMultiplier = 2;
+    [Range(7f, 14f)]
+    public float divisionMultiplier = 7;
+
 
     // Start is called before the first frame update
     void Start()
     {
         frontXpBar.fillAmount = currentXp / requiredXp;
         backXpBar.fillAmount = currentXp / requiredXp;
+        requiredXp = CalculateRequiredXp();
     }
 
     // Update is called once per frame
@@ -33,6 +42,11 @@ public class LevelSystem : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.B))
         {
             GainExperienceFlatRate(20);
+        }
+
+        if (currentXp > requiredXp)
+        {
+            levelUp();
         }
 
     }
@@ -49,7 +63,7 @@ public class LevelSystem : MonoBehaviour
             if (delayTimer > 3)
             {
                 lerpTimer += Time.deltaTime;
-                float percentComplete = lerpTimer / 2;
+                float percentComplete = lerpTimer / 1;
                 frontXpBar.fillAmount = Mathf.Lerp(FXP, backXpBar.fillAmount, percentComplete);
             }
         }
@@ -59,6 +73,27 @@ public class LevelSystem : MonoBehaviour
     {
         currentXp += xpGained;
         lerpTimer = 0f;
+    }
+
+    public void levelUp()
+    {
+        level++;
+        frontXpBar.fillAmount = 0f;
+        backXpBar.fillAmount = 0f;
+        currentXp = Mathf.RoundToInt(currentXp - requiredXp);
+        GetComponent<PlayerHealth>().IncreaseHealth(level);
+        requiredXp = CalculateRequiredXp();
+    }
+
+    private int CalculateRequiredXp()
+    {
+        int solveForRequiredXp = 0;
+        for (int levelCycle = 1; levelCycle <= level; levelCycle++)
+        {
+            solveForRequiredXp += (int)Mathf.Floor(levelCycle + additionMultiplier * Mathf.Pow(powerMultiplier, levelCycle / divisionMultiplier));
+        }
+
+        return solveForRequiredXp / 4;
     }
 }
 
