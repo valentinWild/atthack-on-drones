@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class PlayerHealth : MonoBehaviour
     public float chipSpeed = 2; //the speed at which the health bar transition occurs when health changes.
     public Image frontHealthBar; //UI image representing the current health, blue one
     public Image backHealthBar; //UI image, grey one, changing color depending on damage/restore
+    public TextMeshProUGUI healthText;
 
     // Start is called before the first frame update
     void Start()
@@ -71,6 +73,8 @@ public class PlayerHealth : MonoBehaviour
             percentComplate = percentComplate * percentComplate;
             frontHealthBar.fillAmount = Mathf.Lerp(fillF, backHealthBar.fillAmount, percentComplate);
         }
+
+        healthText.text = Mathf.Round(health) + "/" + Mathf.Round(maxHealth);
     }
 
     public void TakeDamage(float damage)
