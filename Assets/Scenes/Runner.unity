@@ -3758,6 +3758,8 @@ MonoBehaviour:
   frontHealthBar: {fileID: 1679754280}
   backHealthBar: {fileID: 1029589749}
   healthText: {fileID: 1679599117}
+  friendCounterText: {fileID: 832382054}
+  enemyCounterText: {fileID: 850422826}
 --- !u!114 &1668821207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4287,7 +4289,7 @@ GameObject:
   - component: {fileID: 2010153151}
   - component: {fileID: 2010153150}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: EnemyDronesImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
