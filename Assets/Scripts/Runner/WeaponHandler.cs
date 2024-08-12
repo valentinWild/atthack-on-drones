@@ -12,6 +12,8 @@ public class WeaponHandler : MonoBehaviour
     public Transform spawnPoint;
     public float fireSpeed = 50f;
 
+    private AudioSource audioSource; 
+
     private void OnEnable()
     {
         shootAction.action.performed += OnShoot;
@@ -21,6 +23,18 @@ public class WeaponHandler : MonoBehaviour
     {
         shootAction.action.performed -= OnShoot;
     }
+
+    private void Start()
+    {
+        // AudioSource-Komponente abrufen
+        audioSource = GetComponent<AudioSource>();
+
+        if (audioSource == null)
+        {
+            Debug.LogWarning("No AudioSource component found on this GameObject.");
+        }
+    }
+
 
     private void OnShoot(InputAction.CallbackContext context)
     {
@@ -44,5 +58,15 @@ public class WeaponHandler : MonoBehaviour
             rb.velocity = spawnPoint.forward * fireSpeed;
         }
         Destroy(spawnedBullet, 5);
+
+        // Schuss-Sound abspielen
+        if (audioSource != null)
+        {
+            audioSource.Play();
+        }
+        else
+        {
+            Debug.LogWarning("AudioSource is not assigned or missing.");
+        }
     }
 }
