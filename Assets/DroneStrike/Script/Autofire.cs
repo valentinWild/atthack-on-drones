@@ -186,40 +186,22 @@ public class Autofire : MonoBehaviour
     public bool fireInBursts = false; // Boolean to enable firing bursts of 3 projectiles
     public float burstInterval = 0.1f; // Interval between shots in a burst
     public bool useSecondProjectile = false; // Boolean to toggle between projectiles
-    public string playerTag = "Player"; // Tag used to identify the player
 
     private int nextSpawnPointIndex = 0;
     private bool isHit = false;
 
     private Coroutine fireCoroutine;
-    private Transform playerTransform;
 
     private void Start()
     {
-        // Find the player by tag
-        GameObject player = GameObject.FindGameObjectWithTag(playerTag);
-        if (player != null)
-        {
-            playerTransform = player.transform;
-        }
-        else
-        {
-            Debug.LogWarning("Player object not found in the scene.");
-        }
-
-        // Shooting starts after 8 seconds
+        //Shooting starts 5 seconds later
         Invoke("StartFiring", 8f);
+
     }
+
     private void StartFiring()
     {
-        if (playerTransform != null)
-        {
-            fireCoroutine = StartCoroutine(FireBullets());
-        }
-        else
-        {
-            Debug.LogWarning("Cannot start firing because playerTransform is null.");
-        }
+        StartCoroutine(FireBullets());
     }
 
     private IEnumerator FireBullets()
@@ -293,7 +275,6 @@ public class Autofire : MonoBehaviour
         {
             if (spawnPoint != null)
             {
-                AlignWithPlayer(spawnPoint);
                 FireBulletFromSpawnPoint(spawnPoint);
             }
         }
@@ -317,7 +298,6 @@ public class Autofire : MonoBehaviour
     {
         if (spawnPoints[nextSpawnPointIndex] != null)
         {
-            AlignWithPlayer(spawnPoints[nextSpawnPointIndex]);
             FireBulletFromSpawnPoint(spawnPoints[nextSpawnPointIndex]);
         }
     }
@@ -345,27 +325,6 @@ public class Autofire : MonoBehaviour
 
             // Destroy the bullet after 5 seconds to avoid clutter
             Destroy(spawnedBullet, 5f);
-        }
-    }
-
-    private void AlignWithPlayer(Transform spawnPoint)
-    {
-        if (playerTransform != null)
-        {
-            // Calculate the direction from the spawn point to the player
-            Vector3 directionToPlayer = (playerTransform.position - spawnPoint.position).normalized;
-
-            /*
-            // Add a random spread angle to the direction
-            float spreadAngle = 5f; // Adjust this value to control the spread
-            directionToPlayer = Quaternion.Euler(
-                Random.Range(-spreadAngle, spreadAngle),
-                Random.Range(-spreadAngle, spreadAngle),
-                0) * directionToPlayer;
-            */
-
-            // Align the spawn point's forward direction with the direction to the player
-            spawnPoint.forward = directionToPlayer;
         }
     }
 
@@ -412,3 +371,4 @@ public class Autofire : MonoBehaviour
         Debug.Log("All projectiles destroyed."); // Debug-Message zur Überprüfung
     }
 }
+
