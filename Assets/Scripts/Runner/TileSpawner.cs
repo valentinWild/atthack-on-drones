@@ -159,25 +159,51 @@ public class TileSpawner : MonoBehaviour
             }
         }
 
-        // Randomly offset the obstacle position to avoid linear placement
+        // Define specific ranges for different obstacle types
+        float xOffsetMin = 0f;
+        float xOffsetMax = 0f;
+        float yOffsetMin = 0f;
+        float yOffsetMax = 0.5f; // Default Y axis range
+
+        if (obstaclePrefab.CompareTag("Enemy"))
+        {
+            xOffsetMin = 0f;
+            xOffsetMax = 0f;
+            yOffsetMax = 0f; // Specific Y axis range for enemies
+        }
+        else if (obstaclePrefab.CompareTag("Friend"))
+        {
+            xOffsetMin = -1f;
+            xOffsetMax = 1f;
+        }
+        else
+        {
+            // Default range for other obstacles
+            xOffsetMin = -1.5f;
+            xOffsetMax = 1.5f;
+        }
+
+        // Randomly offset the obstacle position within the specified range
         Vector3 randomOffset = new Vector3(
-            Random.Range(-1.5f, 1.5f),   // Randomly offset on the X axis
-            Random.Range(-0.8f, 0.8f),   // Randomly offset on the Y axis
+            Random.Range(xOffsetMin, xOffsetMax),   // Custom range on the X axis based on obstacle type
+            Random.Range(yOffsetMin, yOffsetMax),   // Custom range on the Y axis based on obstacle type
             Random.Range(-1.0f, 1.0f));  // Randomly offset on the Z axis
 
         Vector3 obstaclePosition = prevTile.transform.position + randomOffset;
 
-        // If the last obstacle was "Friend" and current is "Enemy", ensure they aren't in line
-        if (lastTwoObstacleTags.Count > 0 && lastTwoObstacleTags.Peek() == "Friend" && obstaclePrefab.CompareTag("Enemy"))
+        // Ensure that consecutive "Enemies" or "Friends" are not in line
+        if (lastTwoObstacleTags.Count > 0 &&
+            (lastTwoObstacleTags.Peek() == "Enemy" || lastTwoObstacleTags.Peek() == "Friend") &&
+            (obstaclePrefab.CompareTag("Enemy") || obstaclePrefab.CompareTag("Friend")))
         {
             // Adjust the position to ensure it's not in line with the last obstacle
-            obstaclePosition += new Vector3(0, 0, Random.Range(1.5f, 2.5f));
+            obstaclePosition += new Vector3(0, 0, Random.Range(2f, 3f));
         }
 
         // Instantiate the obstacle
         GameObject newObstacle = GameObject.Instantiate(obstaclePrefab, obstaclePosition, prevTile.transform.rotation);
 
-        //when the drone is spawned, it rotates 180 degrees around the Y-axis, face the player
+        // When the drone is spawned, it rotates 180 degrees around the Y-axis, face the player
         Quaternion newObjectRotation = newObstacle.transform.rotation;
         if (obstaclePrefab.CompareTag("Enemy") || obstaclePrefab.CompareTag("Friend"))
         {
