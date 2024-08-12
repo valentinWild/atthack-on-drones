@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class PlayerCollision : MonoBehaviour
 {
+    [SerializeField] private string bulletTag = "Bullet";// Tag für Drone Shots
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
         // Überprüfen, ob das kollidierende Objekt den Tag "Bullet" hat
-        if (collision.gameObject.CompareTag("Bullet"))
+        if (other.CompareTag(bulletTag))
         {
             // Nachricht ausgeben, wenn der Spieler getroffen wird
-            Debug.Log("User shooted by drones");
+            Debug.Log("User is shooted by drones");
 
-        
+            //Zerstören des Bullet-Objekts
+            Destroy(other.gameObject, 0.1f);
         }
     }
 }
