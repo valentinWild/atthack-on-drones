@@ -354,6 +354,14 @@ public class Autofire : MonoBehaviour
         {
             // Calculate the direction from the spawn point to the player
             Vector3 directionToPlayer = (playerTransform.position - spawnPoint.position).normalized;
+
+            // Add a random spread angle to the direction
+            float spreadAngle = 5f; // Adjust this value to control the spread
+            directionToPlayer = Quaternion.Euler(
+                Random.Range(-spreadAngle, spreadAngle),
+                Random.Range(-spreadAngle, spreadAngle),
+                0) * directionToPlayer;
+
             // Align the spawn point's forward direction with the direction to the player
             spawnPoint.forward = directionToPlayer;
         }
