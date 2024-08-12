@@ -119,8 +119,6 @@ public class FriendDroneCollector : MonoBehaviour
             Debug.Log("Drone collected: " + other.gameObject.name);
             Destroy(other.gameObject); // Zerstöre die Drohne, wenn sie eingesammelt wird
             DroneCounter.IncrementCollectedCounter(); // Erhöhe den Zähler für eingesammelte Drohnen
-        } else         {
-            Debug.Log("Collect: friend tag not found");
         }
         
     }
