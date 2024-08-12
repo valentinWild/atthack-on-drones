@@ -9,7 +9,7 @@ public class DroneMovement : MonoBehaviour
     public float smoothTime = 0.5f; // Smoothing time for the movement
     public Vector3 tileBoundsMin; // Minimum bounds of the tile
     public Vector3 tileBoundsMax; // Maximum bounds of the tile
-    public float margin = 0.2f; // Margin to keep drones away from tile edges
+    public float margin = 0.5f; // Margin to keep drones away from tile edges
 
     private Vector3 targetPosition;
     private Vector3 velocity = Vector3.zero; // Used for smoothing

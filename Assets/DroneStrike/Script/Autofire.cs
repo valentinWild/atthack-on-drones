@@ -371,3 +371,4 @@ public class Autofire : MonoBehaviour
         Debug.Log("All projectiles destroyed."); // Debug-Message zur Überprüfung
     }
 }
+
