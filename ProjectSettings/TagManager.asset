@@ -9,6 +9,15 @@ TagManager:
   - Friend
   - BigExplosion
   - PlayerShot
+  - BlackParticle
+  - GreenParticle
+  - BlueParticle
+  - YellowParticle
+  - RedParticle
+  - WhiteParticle
+  - PurpleParticle
+  - OrangeParticle
+  - LiquidParticle
   layers:
   - Default
   - TransparentFX
