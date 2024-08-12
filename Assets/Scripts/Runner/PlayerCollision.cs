@@ -12,10 +12,10 @@ public class PlayerCollision : MonoBehaviour
         if (other.CompareTag(bulletTag))
         {
             // Nachricht ausgeben, wenn der Spieler getroffen wird
-            Debug.Log("User shooted by drones");
+            Debug.Log("User is shooted by drones");
 
             //Zerstören des Bullet-Objekts
-            Destroy(other.gameObject);
+            Destroy(other.gameObject, 0.1f);
         }
     }
 }
