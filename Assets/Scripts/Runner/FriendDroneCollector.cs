@@ -92,40 +92,32 @@ public class FriendDroneCollector : MonoBehaviour
 
 
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class FriendDroneCollector : MonoBehaviour
 {
     public string friendTag = "Friend"; // Tag für freundliche Drohnen
-    public InputActionReference collectAction; // Aktion zum Sammeln (z.B. linker Button auf dem Controller)
-    public float collectDistance = 0.02f; // Die maximale Entfernung, um eine Drohne zu sammeln
-    public Transform leftControllerTransform; // Referenz zur Position des linken Controllers
+    //public Transform leftControllerTransform; // Referenz zur Position des linken Controllers
+    //private SphereCollider controllerCollider; // Referenz zum Collider des Controllers
 
-    private void OnEnable()
+    /*private void Awake()
     {
-        collectAction.action.performed += CollectFriendDrone; // Aktiviert die Sammel-Aktion
-    }
-
-    private void OnDisable()
-    {
-        collectAction.action.performed -= CollectFriendDrone; // Deaktiviert die Sammel-Aktion
-    }
-
-    private void CollectFriendDrone(InputAction.CallbackContext context)
-    {
-        // Finde alle Objekte mit dem Tag "Friend"
-        GameObject[] friendDrones = GameObject.FindGameObjectsWithTag(friendTag);
-
-        foreach (GameObject drone in friendDrones)
+        // Fügt einen SphereCollider zum Controller hinzu, falls nicht bereits vorhanden
+        controllerCollider = leftControllerTransform.gameObject.GetComponent<SphereCollider>();
+        if (controllerCollider == null)
         {
-            // Berechne die Entfernung zwischen dem linken Controller und der Drohne
-            float distance = Vector3.Distance(leftControllerTransform.position, drone.transform.position);
-            if (distance <= collectDistance)
-            {
-                Debug.Log("Drone collected: " + drone.name);
-                Destroy(drone); // Zerstöre die Drohne, wenn sie eingesammelt wird
-                DroneCounter.IncrementCollectedCounter(); // Erhöhe den Zähler für eingesammelte Drohnen
-            }
+            controllerCollider = leftControllerTransform.gameObject.AddComponent<SphereCollider>();
+            controllerCollider.isTrigger = true; // Setzt den Collider auf Trigger, damit er Kollisionen auslöst
+        }
+    }*/
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // Überprüfe, ob das andere Objekt den Tag "Friend" hat
+        if (other.CompareTag(friendTag))
+        {
+            Debug.Log("Drone collected: " + other.gameObject.name);
+            Destroy(other.gameObject); // Zerstöre die Drohne, wenn sie eingesammelt wird
+            DroneCounter.IncrementCollectedCounter(); // Erhöhe den Zähler für eingesammelte Drohnen
         }
     }
 }
