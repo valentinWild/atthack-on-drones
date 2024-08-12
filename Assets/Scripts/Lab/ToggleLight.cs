@@ -8,11 +8,15 @@ public class ToggleLight : MonoBehaviour
 {
 
     Light lightOrb;
+    ParticleSystem orbParticles;
 
 
     private void Start()
     {
         lightOrb = gameObject.GetComponent<Light>();
+        lightOrb.enabled = false;
+        orbParticles = gameObject.GetComponent<ParticleSystem>();
+        //orbParticles.enableEmission = false;
     }
 
     void OnTriggerEnter(Collider other)
