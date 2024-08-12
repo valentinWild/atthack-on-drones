@@ -4,20 +4,39 @@ using UnityEngine;
 
 public class OrbManager : MonoBehaviour
 {
-    // This array tracks the current state of each orb (true = on, false = off)
-    [SerializeField] private bool[] orbStates = new bool[4];
+    public bool[] correctCode; // correct code sequence
+    private bool[] orbStates;
 
-    // Define the correct code sequence
-    [SerializeField] private bool[] correctCode = new bool[] { true, false, true, false };
+    public GameObject crateObject;
+    private Animation crateAnimation;
+    public string openAnimationName = "Crate_Open";
+    public string closeAnimationName = "Crate_Close";
 
-    // Method called by each orb to update its state
+    private void Start()
+    {
+        orbStates = new bool[correctCode.Length];
+
+        // Get the Animation component from the crate object
+        if (crateObject != null)
+        {
+            crateAnimation = crateObject.GetComponentInChildren<Animation>();
+            if (crateAnimation == null)
+            {
+                Debug.LogWarning("Animation component not found on the crate object or its children.");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Crate object is not assigned.");
+        }
+    }
+
     public void UpdateOrbState(int orbIndex, bool isOn)
     {
         orbStates[orbIndex] = isOn;
         CheckCode();
     }
 
-    // Check if the current state matches the correct code
     private void CheckCode()
     {
         for (int i = 0; i < orbStates.Length; i++)
@@ -28,15 +47,34 @@ public class OrbManager : MonoBehaviour
             }
         }
 
-        // Code matches
-        Debug.Log("Correct code entered!");
+        // If we get here, the code matches
+        Debug.Log("Correct code entered! Triggering the action.");
         TriggerSuccessAction();
     }
 
-    // Trigger the action when the correct code is entered
     private void TriggerSuccessAction()
     {
-        Debug.Log("Puzzle Piece revealed!");
-        //TODO: insert opening of box for puzzle piece
+        if (crateAnimation != null)
+        {
+            crateAnimation.Play(openAnimationName); // Play open animation on the crate
+            Debug.Log("Crate is opening.");
+        }
+        else
+        {
+            Debug.LogWarning("Crate Animation component is missing.");
+        }
+    }
+
+    public void CloseCrate()
+    {
+        if (crateAnimation != null)
+        {
+            crateAnimation.Play(closeAnimationName); // Play close animation on the crate
+            Debug.Log("Crate is closing.");
+        }
+        else
+        {
+            Debug.LogWarning("Crate Animation component is missing.");
+        }
     }
 }
