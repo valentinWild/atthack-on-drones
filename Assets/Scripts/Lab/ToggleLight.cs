@@ -9,6 +9,7 @@ public class ToggleLight : MonoBehaviour
 
     Light lightOrb;
     ParticleSystem orbParticles;
+    string objectTag;
 
 
     private void Start()
@@ -16,6 +17,7 @@ public class ToggleLight : MonoBehaviour
         lightOrb = gameObject.GetComponent<Light>();
         lightOrb.enabled = false;
         orbParticles = gameObject.GetComponent<ParticleSystem>();
+        objectTag = gameObject.tag;
         //orbParticles.enableEmission = false;
     }
 
@@ -27,6 +29,7 @@ public class ToggleLight : MonoBehaviour
         {
             lightOrb.enabled = false;
             Debug.Log("LightOrb disabled");
+
         } else if (lightOrb.enabled == false)
         {
             lightOrb.enabled = true;
