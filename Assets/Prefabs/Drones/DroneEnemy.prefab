@@ -285,11 +285,11 @@ MonoBehaviour:
   spawnPoints:
   - {fileID: 3710357144960936534}
   - {fileID: 3278100140055920156}
-  fireSpeed1: 20
-  fireSpeed2: 20
+  fireSpeed1: 10
+  fireSpeed2: 10
   fireInterval: 0.8
   alternateFire: 1
-  fireInBursts: 1
+  fireInBursts: 0
   burstInterval: 0.1
   useSecondProjectile: 0
 --- !u!135 &-6585092331438486094
