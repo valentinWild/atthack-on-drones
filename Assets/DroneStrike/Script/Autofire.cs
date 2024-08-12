@@ -19,12 +19,23 @@ public class Autofire : MonoBehaviour
     private bool isHit = false;
 
     private Coroutine fireCoroutine;
+    private Transform playerTransform;
 
     private void Start()
     {
+        // Suche das PlayerObject in der Szene und speichere seinen Transform
+        GameObject playerObject = GameObject.Find("PlayerObject");
+        if (playerObject != null)
+        {
+            playerTransform = playerObject.transform;
+        }
+        else
+        {
+            Debug.LogWarning("PlayerObject not found in the scene.");
+        }
+
         //Shooting starts 5 seconds later
         Invoke("StartFiring", 8f);
-
     }
 
     private void StartFiring()
@@ -132,27 +143,45 @@ public class Autofire : MonoBehaviour
 
     private void FireBulletFromSpawnPoint(Transform spawnPoint)
     {
-        GameObject selectedBullet = useSecondProjectile ? bullet2 : bullet1;
-        float selectedSpeed = useSecondProjectile ? fireSpeed2 : fireSpeed1;
-
-        if (selectedBullet != null)
+        if (playerTransform != null)
         {
-            // Instantiate the bullet at the spawn point's position and rotation
-            GameObject spawnedBullet = Instantiate(selectedBullet, spawnPoint.position, spawnPoint.rotation);
-            Rigidbody rb = spawnedBullet.GetComponent<Rigidbody>();
+            // Berechne den Vektor von der Drohne zum PlayerObject
+            Vector3 toPlayer = playerTransform.position - spawnPoint.position;
 
-            if (rb != null)
+            // ‹berpr¸fe, ob die Drohne hinter dem PlayerObject ist
+            float dotProduct = Vector3.Dot(playerTransform.forward, toPlayer.normalized);
+
+            if (dotProduct >= 0)
             {
-                // Apply velocity in the local forward direction of the spawn point
-                rb.velocity = spawnPoint.forward * selectedSpeed;
-            }
-            else
-            {
-                Debug.LogWarning("Spawned bullet does not have a Rigidbody component.");
+                // Die Drohne befindet sich hinter dem PlayerObject, also nicht schieﬂen
+                return;
             }
 
-            // Destroy the bullet after 5 seconds to avoid clutter
-            Destroy(spawnedBullet, 5f);
+            // Drehe den SpawnPoint, um auf das PlayerObject zu zeigen
+            spawnPoint.rotation = Quaternion.LookRotation(toPlayer.normalized);
+
+            GameObject selectedBullet = useSecondProjectile ? bullet2 : bullet1;
+            float selectedSpeed = useSecondProjectile ? fireSpeed2 : fireSpeed1;
+
+            if (selectedBullet != null)
+            {
+                // Instantiate the bullet at the spawn point's position and rotation
+                GameObject spawnedBullet = Instantiate(selectedBullet, spawnPoint.position, spawnPoint.rotation);
+                Rigidbody rb = spawnedBullet.GetComponent<Rigidbody>();
+
+                if (rb != null)
+                {
+                    // Setze die Geschwindigkeit des Geschosses auf die Richtung zum PlayerObject
+                    rb.velocity = spawnPoint.forward * selectedSpeed;
+                }
+                else
+                {
+                    Debug.LogWarning("Spawned bullet does not have a Rigidbody component.");
+                }
+
+                // Destroy the bullet after 5 seconds to avoid clutter
+                Destroy(spawnedBullet, 5f);
+            }
         }
     }
 
