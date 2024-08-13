@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class RunnerNetworkController : MonoBehaviour
+public class RunnerNetworkController : NetworkBehaviour
 {
 
     private GameSyncManager gameSyncManager;
-
 
     private void Start()
     {
@@ -14,8 +15,7 @@ public class RunnerNetworkController : MonoBehaviour
 
         if (gameSyncManager != null)
         {
-            Debug.Log("Current Game Timer: " + gameSyncManager.GameTimer);
-            gameSyncManager.AddScore(10);
+            Debug.Log("Current Runner Health: " + gameSyncManager.RunnerHealth);
         }
     }
 
@@ -23,7 +23,15 @@ public class RunnerNetworkController : MonoBehaviour
     {
         if (gameSyncManager != null)
         {
-            gameSyncManager.AddScore(1);
+            Debug.Log(gameSyncManager.RunnerHealth);
+        }
+
+    }
+    public void UpdateRunnerHealth(float newHealth) {
+        if (gameSyncManager != null)
+        {
+            Debug.Log("Update Runner health from Runner Controller");
+            gameSyncManager.RpcUpdateRunnerHealth(newHealth);
         }
     }
 }
