@@ -117,6 +117,7 @@ public class TileSpawner : MonoBehaviour
         // Select a random obstacle from the list
         GameObject obstaclePrefab = SelectRandomGameObjectFromList(obstacles);
 
+        //Petra: SpawnObstacle Constraints: More than two enemies/friends are not allowed to follow each other
         // Check last two obstacle tags to enforce "Friend" and "Enemy" spawn limits
         if (obstaclePrefab.CompareTag("Friend"))
         {
@@ -159,8 +160,9 @@ public class TileSpawner : MonoBehaviour
             }
         }
 
+        //Petra:
         // Define specific ranges for different obstacle types
-        float xOffsetMin = 0f;
+        /*float xOffsetMin = 0f;
         float xOffsetMax = 0f;
         float yOffsetMin = 0f;
         float yOffsetMax = 0.5f; // Default Y axis range
@@ -182,15 +184,18 @@ public class TileSpawner : MonoBehaviour
             xOffsetMin = -1.5f;
             xOffsetMax = 1.5f;
         }
-
+        //Petra:
         // Randomly offset the obstacle position within the specified range
         Vector3 randomOffset = new Vector3(
             Random.Range(xOffsetMin, xOffsetMax),   // Custom range on the X axis based on obstacle type
             Random.Range(yOffsetMin, yOffsetMax),   // Custom range on the Y axis based on obstacle type
             Random.Range(-1.0f, 1.0f));  // Randomly offset on the Z axis
+        */
 
-        Vector3 obstaclePosition = prevTile.transform.position + randomOffset;
+        //Vector3 obstaclePosition = prevTile.transform.position + randomOffset;
+        Vector3 obstaclePosition = prevTile.transform.position;
 
+        //Petra:
         // Ensure that consecutive "Enemies" or "Friends" are not in line
         if (lastTwoObstacleTags.Count > 0 &&
             (lastTwoObstacleTags.Peek() == "Enemy" || lastTwoObstacleTags.Peek() == "Friend") &&
@@ -203,6 +208,7 @@ public class TileSpawner : MonoBehaviour
         // Instantiate the obstacle
         GameObject newObstacle = GameObject.Instantiate(obstaclePrefab, obstaclePosition, prevTile.transform.rotation);
 
+        //Petra:
         // When the drone is spawned, it rotates 180 degrees around the Y-axis, face the player
         Quaternion newObjectRotation = newObstacle.transform.rotation;
         if (obstaclePrefab.CompareTag("Enemy") || obstaclePrefab.CompareTag("Friend"))
@@ -211,6 +217,7 @@ public class TileSpawner : MonoBehaviour
             newObstacle.transform.rotation = newObjectRotation;
         }
 
+        //Petra:
         // If the obstacle is a drone, set its movement boundaries
         DroneMovement droneMovement = newObstacle.GetComponent<DroneMovement>();
         if (droneMovement != null)
@@ -224,6 +231,7 @@ public class TileSpawner : MonoBehaviour
             }
         }
 
+        //Petra:
         // Update the last two obstacles queue
         lastTwoObstacleTags.Enqueue(obstaclePrefab.tag);
         if (lastTwoObstacleTags.Count > 2)
