@@ -3,39 +3,51 @@ using UnityEngine;
 
 public class GameSyncManager : NetworkBehaviour
 {
-    public static GameSyncManager Instance;
+    public static GameSyncManager Instance { get; set; }
 
-    // Reference to the NetworkRunner
-    private NetworkRunner runner;
-
+    // Networked properties that will be synchronized across all clients
     [Networked] public float GameTimer { get; set; }
+    [Networked] public int Score { get; set; }
 
     private void Awake()
     {
-        if (Instance == null)
+        if (Instance != null && Instance != this)
         {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
+            Destroy(gameObject); // Destroy the duplicate
+            return;
         }
-        else
-        {
-            Destroy(gameObject);
-        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject); // Make this object persistent across scenes
     }
 
-    private void Start()
+    public override void Spawned()
     {
-        // Find the NetworkRunner in the scene (assuming there's only one)
-        runner = FindObjectOfType<NetworkRunner>();
+        base.Spawned();
+        if (HasStateAuthority)
+        {
+            // Initialize values if this is the authoritative instance
+            GameTimer = 0f;
+            Score = 0;
+        }
     }
 
     private void Update()
     {
-        // Ensure the runner is valid, we have state authority, and the object is spawned
-        if (runner != null && HasStateAuthority)
+        if (HasStateAuthority)
         {
+            // Update the timer every second
             GameTimer += Time.deltaTime;
         }
+
+        // Other logic to handle synced values...
     }
 
+    public void AddScore(int points)
+    {
+        if (HasStateAuthority)
+        {
+            Score += points;
+        }
+    }
 }

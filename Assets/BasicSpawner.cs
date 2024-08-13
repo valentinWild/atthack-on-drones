@@ -7,7 +7,22 @@ using System;
 
 public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
 {
-  public void OnPlayerJoined(NetworkRunner runner, PlayerRef player) { }
+
+    [SerializeField] private NetworkPrefabRef syncedDataPrefab;
+
+    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player) { 
+        // Spawn the Game Sync Manager
+        if (runner.IsServer)
+        {
+            Debug.Log("Runner is Server");
+            if (GameSyncManager.Instance == null)
+            {
+                Debug.Log("Try to spawn syncedDataPrefab");
+                runner.Spawn(syncedDataPrefab);
+            }
+        }
+    }
+    
   public void OnPlayerLeft(NetworkRunner runner, PlayerRef player) { }
   public void OnInput(NetworkRunner runner, NetworkInput input) { }
   public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) { }
