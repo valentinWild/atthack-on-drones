@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +8,6 @@ public class CorrectCode
 {
     public bool[] code;
 }
-
 
 public class OrbManager : MonoBehaviour
 {
@@ -49,39 +49,68 @@ public class OrbManager : MonoBehaviour
 
     private void GenerateRandomCorrectCodes()
     {
+        List<bool[]> generatedCodes = new List<bool[]>();
+
         for (int i = 0; i < correctCodes.Length; i++)
         {
             correctCodes[i] = new CorrectCode();
-            correctCodes[i].code = GenerateRandomCode();
+            bool[] newCode;
+
+            do
+            {
+                newCode = GenerateRandomCode();
+            } while (IsAllFalse(newCode) || ContainsDuplicateCode(generatedCodes, newCode));
+
+            generatedCodes.Add(newCode);
+            correctCodes[i].code = newCode;
         }
     }
 
     private bool[] GenerateRandomCode()
     {
-        bool[] code;
-        do
+        bool[] code = new bool[4];
+        for (int i = 0; i < code.Length; i++)
         {
-            code = new bool[4];
-            for (int i = 0; i < code.Length; i++)
-            {
-                code[i] = UnityEngine.Random.value > 0.5f; // Randomly assign true or false
-            }
-        } while (IsAllFalse(code)); // Ensure the code is not all false
-
+            code[i] = UnityEngine.Random.value > 0.5f; // Randomly assign true or false
+        }
         return code;
     }
 
     private bool IsAllFalse(bool[] code)
     {
         // Check if all elements in the code are false (i.e., 0000)
-        for (int i = 0; i < code.Length; i++)
+        foreach (bool bit in code)
         {
-            if (code[i])
+            if (bit)
             {
                 return false; // If any value is true, return false
             }
         }
         return true; // All values were false
+    }
+
+    private bool ContainsDuplicateCode(List<bool[]> generatedCodes, bool[] newCode)
+    {
+        foreach (bool[] existingCode in generatedCodes)
+        {
+            if (AreCodesEqual(existingCode, newCode))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private bool AreCodesEqual(bool[] code1, bool[] code2)
+    {
+        for (int i = 0; i < code1.Length; i++)
+        {
+            if (code1[i] != code2[i])
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void UpdateOrbState(int orbIndex, bool isOn)
