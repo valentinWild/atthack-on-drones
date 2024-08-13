@@ -31,14 +31,14 @@ public class PourDetector : MonoBehaviour
 
     private void StartPour()
     {
-        print("Start");
+        //print("Start");
         currentStream = CreateStream();
         currentStream.Begin();
     }
 
     private void StopPour()
     {
-        print("End");
+        //print("End");
         currentStream.End();
         currentStream = null;
     }

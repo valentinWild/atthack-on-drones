@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9152007584781298690}
   - component: {fileID: 2583379055566569059}
   m_Layer: 0
-  m_Name: BreakableObjects_Liquid
+  m_Name: OrangeBreakableObjects_Liquid 2
   m_TagString: GreenParticle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -223,7 +223,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.85312265, g: 0, b: 0.9490196, a: 1}
+      maxColor: {r: 0.9490196, g: 0.5043142, b: 0, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -4777,7 +4777,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e6bf8ed070840284f95c9d0d4a66921f, type: 2}
+  - {fileID: 2100000, guid: ac72cd99463aebb459305f0f71e12b2f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

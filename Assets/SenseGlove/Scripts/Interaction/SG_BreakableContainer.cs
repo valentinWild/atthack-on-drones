@@ -101,6 +101,8 @@ namespace SG
             this.SpawnContents();
             this.SpawnShards();
 
+            Debug.Log("Object broken!");
+
             // Play the liquid particle system when the object breaks
             if (liquidParticleSystem != null)
             {
