@@ -6,9 +6,9 @@ public class GameSyncManager : NetworkBehaviour
     public static GameSyncManager Instance { get; set; }
 
     // Networked properties that will be synchronized across all clients
-    [Networked] public float GameTimer { get; set; }
-    [Networked] public int Score { get; set; }
-    [Networked] public float RunnerHealth { get; set; }
+    [Networked] public float gameTimer { get; set; }
+    [Networked] public int collectedHintDrones { get; set; }
+    [Networked] public float runnerHealth { get; set; }
 
     private ChangeDetector _changeDetector;
 
@@ -30,9 +30,9 @@ public class GameSyncManager : NetworkBehaviour
         if (HasStateAuthority)
         {
             // Initialize values if this is the authoritative instance
-            GameTimer = 0f;
-            Score = 0;
-            RunnerHealth = 0;
+            gameTimer = 0f;
+            collectedHintDrones = 0;
+            runnerHealth = 100;
         }
     }
 
@@ -43,15 +43,15 @@ public class GameSyncManager : NetworkBehaviour
             // Update the timer every second
             //GameTimer += Time.deltaTime;
         }
-
-        // Other logic to handle synced values...
     }
 
-    public void AddScore(int points)
+    // Networked RPC to allow clients to request Collected Hint Drones Changes
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void RpcUpdateCollectedHintDrones(int currentAmount)
     {
         if (HasStateAuthority)
         {
-            Score += points;
+            collectedHintDrones = currentAmount;
         }
     }
 
@@ -62,7 +62,7 @@ public class GameSyncManager : NetworkBehaviour
         if (HasStateAuthority)
         {
             // Only the authoritative instance should modify the Score
-            RunnerHealth = newHealth;
+            runnerHealth = newHealth;
         }
     }
 

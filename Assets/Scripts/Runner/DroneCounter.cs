@@ -19,7 +19,19 @@ public static class DroneCounter
 
     public static void IncrementCollectedCounter()
     {
-        collectedDroneCount++;
+        var newAmount = collectedDroneCount + 1;
+        UpdateCollectedCounter(newAmount);
+    }
+
+    private static void UpdateCollectedCounter(int newAmount)
+    {
+        if(GameSyncManager.Instance) 
+        {
+            GameSyncManager.Instance.RpcUpdateCollectedHintDrones(newAmount);
+            collectedDroneCount = newAmount;
+        } else {
+            collectedDroneCount = newAmount;
+        }
     }
 
     public static int GetCollectedCounter()
