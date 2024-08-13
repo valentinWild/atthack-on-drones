@@ -11,7 +11,7 @@ public class PlayerHealth : MonoBehaviour
     private float health; //current health of the player
     private float lerpTimer; // timer used for controlling the smooth transition of the health bar
     public float maxHealth = 100; //the maximum health the player can have
-    public float chipSpeed = 2; //the speed at which the health bar transition occurs when health changes.
+    public float chipSpeed = 1; //the speed at which the health bar transition occurs when health changes.
     public Image frontHealthBar; //UI image representing the current health, blue one
     public Image backHealthBar; //UI image, grey one, changing color depending on damage/restore
     public TextMeshProUGUI healthText;
@@ -19,8 +19,8 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField]
     private UnityEvent<float> healthUpdateEvent;
 
-    //public TextMeshProUGUI friendCounterText;
-    //public TextMeshProUGUI enemyCounterText;
+    public TextMeshProUGUI friendCounterText;
+    public TextMeshProUGUI enemyCounterText;
 
     // Start is called before the first frame update
     void Start()
@@ -35,18 +35,8 @@ public class PlayerHealth : MonoBehaviour
         health = Mathf.Clamp(health, 0, maxHealth); 
         UpdateHealthUI();
 
-        //UpdateFriendCounter(DroneCounter.GetCollectedCounter());
-        //UpdateEnemyCounter(DroneCounter.GetExplosionCounter());
-
-       /* if (Input.GetKeyDown(KeyCode.Space))
-        {
-            TakeDamage(Random.Range(5, 10));
-        }
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            RestoreHealth(Random.Range(5, 10));
-        }*/
+        UpdateFriendCounter(DroneCounter.GetCollectedCounter());
+        UpdateEnemyCounter(DroneCounter.GetExplosionCounter());
 
     }
 
@@ -84,7 +74,7 @@ public class PlayerHealth : MonoBehaviour
             frontHealthBar.fillAmount = Mathf.Lerp(fillF, backHealthBar.fillAmount, percentComplate);
         }
 
-        healthText.text = Mathf.Round(health) + "/" + Mathf.Round(maxHealth);
+        healthText.text = Mathf.Round(health).ToString();
     }
 
     public void TakeDamage(float damage)
@@ -114,13 +104,15 @@ public class PlayerHealth : MonoBehaviour
         UpdateHealth(maxHealth);
     }
 
-    /*public void UpdateFriendCounter(int friendCount)
+    public void UpdateFriendCounter(int friendCount)
     {
-        friendCounterText.text = friendCount.ToString();
+        Debug.Log("Friend Counter Updated: " + friendCount);
+        friendCounterText.text = "Hints: " + friendCount.ToString();
     }
 
     public void UpdateEnemyCounter(int enemyCount)
     {
-        enemyCounterText.text = enemyCount.ToString();
-    }*/
+        Debug.Log("Enemy Counter Updated: " + enemyCount);
+        enemyCounterText.text = "Enemies: " + enemyCount.ToString();
+    }
 }

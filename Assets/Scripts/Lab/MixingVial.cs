@@ -7,9 +7,12 @@ public class MixingVial : MonoBehaviour
     private Dictionary<string, bool> particlesInVial = new Dictionary<string, bool>();
 
     // Set of Colors to be mixed
-    public Material healthPotionMaterial;
-    public Material deathPotionMaterial;
-    public GameObject mixingVial;
+    public Material red;
+    public Material yellow;
+    public Material green;
+    public Material blue;
+    public Material black;
+    public GameObject fluid; // Reference to the fluid inside the vial
 
     // Start is called before the first frame update
     void Start()
@@ -24,49 +27,38 @@ public class MixingVial : MonoBehaviour
         particlesInVial.Add("WhiteParticle", false);
     }
 
-    private void OnParticleCollision(GameObject other)
-    {
-        ParticleSystem particleSystem = other.GetComponent<ParticleSystem>();
-        if (particleSystem != null)
-        {
-            string particleTag = other.tag;
-
-            if (particlesInVial.ContainsKey(particleTag))
-            {
-                particlesInVial[particleTag] = true;
-                CheckMixingResult();
-            }
-        }
-    }
-
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("PurpleParticle"))
+        string particleTag = other.tag;
+
+        if (particlesInVial.ContainsKey(particleTag))
         {
-            mixingVial.GetComponent<Renderer>().material = healthPotionMaterial;
-            Debug.Log("Pink Liquid detected");
-        }
-        if (other.CompareTag("GreenParticle"))
-        {
-            mixingVial.GetComponent<Renderer>().material = deathPotionMaterial;
+            particlesInVial[particleTag] = true;
+            CheckMixingResult();
         }
     }
 
     private void CheckMixingResult()
     {
-        if (particlesInVial["RedParticle"] && particlesInVial["WhiteParticle"])
+        if (particlesInVial["RedParticle"])
         {
-            mixingVial.GetComponent<Renderer>().material = healthPotionMaterial;
+            fluid.GetComponent<Renderer>().material = red;
         }
-        if (particlesInVial["BlackParticle"] && particlesInVial["WhiteParticle"])
+        if (particlesInVial["BlackParticle"])
         {
-            mixingVial.GetComponent<Renderer>().material = deathPotionMaterial;
+            fluid.GetComponent<Renderer>().material = black;
         }
-        if (particlesInVial["PurpleParticle"])
+        if (particlesInVial["YellowParticle"])
         {
-            mixingVial.GetComponent<Renderer>().material = healthPotionMaterial;
-            Debug.Log("Pink Liquid detected");  
+            fluid.GetComponent<Renderer>().material = yellow;
+        }
+        if (particlesInVial["GreenParticle"])
+        {
+            fluid.GetComponent<Renderer>().material = green;
+        }
+        if (particlesInVial["BlueParticle"])
+        {
+            fluid.GetComponent<Renderer>().material = blue;
         }
     }
-
 }
