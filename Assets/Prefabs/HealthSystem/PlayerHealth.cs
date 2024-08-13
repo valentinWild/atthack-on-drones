@@ -13,8 +13,8 @@ public class PlayerHealth : MonoBehaviour
     public Image frontHealthBar; //UI image representing the current health, blue one
     public Image backHealthBar; //UI image, grey one, changing color depending on damage/restore
     public TextMeshProUGUI healthText;
-    //public TextMeshProUGUI friendCounterText;
-    //public TextMeshProUGUI enemyCounterText;
+    public TextMeshProUGUI friendCounterText;
+    public TextMeshProUGUI enemyCounterText;
 
     // Start is called before the first frame update
     void Start()
@@ -29,18 +29,8 @@ public class PlayerHealth : MonoBehaviour
         health = Mathf.Clamp(health, 0, maxHealth); 
         UpdateHealthUI();
 
-        //UpdateFriendCounter(DroneCounter.GetCollectedCounter());
-        //UpdateEnemyCounter(DroneCounter.GetExplosionCounter());
-
-       /* if (Input.GetKeyDown(KeyCode.Space))
-        {
-            TakeDamage(Random.Range(5, 10));
-        }
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            RestoreHealth(Random.Range(5, 10));
-        }*/
+        UpdateFriendCounter(DroneCounter.GetCollectedCounter());
+        UpdateEnemyCounter(DroneCounter.GetExplosionCounter());
 
     }
 
@@ -99,7 +89,7 @@ public class PlayerHealth : MonoBehaviour
         health = maxHealth;
     }
 
-    /*public void UpdateFriendCounter(int friendCount)
+    public void UpdateFriendCounter(int friendCount)
     {
         friendCounterText.text = friendCount.ToString();
     }
@@ -107,5 +97,5 @@ public class PlayerHealth : MonoBehaviour
     public void UpdateEnemyCounter(int enemyCount)
     {
         enemyCounterText.text = enemyCount.ToString();
-    }*/
+    }
 }
