@@ -29,12 +29,12 @@ public class PlayerLeanHandler : MonoBehaviour
         float leanValue = 0f;
         if (lateralOffset > leanThreshold)
         {
-            Debug.Log("lean right");
+            //Debug.Log("lean right");
             leanValue = 1f;
         }
         else if (lateralOffset < -leanThreshold)
         {
-            Debug.Log("lean left");
+            //Debug.Log("lean left");
             leanValue = -1f;
         }
 

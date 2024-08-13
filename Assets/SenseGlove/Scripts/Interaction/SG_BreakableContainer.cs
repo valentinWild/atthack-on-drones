@@ -7,6 +7,10 @@ namespace SG
     /// <summary> A SenseGlove_Breakable that contains objects and optionally spawns shards of itself upon breaking. </summary>
     public class SG_BreakableContainer : SG_Breakable
     {
+        // Added for Liquid: 
+        [Header("Container Components")]
+        public ParticleSystem liquidParticleSystem;
+
         //----------------------------------------------------------------------------------------------------
         // Properties
 
@@ -96,6 +100,15 @@ namespace SG
 
             this.SpawnContents();
             this.SpawnShards();
+
+            Debug.Log("Object broken!");
+
+            // Play the liquid particle system when the object breaks
+            if (liquidParticleSystem != null)
+            {
+                liquidParticleSystem.transform.position = this.transform.position; // Adjust the position if needed
+                liquidParticleSystem.Play();
+            }
         }
 
         /// <summary> Called when the breakable material is reset. </summary>

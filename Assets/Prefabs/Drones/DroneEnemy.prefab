@@ -49,9 +49,17 @@ PrefabInstance:
       value: 0.00002
       objectReference: {fileID: 0}
     - target: {fileID: -6057140222963153312, guid: 5090c1d92c3e3034a85460b495fcf820, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -6057140222963153312, guid: 5090c1d92c3e3034a85460b495fcf820, type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: b73383ab2459f2643abe557b2d08dcd5, type: 2}
+    - target: {fileID: -6057140222963153312, guid: 5090c1d92c3e3034a85460b495fcf820, type: 3}
+      propertyPath: m_CullingMode
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: -5470172745062536958, guid: 5090c1d92c3e3034a85460b495fcf820, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.7071068
@@ -277,11 +285,11 @@ MonoBehaviour:
   spawnPoints:
   - {fileID: 3710357144960936534}
   - {fileID: 3278100140055920156}
-  fireSpeed1: 20
-  fireSpeed2: 20
+  fireSpeed1: 10
+  fireSpeed2: 10
   fireInterval: 0.8
   alternateFire: 1
-  fireInBursts: 1
+  fireInBursts: 0
   burstInterval: 0.1
   useSecondProjectile: 0
 --- !u!135 &-6585092331438486094
@@ -331,4 +339,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2
-  moveDistance: 3
+  moveDistance: 0.2
+  smoothTime: 0.5
+  tileBoundsMin: {x: 0, y: 0, z: 0}
+  tileBoundsMax: {x: 0, y: 0, z: 0}
+  margin: 5

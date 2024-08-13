@@ -39,6 +39,19 @@ public class MixingVial : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("PurpleParticle"))
+        {
+            mixingVial.GetComponent<Renderer>().material = healthPotionMaterial;
+            Debug.Log("Pink Liquid detected");
+        }
+        if (other.CompareTag("GreenParticle"))
+        {
+            mixingVial.GetComponent<Renderer>().material = deathPotionMaterial;
+        }
+    }
+
     private void CheckMixingResult()
     {
         if (particlesInVial["RedParticle"] && particlesInVial["WhiteParticle"])
@@ -48,6 +61,11 @@ public class MixingVial : MonoBehaviour
         if (particlesInVial["BlackParticle"] && particlesInVial["WhiteParticle"])
         {
             mixingVial.GetComponent<Renderer>().material = deathPotionMaterial;
+        }
+        if (particlesInVial["PurpleParticle"])
+        {
+            mixingVial.GetComponent<Renderer>().material = healthPotionMaterial;
+            Debug.Log("Pink Liquid detected");  
         }
     }
 
