@@ -14,10 +14,9 @@ public class ToggleLightHandTracking : MonoBehaviour
     private bool isDebouncing = false; // To track if we're in the debounce period
     public float debounceTime = 0.5f; // Time in seconds to wait before allowing another toggle
 
-
     private void Start()
     {
-        // turn off light and particle system initially
+        // Turn off light and particle system initially
         lightOrb = gameObject.GetComponent<Light>();
         lightOrb.enabled = false;
         orbParticles = gameObject.GetComponent<ParticleSystem>();
@@ -27,13 +26,11 @@ public class ToggleLightHandTracking : MonoBehaviour
     // Detect when the hand enters the collider
     private void OnTriggerEnter(Collider other)
     {
-
         if (!isDebouncing) // Only toggle if we're not in the debounce period
         {
             ToggleLightAndParticles();
             StartCoroutine(Debounce()); // Start the debounce timer
         }
-
     }
 
     private void ToggleLightAndParticles()
@@ -57,6 +54,7 @@ public class ToggleLightHandTracking : MonoBehaviour
             orbManager.UpdateOrbState(orbIndex, isLightOn);
         }
     }
+
     private IEnumerator Debounce()
     {
         isDebouncing = true; // Set debouncing to true to prevent further toggling
@@ -64,4 +62,10 @@ public class ToggleLightHandTracking : MonoBehaviour
         isDebouncing = false; // Reset debouncing to allow toggling again
     }
 
+    public void ResetLightAndParticles()
+    {
+        isLightOn = false;
+        lightOrb.enabled = false;
+        orbParticles.Stop();
+    }
 }
