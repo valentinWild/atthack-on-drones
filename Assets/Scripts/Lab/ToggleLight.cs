@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ToggleLightHandTracking : MonoBehaviour
+public class ToggleLight : MonoBehaviour
 {
     public Light lightOrb; // Reference to the Light component on the orb
     public ParticleSystem orbParticles; // Reference to the Particle System on the orb
