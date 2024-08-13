@@ -15,7 +15,6 @@ public class ToggleLightHandTracking : MonoBehaviour
     public float debounceTime = 0.5f; // Time in seconds to wait before allowing another toggle
 
 
-
     private void Start()
     {
         // turn off light and particle system initially
@@ -58,14 +57,6 @@ public class ToggleLightHandTracking : MonoBehaviour
             orbManager.UpdateOrbState(orbIndex, isLightOn);
         }
     }
-
-    public void ResetLightAndParticles()
-    {
-        isLightOn = false;
-        lightOrb.enabled = false;
-        orbParticles.Stop();
-    }
-
     private IEnumerator Debounce()
     {
         isDebouncing = true; // Set debouncing to true to prevent further toggling
