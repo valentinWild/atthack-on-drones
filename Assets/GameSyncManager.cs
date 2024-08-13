@@ -8,6 +8,9 @@ public class GameSyncManager : NetworkBehaviour
     // Networked properties that will be synchronized across all clients
     [Networked] public float GameTimer { get; set; }
     [Networked] public int Score { get; set; }
+    [Networked] public float RunnerHealth { get; set; }
+
+    private ChangeDetector _changeDetector;
 
     private void Awake()
     {
@@ -29,6 +32,7 @@ public class GameSyncManager : NetworkBehaviour
             // Initialize values if this is the authoritative instance
             GameTimer = 0f;
             Score = 0;
+            RunnerHealth = 0;
         }
     }
 
@@ -37,7 +41,7 @@ public class GameSyncManager : NetworkBehaviour
         if (HasStateAuthority)
         {
             // Update the timer every second
-            GameTimer += Time.deltaTime;
+            //GameTimer += Time.deltaTime;
         }
 
         // Other logic to handle synced values...
@@ -50,4 +54,16 @@ public class GameSyncManager : NetworkBehaviour
             Score += points;
         }
     }
+
+    // Networked RPC to allow clients to request Health changes
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void RpcUpdateRunnerHealth(float newHealth)
+    {
+        if (HasStateAuthority)
+        {
+            // Only the authoritative instance should modify the Score
+            RunnerHealth = newHealth;
+        }
+    }
+
 }
