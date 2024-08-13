@@ -9,7 +9,7 @@ public class PlayerHealth : MonoBehaviour
     private float health; //current health of the player
     private float lerpTimer; // timer used for controlling the smooth transition of the health bar
     public float maxHealth = 100; //the maximum health the player can have
-    public float chipSpeed = 2; //the speed at which the health bar transition occurs when health changes.
+    public float chipSpeed = 1; //the speed at which the health bar transition occurs when health changes.
     public Image frontHealthBar; //UI image representing the current health, blue one
     public Image backHealthBar; //UI image, grey one, changing color depending on damage/restore
     public TextMeshProUGUI healthText;
@@ -80,7 +80,7 @@ public class PlayerHealth : MonoBehaviour
     public void RestoreHealth(float healAmount)
     {
         health += healAmount;
-        health = Mathf.Clamp(health, 0, maxHealth);
+        //health = Mathf.Clamp(health, 0, maxHealth);
         lerpTimer = 0f;
     }
 
