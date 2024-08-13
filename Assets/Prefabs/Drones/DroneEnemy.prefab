@@ -339,8 +339,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2
-  moveDistance: 3
+  moveDistance: 0.2
   smoothTime: 0.5
   tileBoundsMin: {x: 0, y: 0, z: 0}
   tileBoundsMax: {x: 0, y: 0, z: 0}
-  margin: 0.5
+  margin: 5
