@@ -68,7 +68,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 62dad06c47d1d1a448901a67f077f0b6, type: 2}
+  - {fileID: 2100000, guid: 6871e28f73be94cc2ad06ea1d1c11d11, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4986,7 +4986,7 @@ MonoBehaviour:
   orbParticles: {fileID: 305384693378551609}
   orbManager: {fileID: 0}
   orbIndex: 0
-  debounceTime: 0.5
+  debounceTime: 1
 --- !u!54 &3642941046596643898
 Rigidbody:
   m_ObjectHideFlags: 0
