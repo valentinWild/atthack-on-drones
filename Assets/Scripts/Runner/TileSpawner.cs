@@ -53,8 +53,8 @@ public class TileSpawner : MonoBehaviour
             currentTileLocation += Vector3.Scale(prevTile.GetComponent<Renderer>().bounds.size, currentTileDirection);
         }
 
-        // Spawn obstacle only after the first 4 tiles
-        if (spawnObstacle && currentTiles.Count > 5)
+        // Spawn obstacle only after the first 5 tiles and only if the tile is not a turn tile
+        if (spawnObstacle && currentTiles.Count > 5 && !turnTiles.Contains(tile.gameObject))
         {
             SpawnObstacle();
         }
