@@ -68,7 +68,7 @@ public class PlayerHealth : MonoBehaviour
             frontHealthBar.fillAmount = Mathf.Lerp(fillF, backHealthBar.fillAmount, percentComplate);
         }
 
-        healthText.text = Mathf.Round(health) + "/" + Mathf.Round(maxHealth);
+        healthText.text = Mathf.Round(health).ToString();
     }
 
     public void TakeDamage(float damage)
@@ -80,6 +80,7 @@ public class PlayerHealth : MonoBehaviour
     public void RestoreHealth(float healAmount)
     {
         health += healAmount;
+        health = Mathf.Clamp(health, 0, maxHealth);
         lerpTimer = 0f;
     }
 
@@ -91,11 +92,13 @@ public class PlayerHealth : MonoBehaviour
 
     public void UpdateFriendCounter(int friendCount)
     {
-        friendCounterText.text = friendCount.ToString();
+        Debug.Log("Friend Counter Updated: " + friendCount);
+        friendCounterText.text = "Hints: " + friendCount.ToString();
     }
 
     public void UpdateEnemyCounter(int enemyCount)
     {
-        enemyCounterText.text = enemyCount.ToString();
+        Debug.Log("Enemy Counter Updated: " + enemyCount);
+        enemyCounterText.text = "Enemies: " + enemyCount.ToString();
     }
 }
