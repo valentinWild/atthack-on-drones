@@ -27,6 +27,7 @@ public class HintCounter : MonoBehaviour
         if (_text != null)
         {
             _text.text = _hintCounter.ToString();
+            Debug.Log("Set Hint Counter to " + _hintCounter);
         }
     }
 
