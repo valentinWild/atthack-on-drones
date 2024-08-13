@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 8336848664471954278}
   - component: {fileID: 4690708102541018874}
   - component: {fileID: 5754751161188642923}
-  - component: {fileID: 755310915138807789}
   - component: {fileID: 305384693378551609}
   - component: {fileID: 1753834607999689193}
   - component: {fileID: 6032132168542280747}
@@ -118,7 +117,7 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4897592046126779823}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
@@ -173,18 +172,6 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &755310915138807789
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4897592046126779823}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9693bfa957fe2ea459b705a37252ae3a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!198 &305384693378551609
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -4996,6 +4983,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lightOrb: {fileID: 5754751161188642923}
   orbParticles: {fileID: 305384693378551609}
+  orbManager: {fileID: 0}
+  orbIndex: 0
+  debounceTime: 0.5
 --- !u!1 &7377082058690716804
 GameObject:
   m_ObjectHideFlags: 0
