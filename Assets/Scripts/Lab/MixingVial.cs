@@ -46,6 +46,10 @@ public class MixingVial : MonoBehaviour
             mixingVial.GetComponent<Renderer>().material = healthPotionMaterial;
             Debug.Log("Pink Liquid detected");
         }
+        if (other.CompareTag("GreenParticle"))
+        {
+            mixingVial.GetComponent<Renderer>().material = deathPotionMaterial;
+        }
     }
 
     private void CheckMixingResult()
