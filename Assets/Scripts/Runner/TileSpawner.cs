@@ -54,7 +54,7 @@ public class TileSpawner : MonoBehaviour
         }
 
         // Spawn obstacle only after the first 5 tiles and only if the tile is not a turn tile
-        if (spawnObstacle && currentTiles.Count > 5 && !turnTiles.Contains(tile.gameObject))
+        if (spawnObstacle && currentTiles.Count > 3 && !turnTiles.Contains(tile.gameObject))
         {
             SpawnObstacle();
         }
