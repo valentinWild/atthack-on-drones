@@ -159,7 +159,6 @@ GameObject:
   - component: {fileID: 2196814284818869612}
   - component: {fileID: 1733148023682032840}
   - component: {fileID: 2129232659038427522}
-  - component: {fileID: 8856382870336656087}
   - component: {fileID: 7303032491198258807}
   m_Layer: 5
   m_Name: CodeDisplayText
@@ -284,18 +283,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &8856382870336656087
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2511531199492016368}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f435e3f4ac514ac488f064ddd2975c86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7303032491198258807
 MonoBehaviour:
   m_ObjectHideFlags: 0
