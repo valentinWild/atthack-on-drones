@@ -106,6 +106,7 @@ public class MixingVial : MonoBehaviour
             potionName = "Health Potion";
             Debug.Log("Created a new material by mixing Blue and Red");
             creation.Play();
+            
         }
         else if (pouredLiquids.Contains("BlueParticle") && pouredLiquids.Contains("GreenParticle"))
         {
@@ -127,9 +128,9 @@ public class MixingVial : MonoBehaviour
             fail.Play(); // Play failure sound
             return; // Exit early, no potion was created
         }
-
         // Show the speech bubble with the created potion name
         ShowSpeechBubble("Potion created: " + potionName);
+        GameSyncManager.Instance.RpcSetRunnerPotion(potionName);
     }
 
     private void ShowSpeechBubble(string message)
