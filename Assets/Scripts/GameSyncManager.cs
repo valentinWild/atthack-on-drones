@@ -92,6 +92,7 @@ public class GameSyncManager : NetworkBehaviour
         if (HasStateAuthority)
         {
             activePotion = potionType;
+
         }
 
         GameObject gameManager = GameObject.Find("gameManager");
