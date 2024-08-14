@@ -148,23 +148,23 @@ public class Autofire : MonoBehaviour
             // Berechne den Vektor von der Drohne zum PlayerObject
             Vector3 toPlayer = playerTransform.position - spawnPoint.position;
 
-            // Überprüfe die Entfernung zum PlayerObject
+            // ï¿½berprï¿½fe die Entfernung zum PlayerObject
             float distanceToPlayer = toPlayer.magnitude;
-            Debug.Log("Distance to Player: " + distanceToPlayer);
+            //Debug.Log("Distance to Player: " + distanceToPlayer);
 
-            // Schießen nur, wenn das PlayerObject innerhalb von 3 Metern ist
+            // Schieï¿½en nur, wenn das PlayerObject innerhalb von 3 Metern ist
             if (distanceToPlayer > 30f)
             {
-                Debug.Log("Player is too far, not shooting.");
-                return; // Wenn das PlayerObject weiter als 3 Meter entfernt ist, nicht schießen
+                //Debug.Log("Player is too far, not shooting.");
+                return; // Wenn das PlayerObject weiter als 3 Meter entfernt ist, nicht schieï¿½en
             }
 
-            // Überprüfe, ob die Drohne hinter dem PlayerObject ist
+            // ï¿½berprï¿½fe, ob die Drohne hinter dem PlayerObject ist
             float dotProduct = Vector3.Dot(playerTransform.forward, toPlayer.normalized);
 
             if (dotProduct >= 0)
             {
-                // Die Drohne befindet sich hinter dem PlayerObject, also nicht schießen
+                // Die Drohne befindet sich hinter dem PlayerObject, also nicht schieï¿½en
                 return;
             }
 
@@ -203,12 +203,12 @@ public class Autofire : MonoBehaviour
             // Berechne den Vektor von der Drohne zum PlayerObject
             Vector3 toPlayer = playerTransform.position - spawnPoint.position;
 
-            // Überprüfe, ob die Drohne hinter dem PlayerObject ist
+            // ï¿½berprï¿½fe, ob die Drohne hinter dem PlayerObject ist
             float dotProduct = Vector3.Dot(playerTransform.forward, toPlayer.normalized);
 
             if (dotProduct >= 0)
             {
-                // Die Drohne befindet sich hinter dem PlayerObject, also nicht schießen
+                // Die Drohne befindet sich hinter dem PlayerObject, also nicht schieï¿½en
                 return;
             }
 
@@ -219,7 +219,7 @@ public class Autofire : MonoBehaviour
             Vector3 crossProduct = Vector3.Cross(playerTransform.forward, toPlayer);
 
             // Leichte Drehung je nachdem, ob die Drohne links oder rechts vom PlayerObject ist
-            float angle = 10f; // Ändere diesen Wert, um die Drehung zu justieren
+            float angle = 10f; // ï¿½ndere diesen Wert, um die Drehung zu justieren
             if (crossProduct.y > 0)
             {
                 // Die Drohne befindet sich rechts vom PlayerObject, drehe sie leicht nach rechts
@@ -290,13 +290,13 @@ public class Autofire : MonoBehaviour
         // Finde alle existierenden Projektile in der Szene
         GameObject[] bullets = GameObject.FindGameObjectsWithTag("Bullet");
 
-        // Zerstöre jedes Projektil
+        // Zerstï¿½re jedes Projektil
         foreach (GameObject bullet in bullets)
         {
             Destroy(bullet);
         }
 
-        Debug.Log("All projectiles destroyed."); // Debug-Message zur Überprüfung
+        Debug.Log("All projectiles destroyed."); // Debug-Message zur ï¿½berprï¿½fung
     }
 }
 

@@ -27,12 +27,13 @@ public class DroneMovement : MonoBehaviour
             // Randomly decide on a small movement in either x or y direction
             float randomX = Random.Range(-moveDistance, moveDistance);
             float randomY = Random.Range(-moveDistance, moveDistance);
+            float randomZ = Random.Range(-moveDistance, moveDistance);
 
             // Calculate the new target position with small random adjustments
             Vector3 potentialPosition = new Vector3(
                 transform.position.x + randomX,
                 transform.position.y + randomY,
-                transform.position.z
+                transform.position.z + randomZ
             );
 
             // Ensure the target position is within the tile bounds

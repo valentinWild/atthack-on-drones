@@ -53,7 +53,7 @@ public class TileSpawner : MonoBehaviour
             currentTileLocation += Vector3.Scale(prevTile.GetComponent<Renderer>().bounds.size, currentTileDirection);
         }
 
-            // Spawn obstacle only after the first 5 tiles and only if the tile is not a turn tile
+        // Spawn obstacle only after the first 5 tiles and only if the tile is not a turn tile
         if (spawnObstacle && currentTiles.Count > 5 && !turnTiles.Contains(tile.gameObject))
         {
             SpawnObstacle();
@@ -206,7 +206,8 @@ public class TileSpawner : MonoBehaviour
         }
 
         // Instantiate the obstacle
-        GameObject newObstacle = GameObject.Instantiate(obstaclePrefab, obstaclePosition, prevTile.transform.rotation);
+        Quaternion obstacleRotation = obstaclePrefab.gameObject.transform.rotation * Quaternion.LookRotation(currentTileDirection, Vector3.up);
+        GameObject newObstacle = GameObject.Instantiate(obstaclePrefab, currentTileLocation, obstacleRotation);
 
         //Petra:
         // When the drone is spawned, it rotates 180 degrees around the Y-axis, face the player
