@@ -160,6 +160,12 @@ public class OrbManager : MonoBehaviour
                     Debug.Log($"Entered code is correct and hint counter is sufficient ({currentHintCounter} >= {i + 1})!");
                     hintManager.ChangeHintColor(i, Color.black); // Change hint text color to black
                     hintWasDecoded[i] = true;
+
+                    // Check if all hints are decoded
+                    if (CheckAllHintsDecoded())
+                    {
+                        TriggerAllHintsDecodedAction();
+                    }
                 }
                 else
                 {
@@ -168,6 +174,24 @@ public class OrbManager : MonoBehaviour
                 break;
             }
         }
+    }
+
+    private bool CheckAllHintsDecoded()
+    {
+        foreach (bool decoded in hintWasDecoded)
+        {
+            if (!decoded)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void TriggerAllHintsDecodedAction()
+    {
+        Debug.Log("All hints decoded!");
+        // TODO: increment level
     }
 
 
