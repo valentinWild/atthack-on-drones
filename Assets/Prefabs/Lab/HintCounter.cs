@@ -17,7 +17,7 @@ public class HintCounter : MonoBehaviour
         UpdateHintCounterDisplay();  // Initial update of the display
     }
 
-    // Method to increase the hint counter
+    // Method to increase the hint counter with button in UI (for testing)
     public void IncreaseCounter()
     {
         hintCounter++;
@@ -54,16 +54,4 @@ public class HintCounter : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (GameSyncManager.Instance != null)
-        {
-            Debug.Log("Collected Drones: " + GameSyncManager.Instance.collectedHintDrones);
-            GameSyncManager.Instance.RpcUpdateCollectedHintDrones(4);
-        }
-        else
-        {
-            Debug.LogError("No GameSyncManagerInstance");
-        }
-    }
 }
