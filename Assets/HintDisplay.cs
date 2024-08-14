@@ -3,13 +3,13 @@ using TMPro;
 
 public class HintDisplay : MonoBehaviour
 {
-    [SerializeField] private OrbManager orbManager;
+    private OrbManager orbManager;
     private TextMeshProUGUI hintDisplayText;
 
     private void Start()
     {
         hintDisplayText = GetComponent<TextMeshProUGUI>();
-
+        orbManager = FindObjectOfType<OrbManager>();
         UpdateDisplay();
     }
 

@@ -3,13 +3,13 @@ using TMPro;
 
 public class CodeDisplay : MonoBehaviour
 {
-    [SerializeField] private OrbManager orbManager;
+    private OrbManager orbManager;
     private TextMeshProUGUI codeDisplayText;
 
     private void Start()
     {
         codeDisplayText = GetComponent<TextMeshProUGUI>();
-
+        orbManager = FindObjectOfType<OrbManager>();
         UpdateDisplay();
     }
 
