@@ -4,29 +4,59 @@ using UnityEngine;
 
 public class ShieldCollisionHandler : MonoBehaviour
 {
-    void OnTriggerEnter(Collider other)
+    public Material shieldMaterial; 
+    public float collisionMaskPower = 10.0f; 
+    public float normalMaskPower = -0.71f; 
+
+    void Start()
     {
         
-        if (other.CompareTag("Bullet"))
+        if (shieldMaterial != null)
+        {
+            shieldMaterial.SetFloat("_MaskPower", normalMaskPower);
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Bullet") || other.CompareTag("Enemy") || other.CompareTag("Friend"))
         {
             
-            Destroy(other.gameObject);
+            if (shieldMaterial != null)
+            {
+                shieldMaterial.SetFloat("_MaskPower", collisionMaskPower);
+            }
+
+            
+            if (other.CompareTag("Bullet"))
+            {
+                Destroy(other.gameObject);
+            }
+
+            
+            if (other.CompareTag("Enemy"))
+            {
+                DroneCounter.IncrementExplosionCounter();
+                Destroy(other.gameObject);
+            }
+
+            if (other.CompareTag("Friend"))
+            {
+                DroneCounter.IncrementCollectedCounter();
+                Destroy(other.gameObject);
+            }
         }
+    }
 
-        
-        if (other.CompareTag("Enemy"))
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Bullet") || other.CompareTag("Enemy") || other.CompareTag("Friend"))
         {
-            DroneCounter.IncrementExplosionCounter();
-
-            Destroy(other.gameObject);
-        }
-
-        
-        if (other.CompareTag("Friend"))
-        {
-            DroneCounter.IncrementCollectedCounter();
-
-            Destroy(other.gameObject);
+            
+            if (shieldMaterial != null)
+            {
+                shieldMaterial.SetFloat("_MaskPower", normalMaskPower);
+            }
         }
     }
 }
