@@ -5,10 +5,12 @@ public class PourDetector : MonoBehaviour
 {
     public int pourThreshold = 45;
     public Transform origin = null;
-    public GameObject streamPrefab = null; 
+    public GameObject streamPrefab = null;
+    public AudioSource pouring; 
 
     private bool isPouring = false;
     private Stream currentStream = null;
+
 
     private void Update()
     {
@@ -34,6 +36,7 @@ public class PourDetector : MonoBehaviour
         print("Start");
         currentStream = CreateStream();
         currentStream.Begin();
+        pouring.Play();
     }
 
     private void StopPour()
@@ -41,6 +44,7 @@ public class PourDetector : MonoBehaviour
         print("End");
         currentStream.End();
         currentStream = null;
+        pouring.Stop();
     }
 
     private float CalculatePourAngle()
