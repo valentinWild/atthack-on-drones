@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour
     private LayerMask groundLayer;
     [SerializeField]
     private LayerMask turnLayer;
+    [SerializeField]
+    private LayerMask turnFailedLayer;
 
 
     private float playerSpeed;
@@ -83,6 +85,19 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Current Movement Direction: " + movementDirection);
         turnEvent.Invoke(targetDirection);
         Turn(context.ReadValue<float>(), turnPosition.Value);
+    }
+
+    public void ForcePlayerTurn(float direction) {
+        Debug.Log("Forcing Player Turn in Player Controller");
+        Vector3? turnPosition = CheckForcedTurn();
+        if (!turnPosition.HasValue || turningActive == false)
+        {
+            return;
+        }
+        Vector3 targetDirection = Quaternion.AngleAxis(90 * direction, Vector3.up) * movementDirection;
+        Debug.Log("New Target Direction: " + targetDirection);
+        turnEvent.Invoke(targetDirection);
+        Turn(direction, turnPosition.Value);
     }
 
     private void PlayerJump(InputAction.CallbackContext context) {
@@ -153,6 +168,21 @@ public class PlayerController : MonoBehaviour
                 (type == TileType.RIGHT && turnValue == 1) ||
                 (type == TileType.SIDEWAYS)) {
                     Debug.Log(tile.pivot.position);
+                    return tile.pivot.position;
+            }
+        }
+        return null;
+    }
+
+    private Vector3? CheckForcedTurn() {
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, .5f, turnFailedLayer);
+        if (hitColliders.Length != 0)
+        {
+            Tile tile = hitColliders[0].transform.parent.GetComponent<Tile>();
+            TileType type = tile.type;
+            if ((type == TileType.LEFT) ||
+                (type == TileType.RIGHT) ||
+                (type == TileType.SIDEWAYS)) {
                     return tile.pivot.position;
             }
         }

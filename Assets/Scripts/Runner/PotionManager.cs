@@ -9,12 +9,12 @@ public class PotionManager : MonoBehaviour
     {
         if (potionType == "Health Potion")
         {
-            GameSyncManager.Instance.runnerHealth += 10;
+            /* GameSyncManager.Instance.runnerHealth += 10 */;
             Debug.Log("Health Potion activated, increased Player Health");
         }
         else if (potionType == "Death Potion")
         {
-            GameSyncManager.Instance.runnerHealth -= 10;
+            /* GameSyncManager.Instance.runnerHealth -= 10; */
             Debug.Log("Death Potion activated, decreased Player Health");
         }
         else if (potionType == "Shield Potion")
