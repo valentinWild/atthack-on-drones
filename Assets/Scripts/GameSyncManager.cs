@@ -9,6 +9,7 @@ public class GameSyncManager : NetworkBehaviour
     [Networked] public float gameTimer { get; set; }
     [Networked] public int collectedHintDrones { get; set; }
     [Networked] public float runnerHealth { get; set; }
+    [Networked] public string activePotion {get; set; }
 
     private ChangeDetector _changeDetector;
 
@@ -64,6 +65,28 @@ public class GameSyncManager : NetworkBehaviour
             // Only the authoritative instance should modify the Score
             runnerHealth = newHealth;
         }
+    }
+
+    // Networked RPC to communicate active potions for the runner
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    public void RpcSetRunnerPotion(string potionType)
+    {
+
+        if (HasStateAuthority)
+        {
+            activePotion = potionType;
+        }
+
+        GameObject gameManager = GameObject.Find("gameManager");
+        if (gameManager == null)
+        {
+            return;
+        }
+        var potionManager = gameManager.GetComponent<PotionManager>();
+        if (potionManager != null) {
+            potionManager.setActivePotion(potionType);
+        }
+
     }
 
 }
