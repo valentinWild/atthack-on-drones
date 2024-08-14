@@ -98,4 +98,27 @@ public class HintManager : MonoBehaviour
             hint4.SetActive(false);
         }
     }
+
+    public void ChangeHintColor(int index, Color color)
+    {
+        switch (index)
+        {
+            case 0:
+                hint1Text.color = color;
+                break;
+            case 1:
+                hint2Text.color = color;
+                break;
+            case 2:
+                hint3Text.color = color;
+                break;
+            case 3:
+                hint4Text.color = color;
+                break;
+            default:
+                Debug.LogWarning("Invalid hint index for color change.");
+                break;
+        }
+    }
+
 }
