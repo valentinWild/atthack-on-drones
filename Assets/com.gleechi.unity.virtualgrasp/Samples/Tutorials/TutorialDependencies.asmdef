@@ -1,0 +1,25 @@
+{
+    "name": "Dependencies",
+    "rootNamespace": "",
+    "references": [
+        "GUID:dca86c3434c38674a865b8fad7a81c91",
+        "GUID:e1a114fd017cd6f489cc0e96ca379cf6"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.learn.iet-framework",
+            "expression": "2.0",
+            "define": "UNITY_TUTORIALS_PACKAGE_INSTALLED"
+        }
+    ],
+    "noEngineReferences": false
+}
