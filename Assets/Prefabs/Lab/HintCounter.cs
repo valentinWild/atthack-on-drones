@@ -53,4 +53,16 @@ public class HintCounter : MonoBehaviour
             UpdateHintCounterDisplay();
         }
     }
+
+    private void Update()
+    {
+        if(GameSyncManager.Instance != null)
+        {
+            Debug.Log("Collected Drones: " + GameSyncManager.Instance.collectedHintDrones);
+            GameSyncManager.Instance.RpcUpdateCollectedHintDrones(4);
+        } else
+        {
+            Debug.LogError("No GameSyncManagerInstance");
+        }
+    }
 }
