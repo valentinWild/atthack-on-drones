@@ -41,21 +41,6 @@ public class OrbManager : MonoBehaviour
         }
 
         GenerateRandomCorrectCodes();
-
-        /*
-        if (crateObject != null)
-        {
-            crateAnimation = crateObject.GetComponentInChildren<Animation>();
-            if (crateAnimation == null)
-            {
-                Debug.LogWarning("Animation component not found on the crate object or its children.");
-            }
-        }
-        else
-        {
-            Debug.LogWarning("Crate object is not assigned.");
-        }*/
-
         ResetOrbs();
         ResetDecodedHints();
     }
@@ -162,18 +147,29 @@ public class OrbManager : MonoBehaviour
         orbStates[orbIndex] = isOn;
         Debug.Log($"Orb {orbIndex} state updated: {isOn}");
 
+        // Get the current hint counter value
+        int currentHintCounter = hintCounter != null ? hintCounter.HintCounterValue : 0;
+
         for (int i = 0; i < correctCodes.Length; i++)
         {
             Debug.Log($"Checking if entered code matches {BoolArrayToBinaryString(correctCodes[i].code)}");
             if (AreCodesEqual(orbStates, correctCodes[i].code))
             {
-                Debug.Log("Entered code is correct!");
-                hintManager.ChangeHintColor(i, Color.black); // Change hint text color to black
-                hintWasDecoded[i] = true;
+                if (currentHintCounter >= i + 1)  // Ensure the hintCounter is high enough
+                {
+                    Debug.Log($"Entered code is correct and hint counter is sufficient ({currentHintCounter} >= {i + 1})!");
+                    hintManager.ChangeHintColor(i, Color.black); // Change hint text color to black
+                    hintWasDecoded[i] = true;
+                }
+                else
+                {
+                    Debug.Log($"Hint counter is too low to decode hint {i + 1}. Current counter: {currentHintCounter}");
+                }
                 break;
             }
         }
     }
+
 
     public void ResetOrbs()
     {

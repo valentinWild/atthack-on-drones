@@ -9,6 +9,8 @@ public class HintCounter : MonoBehaviour
 
     // Event to notify when the hint counter changes
     public event Action<int> OnHintCounterChanged;
+    public int HintCounterValue => hintCounter;
+
 
     private void Start()
     {
