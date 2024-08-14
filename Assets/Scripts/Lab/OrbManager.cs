@@ -9,10 +9,12 @@ public class CorrectCode
     public bool[] code; // 4-bit binary code represented as a boolean array
 }
 
+
 public class OrbManager : MonoBehaviour
 {
     [SerializeField] private CorrectCode[] correctCodes; // Array to hold 4 correct code sequences
-    [SerializeField] private bool[] orbStates; // Tracks the player's input for the current level
+    [SerializeField] public String[] correctCodesDecimal; // Array to hold 4 hints
+    [SerializeField] private bool[] orbStates;
 
     public GameObject crateObject;
     private Animation crateAnimation;
@@ -31,6 +33,7 @@ public class OrbManager : MonoBehaviour
     private void Start()
     {
         correctCodes = new CorrectCode[4];
+        correctCodesDecimal = new String[4];
         orbStates = new bool[4];
 
         hintCounter = FindObjectOfType<HintCounter>();
@@ -74,6 +77,7 @@ public class OrbManager : MonoBehaviour
 
             generatedCodes.Add(newCode);
             correctCodes[i].code = newCode;
+            correctCodesDecimal[i] = ConvertCodeToDecimal(newCode);
 
             Debug.Log($"Generated Code {i + 1}: {BoolArrayToBinaryString(newCode)} (Decimal: {ConvertCodeToDecimal(newCode)})");
         }
