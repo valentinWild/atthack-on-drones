@@ -90,7 +90,7 @@ Material:
     - _DotsNoiseScale: 30
     - _DotsSize: 0.8
     - _DstBlend: 1
-    - _MaskPower: -2.52
+    - _MaskPower: -0.71
     - _NoiseScale: 10
     - _QueueControl: 0
     - _QueueOffset: 0
