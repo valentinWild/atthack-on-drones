@@ -9,32 +9,27 @@ public class MixingVial : MonoBehaviour
     public Material healthPotion;
     public Material shieldPotion;
     public Material deathPotion;
+    public Material water;
     public GameObject fluid; // Reference to the fluid inside the vial
-    public GameObject mixingVial; 
+    public GameObject mixingVial;
     public AudioSource creation;
     public AudioSource fail;
-
-    // Variables to track the last two particle collisions
-    private string firstParticleTag = "";
-    private string secondParticleTag = "";
-
-    // Dictionary to define material combinations based on particle tags
-    private Dictionary<string, Material> materialCombinations = new Dictionary<string, Material>();
 
     // Glow Effect Parameters
     public Material glowMaterial; // The material with a glow effect
     public float glowDuration = 0.5f; // Duration of the glow effect
 
-    void Start()
-    {
-        // Define combinations of particles that result in different materials
-        materialCombinations.Add("RedParticle+GreenParticle", healthPotion);
-        materialCombinations.Add("YellowParticle+BlueParticle", shieldPotion);
-        materialCombinations.Add("YellowParticle+GreenParticle", attackPotion); // 'Any' signifies it doesn't matter what the second particle is
-        materialCombinations.Add("BlackParticle+Any", deathPotion);
-       // materialCombinations.Add("OrangeParticle+Any", deathPotionMaterial);
-    }
+    // List to track poured liquids
+    private List<string> pouredLiquids = new List<string>();
 
+    // HashSet to avoid duplicate triggers from the same liquid
+    private HashSet<string> detectedLiquids = new HashSet<string>();
+
+    // List of valid liquid tags
+    private HashSet<string> validLiquidTags = new HashSet<string> { "YellowParticle", "GreenParticle", "BlueParticle", "RedParticle", "BlackParticle" };
+
+
+    /*
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("YellowParticle"))
@@ -44,7 +39,7 @@ public class MixingVial : MonoBehaviour
         }
         if (other.CompareTag("GreenParticle"))
         {
-            fluid.GetComponent<Renderer>().material = deathPotion;
+            fluid.GetComponent<Renderer>().material = attackPotion;
             Debug.Log("Green Liquid detected");
         }
         if (other.CompareTag("BlueParticle"))
@@ -52,66 +47,77 @@ public class MixingVial : MonoBehaviour
             fluid.GetComponent<Renderer>().material = shieldPotion;
             Debug.Log("Blue Liquid detected");
         }
+        if (other.CompareTag("RedParticle"))
+        {
+            fluid.GetComponent<Renderer>().material = healthPotion;
+            Debug.Log("Red Liquid detected");
+        }
+        if (other.CompareTag("BlackParticle"))
+        {
+            fluid.GetComponent<Renderer>().material = deathPotion;
+            Debug.Log("Black Liquid detected");
+        }
+    }
+    */
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // Add the liquid to the list
+        if (validLiquidTags.Contains(other.tag) && !pouredLiquids.Contains(other.tag))
+        {
+            detectedLiquids.Add(other.tag); // Add the tag to the set to avoid reprocessing
+            pouredLiquids.Add(other.tag);
+            Debug.Log($"{other.tag} detected");
+
+            // If two liquids have been added, mix them
+            if (pouredLiquids.Count == 2)
+            {
+                MixLiquids();
+                // Clear the list for the next mixing
+                pouredLiquids.Clear();
+                detectedLiquids.Clear(); // Reset detection for the next round of mixing
+            }
+        }
     }
 
-    private void CheckMixingResult()
+    private void MixLiquids()
     {
-        // Check for exact combination or with 'Any' wildcard
-        string combinationKey = firstParticleTag + "+" + secondParticleTag;
-        string reverseCombinationKey = secondParticleTag + "+" + firstParticleTag;
-        string wildcardKey1 = firstParticleTag + "+Any";
-        string wildcardKey2 = "Any+" + secondParticleTag;
-
-        if (materialCombinations.ContainsKey(combinationKey))
+        // Example: Mixing logic based on two liquids
+        if (pouredLiquids.Contains("YellowParticle") && pouredLiquids.Contains("RedParticle"))
         {
-            fluid.GetComponent<Renderer>().material = materialCombinations[combinationKey];
-            Debug.Log(combinationKey + " = Material Applied");
+            fluid.GetComponent<Renderer>().material = attackPotion; // New combination material
+            Debug.Log("Created a new material by mixing Yellow and Red");
             creation.Play();
         }
-        else if (materialCombinations.ContainsKey(reverseCombinationKey))
+        else if (pouredLiquids.Contains("YellowParticle") && pouredLiquids.Contains("GreenParticle"))
         {
-            fluid.GetComponent<Renderer>().material = materialCombinations[reverseCombinationKey];
-            Debug.Log(reverseCombinationKey + " = Material Applied");
+            fluid.GetComponent<Renderer>().material = water; // Another combination
+            Debug.Log("Created a new material by mixing Yellow and Green");
             creation.Play();
         }
-        else if (materialCombinations.ContainsKey(wildcardKey1))
+        else if (pouredLiquids.Contains("BlueParticle") && pouredLiquids.Contains("RedParticle"))
         {
-            fluid.GetComponent<Renderer>().material = materialCombinations[wildcardKey1];
-            Debug.Log(wildcardKey1 + " = Material Applied");
+            fluid.GetComponent<Renderer>().material = healthPotion; // Another combination
+            Debug.Log("Created a new material by mixing Blue and Red");
             creation.Play();
         }
-        else if (materialCombinations.ContainsKey(wildcardKey2))
+        else if (pouredLiquids.Contains("BlueParticle") && pouredLiquids.Contains("GreenParticle"))
         {
-            fluid.GetComponent<Renderer>().material = materialCombinations[wildcardKey2];
-            Debug.Log(wildcardKey2 + " = Material Applied");
+            fluid.GetComponent<Renderer>().material = shieldPotion; // Another combination
+            Debug.Log("Created a new material by mixing Blue and Green");
             creation.Play();
+        }
+        else if (pouredLiquids.Contains("BlackParticle"))
+        {
+            fluid.GetComponent<Renderer>().material = deathPotion; // Death potion overrides others
+            Debug.Log("Black liquid mixed, created death potion");
         }
         else
         {
-            Debug.Log("No valid combination found");
-            //fail.Play();
+            // Default case for invalid combinations
+            Debug.Log("Failed to mix the liquids");
+            fail.Play(); // Play failure sound
         }
     }
 
-    private void ResetParticles()
-    {
-        firstParticleTag = "";
-        secondParticleTag = "";
-    }
-
-    // Coroutine to handle the glow effect
-    private IEnumerator GlowEffect()
-    {
-        Renderer renderer = mixingVial.GetComponent<Renderer>();
-        Material originalMaterial = renderer.material;
-
-        // Apply the glow material
-        renderer.material = glowMaterial;
-
-        // Wait for the duration of the glow effect
-        yield return new WaitForSeconds(glowDuration);
-
-        // Revert to the original material
-        renderer.material = originalMaterial;
-    }
 }
