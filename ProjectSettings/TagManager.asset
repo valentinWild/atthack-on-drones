@@ -18,6 +18,9 @@ TagManager:
   - PurpleParticle
   - OrangeParticle
   - LiquidParticle
+  - TurnLeftFailed
+  - TurnRightFailed
+  - TurnSidewaysFailed
   layers:
   - Default
   - TransparentFX
@@ -28,7 +31,7 @@ TagManager:
   - Ground
   - Turn
   - Corridor
-  - 
+  - Turn Failed
   - 
   - 
   - 

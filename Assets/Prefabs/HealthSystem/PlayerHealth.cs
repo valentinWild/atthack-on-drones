@@ -91,6 +91,7 @@ public class PlayerHealth : MonoBehaviour
         lerpTimer = 0f;
     }
 
+
     private void UpdateHealth(float newHealth)
     {
         health = newHealth;

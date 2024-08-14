@@ -2,34 +2,64 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace TempleRun.Player {
+
 public class PlayerCollision : MonoBehaviour
 {
-    [SerializeField] private string bulletTag = "Bullet";// Tag für Drone Shots
+    [SerializeField] private string bulletTag = "Bullet";// Tag fï¿½r Drone Shots
     [SerializeField] private float damageAmount = 2f; // Schaden, den der Spieler erleidet
     private PlayerHealth playerHealth; // Referenz auf das PlayerHealth-Skript
+    private PlayerController playerController;
 
     private void Start()
     {
         // Sucht nach dem PlayerHealth-Skript im selben GameObject
         playerHealth = GetComponent<PlayerHealth>();
+        playerController = GetComponentInParent<PlayerController>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        // Überprüfen, ob das kollidierende Objekt den Tag "Bullet" hat
+
+        Debug.Log("Player Collision with: " + other.gameObject.tag);
+
+        // ï¿½berprï¿½fen, ob das kollidierende Objekt den Tag "Bullet" hat
         if (other.CompareTag(bulletTag))
         {
             // Nachricht ausgeben, wenn der Spieler getroffen wird
             Debug.Log("User is shooted by drones");
 
-            // Schaden dem Spieler zufügen
+            // Schaden dem Spieler zufï¿½gen
             if (playerHealth != null)
             {
                 playerHealth.TakeDamage(damageAmount);
             }
 
-            //Zerstören des Bullet-Objekts
+            //Zerstï¿½ren des Bullet-Objekts
             Destroy(other.gameObject, 0.1f);
         }
+
+        else if (other.CompareTag("TurnLeftFailed"))
+        {
+            playerController.ForcePlayerTurn(-1);
+        }
+
+        else if (other.CompareTag("TurnRightFailed"))
+        {
+            playerController.ForcePlayerTurn(1);
+        }
+
+        else if (other.CompareTag("TurnSidewaysFailed"))
+        {
+            playerController.ForcePlayerTurn(-1);
+        }
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+
+        Debug.Log("Player Collision with: " + collision);
+
+    }
+}
 }
