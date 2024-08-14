@@ -26,6 +26,7 @@ public class OrbManager : MonoBehaviour
     [SerializeField] public TextMeshProUGUI hintDisplayText;
 
     [SerializeField] private HintCounter hintCounter; // Reference to the HintCounter
+    private int dronesCollected;
 
     private void Start()
     {
@@ -227,5 +228,10 @@ public class OrbManager : MonoBehaviour
                 codeDisplayText.text += $"Code {i + 1}: {BoolArrayToBinaryString(correctCodes[i].code)}\n";
             }
         }
+    }
+
+    public void setHintCounter(int newValue)
+    {
+        dronesCollected = newValue;
     }
 }

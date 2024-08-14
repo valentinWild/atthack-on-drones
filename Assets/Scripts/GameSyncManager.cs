@@ -9,7 +9,7 @@ public class GameSyncManager : NetworkBehaviour
     [Networked] public float gameTimer { get; set; }
     [Networked] public int collectedHintDrones { get; set; }
     [Networked] public float runnerHealth { get; set; }
-    [Networked] public string activePotion {get; set; }
+    [Networked] public string activePotion { get; set; }
 
     private ChangeDetector _changeDetector;
 
@@ -53,6 +53,23 @@ public class GameSyncManager : NetworkBehaviour
         if (HasStateAuthority)
         {
             collectedHintDrones = currentAmount;
+        }
+
+        GameObject orbManager = GameObject.Find("OrbManager");
+        var orbManagerScript = orbManager.GetComponent<OrbManager>();
+
+        if (orbManagerScript != null)
+        {
+            orbManagerScript.setHintCounter(collectedHintDrones);
+        }
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void RpcIncrementCollectedHintDrones()
+    {
+        if (HasStateAuthority)
+        {
+            collectedHintDrones++;
         }
     }
 
@@ -115,7 +132,8 @@ public class GameSyncManager : NetworkBehaviour
             return;
         }
         var potionManager = gameManager.GetComponent<PotionManager>();
-        if (potionManager != null) {
+        if (potionManager != null)
+        {
             potionManager.setActivePotion(potionType);
         }
 
