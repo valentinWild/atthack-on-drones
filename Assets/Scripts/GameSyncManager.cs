@@ -9,7 +9,7 @@ public class GameSyncManager : NetworkBehaviour
     [Networked] public float gameTimer { get; set; }
     [Networked] public int collectedHintDrones { get; set; }
     [Networked] public float runnerHealth { get; set; }
-    [Networked] public string activePotion {get; set; }
+    [Networked] public string activePotion { get; set; }
 
     private ChangeDetector _changeDetector;
 
@@ -54,6 +54,23 @@ public class GameSyncManager : NetworkBehaviour
         {
             collectedHintDrones = currentAmount;
         }
+
+        GameObject orbManager = GameObject.Find("OrbManager");
+        var orbManagerScript = orbManager.GetComponent<OrbManager>();
+
+        if (orbManagerScript != null)
+        {
+            orbManagerScript.setHintCounter(collectedHintDrones);
+        }
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void RpcIncrementCollectedHintDrones()
+    {
+        if (HasStateAuthority)
+        {
+            collectedHintDrones++;
+        }
     }
 
     // Networked RPC to allow clients to request Health changes
@@ -64,6 +81,7 @@ public class GameSyncManager : NetworkBehaviour
         {
             // Only the authoritative instance should modify the Score
             runnerHealth = newHealth;
+
         }
     }
 
@@ -75,6 +93,37 @@ public class GameSyncManager : NetworkBehaviour
         if (HasStateAuthority)
         {
             activePotion = potionType;
+          
+
+        }
+
+        if (potionType == "Health Potion")
+        {
+            if (HasStateAuthority)
+            {
+                runnerHealth += 10;
+            }
+            //GameSyncManager.Instance.runnerHealth += 10;
+            Debug.Log("Health Potion activated, increased Player Health");
+        }
+        else if (potionType == "Death Potion")
+        {
+            //GameSyncManager.Instance.runnerHealth -= 10;
+            if (HasStateAuthority)
+            {
+                runnerHealth -= 10;
+            }
+            Debug.Log("Death Potion activated, decreased Player Health");
+        }
+        else if (potionType == "Shield Potion")
+        {
+            // Shield aktivieren
+            Debug.Log("Shield Potion activated");
+        }
+        else if (potionType == "Attack Potion")
+        {
+            // Double Lasers or something
+            Debug.Log("Attack Potion activated");
         }
 
         GameObject gameManager = GameObject.Find("gameManager");
@@ -83,7 +132,8 @@ public class GameSyncManager : NetworkBehaviour
             return;
         }
         var potionManager = gameManager.GetComponent<PotionManager>();
-        if (potionManager != null) {
+        if (potionManager != null)
+        {
             potionManager.setActivePotion(potionType);
         }
 

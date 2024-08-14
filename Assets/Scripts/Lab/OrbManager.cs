@@ -12,7 +12,7 @@ public class CorrectCode
 public class OrbManager : MonoBehaviour
 {
     [SerializeField] private CorrectCode[] correctCodes; // Array to hold 4 correct code sequences
-    private bool[] orbStates; // Tracks the player's input for the current level
+    [SerializeField] private bool[] orbStates; // Tracks the player's input for the current level
 
     public GameObject crateObject;
     private Animation crateAnimation;
@@ -26,6 +26,7 @@ public class OrbManager : MonoBehaviour
     [SerializeField] public TextMeshProUGUI hintDisplayText;
 
     [SerializeField] private HintCounter hintCounter; // Reference to the HintCounter
+    private int dronesCollected;
 
     private void Start()
     {
@@ -227,5 +228,10 @@ public class OrbManager : MonoBehaviour
                 codeDisplayText.text += $"Code {i + 1}: {BoolArrayToBinaryString(correctCodes[i].code)}\n";
             }
         }
+    }
+
+    public void setHintCounter(int newValue)
+    {
+        dronesCollected = newValue;
     }
 }
