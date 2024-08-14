@@ -130,7 +130,13 @@ public class MixingVial : MonoBehaviour
         }
         // Show the speech bubble with the created potion name
         ShowSpeechBubble("Potion created: " + potionName);
-        GameSyncManager.Instance.RpcSetRunnerPotion(potionName);
+
+        // Send potion to runner
+        if (GameSyncManager.Instance != null)
+        {
+            GameSyncManager.Instance.RpcSetRunnerPotion(potionName);
+            Debug.Log("Sent potion to runner");
+        }   
     }
 
     private void ShowSpeechBubble(string message)

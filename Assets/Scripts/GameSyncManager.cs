@@ -64,6 +64,7 @@ public class GameSyncManager : NetworkBehaviour
         {
             // Only the authoritative instance should modify the Score
             runnerHealth = newHealth;
+
         }
     }
 
@@ -75,7 +76,37 @@ public class GameSyncManager : NetworkBehaviour
         if (HasStateAuthority)
         {
             activePotion = potionType;
+          
 
+        }
+
+        if (potionType == "Health Potion")
+        {
+            if (HasStateAuthority)
+            {
+                runnerHealth += 10;
+            }
+            //GameSyncManager.Instance.runnerHealth += 10;
+            Debug.Log("Health Potion activated, increased Player Health");
+        }
+        else if (potionType == "Death Potion")
+        {
+            //GameSyncManager.Instance.runnerHealth -= 10;
+            if (HasStateAuthority)
+            {
+                runnerHealth -= 10;
+            }
+            Debug.Log("Death Potion activated, decreased Player Health");
+        }
+        else if (potionType == "Shield Potion")
+        {
+            // Shield aktivieren
+            Debug.Log("Shield Potion activated");
+        }
+        else if (potionType == "Attack Potion")
+        {
+            // Double Lasers or something
+            Debug.Log("Attack Potion activated");
         }
 
         GameObject gameManager = GameObject.Find("gameManager");
