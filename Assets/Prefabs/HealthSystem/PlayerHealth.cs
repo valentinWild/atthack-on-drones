@@ -98,7 +98,7 @@ public class PlayerHealth : MonoBehaviour
         if (GameSyncManager.Instance) {
             GameSyncManager.Instance.RpcUpdateRunnerHealth(health);
         }
-        Debug.Log("Update Health, new Value: " + health);
+        //Debug.Log("Update Health, new Value: " + health);
     }
 
     public void IncreaseHealth(int level)
@@ -109,13 +109,13 @@ public class PlayerHealth : MonoBehaviour
 
     public void UpdateFriendCounter(int friendCount)
     {
-        Debug.Log("Friend Counter Updated: " + friendCount);
+        //Debug.Log("Friend Counter Updated: " + friendCount);
         friendCounterText.text = "Hints: " + friendCount.ToString();
     }
 
     public void UpdateEnemyCounter(int enemyCount)
     {
-        Debug.Log("Enemy Counter Updated: " + enemyCount);
+        //Debug.Log("Enemy Counter Updated: " + enemyCount);
         enemyCounterText.text = "Enemies: " + enemyCount.ToString();
     }
 }

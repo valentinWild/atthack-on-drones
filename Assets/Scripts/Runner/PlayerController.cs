@@ -79,6 +79,8 @@ public class PlayerController : MonoBehaviour
             return;
         }
         Vector3 targetDirection = Quaternion.AngleAxis(90 * context.ReadValue<float>(), Vector3.up) * movementDirection;
+        Debug.Log("New Target Direction: " + targetDirection);
+        Debug.Log("Current Movement Direction: " + movementDirection);
         turnEvent.Invoke(targetDirection);
         Turn(context.ReadValue<float>(), turnPosition.Value);
     }
@@ -150,6 +152,7 @@ public class PlayerController : MonoBehaviour
             if ((type == TileType.LEFT && turnValue == -1) ||
                 (type == TileType.RIGHT && turnValue == 1) ||
                 (type == TileType.SIDEWAYS)) {
+                    Debug.Log(tile.pivot.position);
                     return tile.pivot.position;
             }
         }
@@ -157,12 +160,13 @@ public class PlayerController : MonoBehaviour
     }
 
     private void Turn(float turnValue, Vector3 turnPosition) {
-        Vector3 tempPlayerPosotion = new Vector3(turnPosition.x, transform.position.y, turnPosition.z);
+        Debug.Log("Current Player Rotation: " + transform.rotation );
+        Vector3 tempPlayerPosition = new Vector3(turnPosition.x, transform.position.y, turnPosition.z);
         controller.enabled = false; 
-        transform.position = tempPlayerPosotion;
+        transform.position = tempPlayerPosition;
         controller.enabled = true;
-
-        Quaternion targetRotation = transform.rotation = Quaternion.Euler(0, 90 * turnValue, 0);
+        Quaternion targetRotation = transform.rotation * Quaternion.Euler(0, 90 * turnValue, 0);
+        Debug.Log("Target Rotation: " + targetRotation );
         transform.rotation = targetRotation;
         movementDirection = transform.forward.normalized;
     }
