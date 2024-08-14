@@ -1,0 +1,203 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>VirtualGrasp.Editor</name>
+    </assembly>
+    <members>
+        <member name="M:VirtualGrasp.Baking.BakingClientWindow.CheckUser">
+            <summary>
+            Check if user is eligible for object baking and if not, update GUI messages.
+            </summary>
+        </member>
+        <member name="M:VirtualGrasp.Baking.BakingClientWindow.GatherObjects">
+            <summary>
+            Check within zip file how many objects there are to bake.
+            </summary>
+            <returns>Number of objects in zip file. 0 if there's no zip file.</returns>
+        </member>
+        <member name="M:VirtualGrasp.Baking.BakingClientWindow.TryRemoveZipFile">
+            <summary>
+            Try to remove the zip file used for uploading objects.
+            </summary>
+        </member>
+        <member name="T:VirtualGrasp.Baking.BakingClient">
+            <summary>
+            Class to handle all communication with auth back-end and cabvg backend.
+            </summary>
+        </member>
+        <member name="M:VirtualGrasp.Baking.BakingClient.Login(System.String,System.String)">
+            <summary>
+            Try to log in and save auth token for subsequent calls. Saves email and password to refresh token if needed.
+            </summary>
+            <param name="email">Email address of the user.</param>
+            <param name="password">Password of the user.</param>
+            <returns>true if login succeeded. false otherwise.</returns>
+        </member>
+        <member name="M:VirtualGrasp.Baking.BakingClient.Refresh">
+            <summary>
+            Try to refresh auth token using latest email address and password.
+            </summary>
+            <returns>true if login succeeded. false otherwise.</returns>
+        </member>
+        <member name="M:VirtualGrasp.Baking.BakingClient.VerifyInvoice(System.String)">
+            <summary>
+            Verify the Invoice Number of a user, to check if the user purchased VG PRO. If Invoice Number is correct, it will be stored in the back-end for subsequent calls.
+            </summary>
+            <param name="invoiceNumber">Password of the user.</param>
+            <returns>true if verification call succeeded and verification yielded positive result. false otherwise.</returns>
+        </member>
+        <member name="M:VirtualGrasp.Baking.BakingClient.GetUserID">
+            <summary>
+            Returns user id.
+            </summary>
+            <returns>User id.</returns>
+        </member>
+        <member name="M:VirtualGrasp.Baking.BakingClient.CreateBakeJob">
+            <summary>
+            Create a new bake job.
+            </summary>
+            <returns>CreateBakeJobResult object. Contains information to upload zip file and start the baking job.</returns>
+            <exception cref="T:VirtualGrasp.Baking.UnverifiedAccountException">If user is not eligible to bake objects.</exception>
+            <exception cref="T:System.IO.IOException">If create job call failed.</exception>
+        </member>
+        <member name="M:VirtualGrasp.Baking.BakingClient.UploadFile(System.String,System.Byte[])">
+            <summary>
+            Upload zip file.
+            </summary>
+            <returns>true if upload succeeded. false otherwise.</returns>
+        </member>
+        <member name="M:VirtualGrasp.Baking.BakingClient.StartBakeJob(System.String)">
+            <summary>
+            Signal backend to start baking.
+            </summary>
+            <param name="jobId">Identifier of bake job, obtained during createJob.</param>
+            <returns>true if job was successfully started. false otherwise.</returns>
+        </member>
+        <member name="M:VirtualGrasp.Baking.BakingClient.CheckJobStatus(System.String)">
+            <summary>
+            Pull the status of a given bake job.
+            </summary>
+            <param name="jobId">Identifier of bake job, obtained during createJob.</param>
+            <returns>GetJobStatusData object, containing bake job status.</returns>
+            <exception cref="T:System.IO.IOException">If call to obtain bake job status was unsuccessful.</exception>
+        </member>
+        <member name="M:VirtualGrasp.Baking.BakingClient.DownloadGraspDB(System.String)">
+            <summary>
+            Download resulting grasp db file and place it in dedicated directory.
+            </summary>
+            <param name="jobId">Identifier of bake job, obtained during createJob.</param>
+            <exception cref="T:System.IO.IOException">If download was unsuccessful, or if writing the file in dedicated directory was unsuccessful.</exception>
+        </member>
+        <member name="M:VirtualGrasp.Baking.BakingClient.CallLogIn(System.String,System.String)">
+            <summary>
+            Try to call the auth api and obtain auth token.
+            </summary>
+            <param name="email">Email address of the user.</param>
+            <param name="password">Password of the user.</param>
+            <returns>LoginContent object, containing auth token.</returns>
+            <exception cref="T:System.Net.Http.HttpResponseMessage">If response status code was not success.</exception>
+            <exception cref="T:System.IO.IOException">If response could not be parsed.</exception>
+        </member>
+        <member name="M:VirtualGrasp.Baking.BakingClient.CallRefreshToken(System.String)">
+            <summary>
+            Try to call the auth api with refresh token and refresh the auth token.
+            </summary>
+            <param name="refreshToken">Refresh token.</param>
+            <returns>RefreshTokenContent object, containing new auth token.</returns>
+            <exception cref="T:System.Net.Http.HttpResponseMessage">If response status code was not success.</exception>
+            <exception cref="T:System.IO.IOException">If response could not be parsed.</exception>
+        </member>
+        <member name="M:VirtualGrasp.Baking.BakingClient.CallVerifyUser">
+            <summary>
+            Call to establish if current user is eligible to use object baking via VG PRO.
+            </summary>
+            <returns>UserVerifyResult object, containing whether user is eligible and if not, a message why.</returns>
+            <exception cref="T:System.Net.Http.HttpResponseMessage">If response status code was not success.</exception>
+        </member>
+        <member name="M:VirtualGrasp.Baking.BakingClient.CallVerifyInvoice(System.String)">
+            <summary>
+            Call to verify user-provided Invoice Number and save it in the backend if verification was successful.
+            </summary>
+            <param name="invoiceNumber">Invoice Number to be verified and (possibly) stored.</param>
+            <returns>true if verification was successful, false otherwise.</returns>
+            <exception cref="T:System.Net.Http.HttpResponseMessage">If response status code was not success.</exception>
+            <exception cref="T:System.IO.IOException">If response could not be parsed, or user could not be authorized.</exception>
+        </member>
+        <member name="M:VirtualGrasp.Baking.BakingClient.CallCreateBakeJob">
+            <summary>
+            Call to create a new bake job.
+            </summary>
+            <returns>CreateBakeJobResult object. Contains information to upload zip file and start the baking job.</returns>
+            <exception cref="T:System.Net.Http.HttpResponseMessage">If response status code was not success.</exception>
+            <exception cref="T:VirtualGrasp.Baking.UnverifiedAccountException">If user is not eligible for object baking.</exception>
+            <exception cref="T:System.IO.IOException">If response could not be parsed.</exception>
+        </member>
+        <member name="M:VirtualGrasp.Baking.BakingClient.CallUploadFile(System.String,System.Byte[])">
+            <summary>
+            Call to upload zip file.
+            </summary>
+            <param name="uploadUrl">URL to upload content to.</param>
+            <param name="content">Content to upload.</param>
+            <returns>true if upload succeeded, false otherwise.</returns>
+            <exception cref="T:System.Net.Http.HttpResponseMessage">If response status code was not success.</exception>
+        </member>
+        <member name="M:VirtualGrasp.Baking.BakingClient.CallStartBakeJob(System.String)">
+            <summary>
+            Call to start bake job.
+            </summary>
+            <param name="jobId">Identifier of bake job, obtained during createJob.</param>
+            <returns>true if bake job started successfully, false otherwise.</returns>
+            <exception cref="T:System.IO.IOException">If call could not be authorized.</exception>
+        </member>
+        <member name="M:VirtualGrasp.Baking.BakingClient.CallPullJobStatus(System.String)">
+            <summary>
+            Call to pull the status of a given bake job.
+            </summary>
+            <param name="jobId">Identifier of bake job, obtained during createJob.</param>
+            <returns>GetJobStatusResult object, containing bake job status.</returns>
+            <exception cref="T:System.Net.Http.HttpResponseMessage">If response status code was not success.</exception>
+            <exception cref="T:System.IO.IOException">If call could not be authorized.</exception>
+        </member>
+        <member name="M:VirtualGrasp.Baking.BakingClient.CallFetchResult(System.String)">
+            <summary>
+            Call to fetch the result meta-data of a given bake job.
+            </summary>
+            <param name="jobId">Identifier of bake job, obtained during createJob.</param>
+            <returns>DownloadResult object, containing a link to download resulting grasp db.</returns>
+            <exception cref="T:System.Net.Http.HttpResponseMessage">If response status code was not success.</exception>
+            <exception cref="T:System.IO.IOException">If call could not be authorized.</exception>
+        </member>
+        <member name="M:VirtualGrasp.Baking.BakingClient.CallDownloadFromURL(System.String,System.String)">
+            <summary>
+            Call to download grasp db and write to a specific folder.
+            </summary>
+            <param name="url">URL to download grasp db from.</param>
+            <param name="path">Folder to store grasp db</param>
+            <returns>true if grasp db was successfully written to given folder. false otherwise.</returns>
+        </member>
+        <member name="M:VirtualGrasp.Baking.BakingClient.CheckLibraryVersion">
+            <summary>
+            Call to obtain latest library version.
+            </summary>
+            <returns>LibraryVersion object containing latest version.</returns>
+        </member>
+        <member name="M:VirtualGrasp.Baking.PrepareBakingWindow.InitSize">
+            <summary>
+            Returns initial size and position of EditorWindow in Rect format.
+            </summary>
+        </member>
+        <member name="T:VirtualGrasp.Baking.PrepareBakingWindow.PrepareBakingResult">
+            <summary>
+            Represents result of object collection.
+            </summary>
+        </member>
+        <member name="M:UnityEditor.VSAttribution.VirtualGrasp.VSAttributionEditor.SendAttributionEvent(System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            Registers and attempts to send a VSP Attribution event.
+            </summary>
+            <param name="actionName">Name of the action, identifying a place this event was called from.</param>
+            <param name="partnerName">Identifiable Verified Solutions Partner name.</param>
+            <param name="customerUid">Unique identifier of the customer using Partner's Verified Solution.</param>
+        </member>
+    </members>
+</doc>

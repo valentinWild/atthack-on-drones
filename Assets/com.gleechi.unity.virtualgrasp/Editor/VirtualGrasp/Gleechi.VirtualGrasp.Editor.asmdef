@@ -1,0 +1,16 @@
+{
+    "name": "Gleechi.VirtualGrasp.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:e1a114fd017cd6f489cc0e96ca379cf6"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

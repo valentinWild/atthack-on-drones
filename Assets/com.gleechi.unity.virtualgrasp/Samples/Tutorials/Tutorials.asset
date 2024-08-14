@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89305aa391d1c5141bbe1628d930a2c5, type: 3}
+  m_Name: Tutorials
+  m_EditorClassIdentifier: 
+  Modified:
+    m_PersistentCalls:
+      m_Calls: []
+  ParentContainer: {fileID: 0}
+  OrderInView: 0
+  BackgroundImage: {fileID: 0}
+  Title:
+    m_Untranslated: VirtualGrasp Tutorials
+  Subtitle:
+    m_Untranslated: by Gleechi
+  Description:
+    m_Untranslated: 
+  ProjectLayout: {fileID: 0}
+  Sections:
+  - OrderInView: 0
+    Heading:
+      m_Untranslated: VG Project Setup (5 min)
+    Text:
+      m_Untranslated: Learn how to quickly setup your project with VG.
+    Metadata: 
+    Url: 
+    Image: {fileID: 2800000, guid: 51545fe43b3fed04f9fd8fb0925b1945, type: 3}
+    Tutorial: {fileID: 11400000, guid: e74f3ba5ac27fce4b99f9189d3c2a71f, type: 2}
+  - OrderInView: 0
+    Heading:
+      m_Untranslated: VG Object Baking (10 min)
+    Text:
+      m_Untranslated: Learn how to bake your objects for high quality interactions.
+    Metadata: 
+    Url: 
+    Image: {fileID: 2800000, guid: 51545fe43b3fed04f9fd8fb0925b1945, type: 3}
+    Tutorial: {fileID: 11400000, guid: 92c91bf83333db34e8b0e90cf9f4f429, type: 2}
+  - OrderInView: 0
+    Heading:
+      m_Untranslated: VG Hand Tracking (10 min)
+    Text:
+      m_Untranslated: Learn how to setup a hand tracking controller with VG.
+    Metadata: 
+    Url: 
+    Image: {fileID: 2800000, guid: 51545fe43b3fed04f9fd8fb0925b1945, type: 3}
+    Tutorial: {fileID: 11400000, guid: bfa52384c8bb23741a3239733e4451d9, type: 2}

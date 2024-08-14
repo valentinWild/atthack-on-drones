@@ -1,19 +1,18 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 [Serializable]
 public class CorrectCode
 {
-    public bool[] code;
+    public bool[] code; // 4-bit binary code represented as a boolean array
 }
 
 public class OrbManager : MonoBehaviour
 {
-    [SerializeField] private CorrectCode[] correctCodes; // Array to hold 4 correct code sequences visible in the Inspector
-    private bool[] orbStates;
-    public GameObject[] orbs;
+    [SerializeField] private CorrectCode[] correctCodes; // Array to hold 4 correct code sequences
+    private bool[] orbStates; // Tracks the player's input for the current level
 
     public GameObject crateObject;
     private Animation crateAnimation;
@@ -22,15 +21,26 @@ public class OrbManager : MonoBehaviour
 
     private bool isCrateOpen = false; // Tracks whether the crate is currently open
 
+    // UI references to display the codes and hints
+    [SerializeField] public TextMeshProUGUI codeDisplayText;
+    [SerializeField] public TextMeshProUGUI hintDisplayText;
+
+    [SerializeField] private HintCounter hintCounter; // Reference to the HintCounter
+
     private void Start()
     {
         correctCodes = new CorrectCode[4];
         orbStates = new bool[4];
 
-        // Generate 4 random correct codes
+        hintCounter = FindObjectOfType<HintCounter>();
+
+        if (hintCounter != null)
+        {
+            hintCounter.OnHintCounterChanged += UpdateHints;  // Subscribe to the hint counter change event
+        }
+
         GenerateRandomCorrectCodes();
 
-        // Get Animation component from the crate object
         if (crateObject != null)
         {
             crateAnimation = crateObject.GetComponentInChildren<Animation>();
@@ -49,7 +59,7 @@ public class OrbManager : MonoBehaviour
 
     private void GenerateRandomCorrectCodes()
     {
-        List<bool[]> generatedCodes = new List<bool[]>();
+        List<bool[]> generatedCodes = new();
 
         for (int i = 0; i < correctCodes.Length; i++)
         {
@@ -63,7 +73,11 @@ public class OrbManager : MonoBehaviour
 
             generatedCodes.Add(newCode);
             correctCodes[i].code = newCode;
+
+            Debug.Log($"Generated Code {i + 1}: {BoolArrayToBinaryString(newCode)} (Decimal: {ConvertCodeToDecimal(newCode)})");
         }
+
+        UpdateCodeDisplay();
     }
 
     private bool[] GenerateRandomCode()
@@ -78,25 +92,18 @@ public class OrbManager : MonoBehaviour
 
     private bool IsAllFalse(bool[] code)
     {
-        // Check if all elements in the code are false (i.e., 0000)
         foreach (bool bit in code)
         {
-            if (bit)
-            {
-                return false; // If any value is true, return false
-            }
+            if (bit) return false;
         }
-        return true; // All values were false
+        return true;
     }
 
     private bool ContainsDuplicateCode(List<bool[]> generatedCodes, bool[] newCode)
     {
         foreach (bool[] existingCode in generatedCodes)
         {
-            if (AreCodesEqual(existingCode, newCode))
-            {
-                return true;
-            }
+            if (AreCodesEqual(existingCode, newCode)) return true;
         }
         return false;
     }
@@ -105,12 +112,31 @@ public class OrbManager : MonoBehaviour
     {
         for (int i = 0; i < code1.Length; i++)
         {
-            if (code1[i] != code2[i])
-            {
-                return false;
-            }
+            if (code1[i] != code2[i]) return false;
         }
         return true;
+    }
+
+    public string ConvertCodeToDecimal(bool[] code)
+    {
+        string binaryString = BoolArrayToBinaryString(code);
+        int decimalValue = Convert.ToInt32(binaryString, 2);
+        return decimalValue.ToString();
+    }
+
+    public string BoolArrayToBinaryString(bool[] code)
+    {
+        return string.Join("", Array.ConvertAll(code, bit => bit ? "1" : "0"));
+    }
+
+    public bool[][] GetCorrectCodes()
+    {
+        bool[][] codes = new bool[correctCodes.Length][];
+        for (int i = 0; i < correctCodes.Length; i++)
+        {
+            codes[i] = correctCodes[i].code;
+        }
+        return codes;
     }
 
     public void UpdateOrbState(int orbIndex, bool isOn)
@@ -122,46 +148,33 @@ public class OrbManager : MonoBehaviour
         }
 
         orbStates[orbIndex] = isOn;
-        CheckCode();
-    }
 
-    private void CheckCode()
-    {
+        bool codeIsCorrect = false;
         foreach (var correctCode in correctCodes)
         {
-            bool isCorrect = true;
-            for (int i = 0; i < orbStates.Length; i++)
+            if (AreCodesEqual(orbStates, correctCode.code))
             {
-                if (orbStates[i] != correctCode.code[i])
-                {
-                    isCorrect = false;
-                    break;
-                }
-            }
-
-            if (isCorrect)
-            {
-                Debug.Log("Correct code entered! Triggering the action.");
-                TriggerSuccessAction();
-                return; // Exit after the first correct match
+                codeIsCorrect = true;
+                break;
             }
         }
 
-        // If none of the codes matched, close the crate (only if it's currently open)
-        if (isCrateOpen)
+        if (codeIsCorrect && !isCrateOpen)
         {
-            Debug.Log("Incorrect code entered. Closing the crate.");
+            OpenCrate();
+        }
+        else if (!codeIsCorrect && isCrateOpen)
+        {
             CloseCrate();
         }
     }
 
-    private void TriggerSuccessAction()
+    private void OpenCrate()
     {
-        if (!isCrateOpen && crateAnimation != null)
+        if (crateAnimation != null && !isCrateOpen)
         {
-            crateAnimation.Play(openAnimationName); // Play open animation on the crate
-            Debug.Log("Crate is opening.");
-            isCrateOpen = true; // Mark the crate as open
+            crateAnimation.Play(openAnimationName);
+            isCrateOpen = true;
         }
         else if (crateAnimation == null)
         {
@@ -169,13 +182,12 @@ public class OrbManager : MonoBehaviour
         }
     }
 
-    public void CloseCrate()
+    private void CloseCrate()
     {
-        if (isCrateOpen && crateAnimation != null)
+        if (crateAnimation != null && isCrateOpen)
         {
-            crateAnimation.Play(closeAnimationName); // Play close animation on the crate
-            Debug.Log("Crate is closing.");
-            isCrateOpen = false; // Mark the crate as closed
+            crateAnimation.Play(closeAnimationName);
+            isCrateOpen = false;
         }
         else if (crateAnimation == null)
         {
@@ -185,25 +197,34 @@ public class OrbManager : MonoBehaviour
 
     public void ResetOrbs()
     {
-        for (int i = 0; i < orbs.Length; i++)
+        for (int i = 0; i < orbStates.Length; i++)
         {
-            var orb = orbs[i];
-            if (orb != null)
+            orbStates[i] = false;
+        }
+    }
+
+    // This method updates the hints displayed based on the current hint counter
+    private void UpdateHints(int hintCount)
+    {
+        if (hintDisplayText != null)
+        {
+            hintDisplayText.text = "Hints (Decimal):\n";
+            for (int i = 0; i < hintCount && i < correctCodes.Length; i++)
             {
-                var lightOrb = orb.GetComponent<Light>();
-                var orbParticles = orb.GetComponent<ParticleSystem>();
+                hintDisplayText.text += $"Hint {i + 1}: {ConvertCodeToDecimal(correctCodes[i].code)}\n";
+            }
+        }
+    }
 
-                if (lightOrb != null)
-                {
-                    lightOrb.enabled = false;
-                }
-
-                if (orbParticles != null)
-                {
-                    orbParticles.Stop();
-                }
-
-                orbStates[i] = false; // Reset the orb state here as well
+    // This method updates the code display for debugging purposes
+    private void UpdateCodeDisplay()
+    {
+        if (codeDisplayText != null)
+        {
+            codeDisplayText.text = "Generated Codes:\n";
+            for (int i = 0; i < correctCodes.Length; i++)
+            {
+                codeDisplayText.text += $"Code {i + 1}: {BoolArrayToBinaryString(correctCodes[i].code)}\n";
             }
         }
     }

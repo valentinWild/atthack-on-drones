@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4690771284683331971
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4690771284683331969}
+  - component: {fileID: 1165665846838833174}
+  m_Layer: 0
+  m_Name: Right Hand Presence
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4690771284683331969
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4690771284683331971}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1165665846838833174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4690771284683331971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d838f7b5349f10b4684285b1507b6eaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showController: 0
+  controllerCharacteristics: 576
+  controllerPrefabs: []
+  handModelPrefab: {fileID: 4799064555842358242, guid: e4515006724990946b39b13f45dbed2d,
+    type: 3}
+  HandModelNum: 0
+  HandModels:
+  - {fileID: 4799064555842358242, guid: e4515006724990946b39b13f45dbed2d, type: 3}
+  - {fileID: 1541925513386823468, guid: 52b96bc5d81eae34dbc638a70cfdbb94, type: 3}
+  - {fileID: 4362056292658425664, guid: 1cdf566e21d072047964d0e47d491553, type: 3}
+  - {fileID: 7599283048136764956, guid: 06cd9e9af97d88946893bd961c4d7f4f, type: 3}
+  WatchDog: 0
+  OldWatchDog: 0
+  LengthOfModelList: 0
+  triggerFloatValue: 0
+  gripFloatValue: 0
+  gripped: 0
+  triggerTouchFloat: 0
+  triggerTouched: 0
+  joyTouch: 0
+  customGrab: 0
+  CurrentPose: 0
