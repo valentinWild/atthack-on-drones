@@ -15,7 +15,7 @@ public class RunnerNetworkController : NetworkBehaviour
 
         if (gameSyncManager != null)
         {
-            Debug.Log("Current Runner Health: " + gameSyncManager.RunnerHealth);
+            Debug.Log("Current Runner Health: " + gameSyncManager.runnerHealth);
         }
     }
 
@@ -23,10 +23,11 @@ public class RunnerNetworkController : NetworkBehaviour
     {
         if (gameSyncManager != null)
         {
-            Debug.Log(gameSyncManager.RunnerHealth);
+            Debug.Log(gameSyncManager.runnerHealth);
         }
 
     }
+    
     public void UpdateRunnerHealth(float newHealth) {
         if (gameSyncManager != null)
         {

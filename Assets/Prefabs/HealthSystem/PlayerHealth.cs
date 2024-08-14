@@ -94,7 +94,10 @@ public class PlayerHealth : MonoBehaviour
     private void UpdateHealth(float newHealth)
     {
         health = newHealth;
-        healthUpdateEvent.Invoke(health);
+        //healthUpdateEvent.Invoke(health);
+        if (GameSyncManager.Instance) {
+            GameSyncManager.Instance.RpcUpdateRunnerHealth(health);
+        }
         Debug.Log("Update Health, new Value: " + health);
     }
 

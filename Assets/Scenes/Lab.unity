@@ -11749,6 +11749,17 @@ MonoBehaviour:
   - {fileID: 506572575}
   useTraditional: 1
   useThresholds: 1
+--- !u!114 &326300647 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5785816146150620818, guid: 15434b413b2050f46adb9611230aef06, type: 3}
+  m_PrefabInstance: {fileID: 1877743504}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fccdca25f2de90c44838e8904ceedc16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &332504082
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13381,6 +13392,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7144758473183370346, guid: e9a23873313c052459c3f0f1f80ebd75, type: 3}
+      propertyPath: hintCounter
+      value: 
+      objectReference: {fileID: 326300647}
+    - target: {fileID: 7144758473183370346, guid: e9a23873313c052459c3f0f1f80ebd75, type: 3}
+      propertyPath: codeDisplayText
+      value: 
+      objectReference: {fileID: 611365508}
+    - target: {fileID: 7144758473183370346, guid: e9a23873313c052459c3f0f1f80ebd75, type: 3}
+      propertyPath: hintDisplayText
+      value: 
+      objectReference: {fileID: 809819818}
     - target: {fileID: 8201826039759979897, guid: e9a23873313c052459c3f0f1f80ebd75, type: 3}
       propertyPath: m_Name
       value: OrbManager
@@ -21379,6 +21402,17 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &611365508 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2129232659038427522, guid: 15434b413b2050f46adb9611230aef06, type: 3}
+  m_PrefabInstance: {fileID: 1877743504}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &617882817
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23483,6 +23517,17 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &809819818 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4662732419989955648, guid: 15434b413b2050f46adb9611230aef06, type: 3}
+  m_PrefabInstance: {fileID: 1877743504}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &817793361
 GameObject:
   m_ObjectHideFlags: 0
@@ -49877,6 +49922,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1756917222}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1757172469 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7144758473183370346, guid: e9a23873313c052459c3f0f1f80ebd75, type: 3}
+  m_PrefabInstance: {fileID: 415165504}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f8900eaa52326d4d8c5f643732d0d6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1762211662
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -51495,10 +51551,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1152488011}
     m_Modifications:
+    - target: {fileID: 1684047043289487762, guid: 15434b413b2050f46adb9611230aef06, type: 3}
+      propertyPath: orbManager
+      value: 
+      objectReference: {fileID: 1757172469}
     - target: {fileID: 3346804275706814782, guid: 15434b413b2050f46adb9611230aef06, type: 3}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1993083392}
+    - target: {fileID: 7303032491198258807, guid: 15434b413b2050f46adb9611230aef06, type: 3}
+      propertyPath: orbManager
+      value: 
+      objectReference: {fileID: 1757172469}
     - target: {fileID: 8492788114577147220, guid: 15434b413b2050f46adb9611230aef06, type: 3}
       propertyPath: m_Name
       value: WristCanvas

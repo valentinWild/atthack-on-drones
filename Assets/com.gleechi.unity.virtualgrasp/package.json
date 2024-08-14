@@ -1,0 +1,55 @@
+{
+  "name": "com.gleechi.unity.virtualgrasp-free",
+  "version": "1.7.0",
+  "displayName": "VirtualGrasp FREE",
+  "description": "VirtualGrasp is the premier interaction engine for VR and Unity, built upon a foundation of years of award-winning robotics research.",
+  "unity": "2020.1",
+  "documentationUrl": "https://docs.virtualgrasp.com/",
+  "changelogUrl": "https://docs.virtualgrasp.com/release_notes.html",
+  "licensesUrl": "https://virtualgrasp.com",
+  "dependencies": {
+    "com.unity.learn.iet-framework": "3.1.3"
+  },
+  "keywords": [
+    "VR",
+    "Interaction",
+    "Hands"
+  ],
+  "author": {
+    "name": "Gleechi Technology AB",
+    "email": "hello@gleechi.com",
+    "url": "https://www.gleechi.com"
+  },
+  "files": [
+    "/Doc",
+    "Doc.meta",
+    "/Editor",
+    "Editor.meta",
+    "/Lib",
+    "Lib.meta",
+    "/Runtime",
+    "Runtime.meta",
+    "/Samples~",
+    "package.json",
+    "package.json.meta",
+    "README.md",
+    "README.md.meta"
+  ],
+  "samples": [
+    {
+      "displayName": "Onboarding",
+      "description": "Contains an onboarding scene and tutorials to get started with the VirtualGrasp SDK.",
+      "path": "Samples~/Onboarding"
+    },
+    {
+      "displayName": "In-Editor Tutorials",
+      "description": "In-Editor tutorials that walk you through some of the basic VG processes. Note: you need to install Unity's tutorial framework package.",
+      "path": "Samples~/Tutorials"
+    },
+    {
+      "displayName": "Tests",
+      "description": "PlayMode tests for Unity TestRunner to monitor various aspects of VirtualGrasp functionality.",
+      "path": "Samples~/Tests"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+    "name": "VG_Scripts",
+    "rootNamespace": "",
+    "references": [
+        "LeapMotion.LeapCSharp",
+        "Ultraleap.Tracking.Core",
+        "Oculus.VR",
+        "SteamVR",
+        "SteamVR_Actions",
+        "Unity.XR.Interaction.Toolkit",
+        "Unity.InputSystem",
+        "Unity.XR.OpenVR",
+        "Unity.XR.PICO",
+        "Unity.XR.Hands",
+        "Unity.XR.CoreUtils",
+        "Unity.XR.Management",
+        "Manus"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.inputsystem",
+            "expression": "",
+            "define": "VG_ENABLE_INPUT_SYSTEM"
+        }
+    ],
+    "noEngineReferences": false
+}
