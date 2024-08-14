@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1350,7 +1350,7 @@ Transform:
   m_GameObject: {fileID: 571944007}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.092, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3607,6 +3607,7 @@ GameObject:
   - component: {fileID: 1492771069}
   - component: {fileID: 1492771070}
   - component: {fileID: 1492771071}
+  - component: {fileID: 1492771072}
   m_Layer: 0
   m_Name: PlayerObject
   m_TagString: Player
@@ -3688,6 +3689,21 @@ MonoBehaviour:
       m_Calls: []
   friendCounterText: {fileID: 1810624362}
   enemyCounterText: {fileID: 1060999428}
+--- !u!114 &1492771072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1492771067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec891615d8416c848b9e32c498b47f6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerShieldPrefab: {fileID: 4091185618273536117, guid: 7a74cefa165d819469fe8cd5660ce245, type: 3}
+  shieldDistance: 2
+  shieldDuration: 10
 --- !u!1 &1561327543
 GameObject:
   m_ObjectHideFlags: 0

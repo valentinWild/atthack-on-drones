@@ -17,7 +17,7 @@ public class HintCounter : MonoBehaviour
         UpdateHintCounterDisplay();  // Initial update of the display
     }
 
-    // Method to increase the hint counter
+    // Method to increase the hint counter with button in UI (for testing)
     public void IncreaseCounter()
     {
         hintCounter++;
@@ -53,4 +53,5 @@ public class HintCounter : MonoBehaviour
             UpdateHintCounterDisplay();
         }
     }
+
 }
