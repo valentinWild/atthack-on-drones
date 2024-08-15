@@ -29,6 +29,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private TakeDamageScript takeDamageScript;
 
+    [SerializeField]
+    private GameObject fadeCanvas; // Referenz auf das Canvas-GameObject
+
+    private FadeInOut fadeInOutScript;
+
 
     private float playerSpeed;
     private float gravity;
@@ -55,7 +60,13 @@ public class PlayerController : MonoBehaviour
         leanAction = playerInput.actions["Lean"];
         jumpAction = playerInput.actions["Jump"];
         slideAction = playerInput.actions["Slide"];
-    }
+
+        // Zugriff auf das FadeInOut-Skript im Canvas-GameObject
+        if (fadeCanvas != null)
+            {
+                fadeInOutScript = fadeCanvas.GetComponent<FadeInOut>();
+            }
+        }
 
     private void OnEnable() {
         turnAction.performed += PlayerTurn;
@@ -88,7 +99,12 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Current Movement Direction: " + movementDirection);
         turnEvent.Invoke(targetDirection);
         Turn(context.ReadValue<float>(), turnPosition.Value);
-    }
+
+            if (fadeInOutScript != null)
+            {
+                fadeInOutScript.StartCoroutine(fadeInOutScript.FadeInAndOut());
+            }
+        }
 
     public void ForcePlayerTurn(float direction) {
         Debug.Log("Forcing Player Turn in Player Controller");
