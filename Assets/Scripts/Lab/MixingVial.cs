@@ -24,6 +24,7 @@ public class MixingVial : MonoBehaviour
     // UI Elements for Speech Bubble
     public GameObject speechBubble; // The speech bubble GameObject
     public TextMeshProUGUI speechText; // The TextMeshPro component for the speech bubble text
+    public TextMeshProUGUI tutorialText; 
     public float speechBubbleDuration = 2.0f; // Duration the speech bubble stays visible
 
     // Tutorial Text
@@ -158,7 +159,7 @@ public class MixingVial : MonoBehaviour
         if (potionCreated)
         {
             // Show the speech bubble with the created potion name
-            ShowSpeechBubble(potionName);
+            ShowSpeechBubble("Potion Created: " + potionName);
 
             // Reset potion creation after a delay
             StartCoroutine(ResetPotion());
@@ -187,7 +188,7 @@ public class MixingVial : MonoBehaviour
     {
         if (!showingPotionMessage) // Only show the tutorial if we're not showing a potion message
         {
-            speechText.text = tutorialMessage; // Set the tutorial text
+            tutorialText.text = tutorialMessage; // Set the tutorial text
             speechBubble.SetActive(true); // Ensure the speech bubble is visible
         }
     }
