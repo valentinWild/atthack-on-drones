@@ -25,13 +25,13 @@ public static class DroneCounter
 
     private static void UpdateCollectedCounter(int newAmount)
     {
-        if(GameSyncManager.Instance) 
+/*         if(GameSyncManager.Instance) 
         {
             GameSyncManager.Instance.RpcUpdateCollectedHintDrones(newAmount);
             collectedDroneCount = newAmount;
         } else {
             collectedDroneCount = newAmount;
-        }
+        } */
     }
 
     public static int GetCollectedCounter()
