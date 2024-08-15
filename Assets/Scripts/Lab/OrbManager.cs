@@ -53,12 +53,13 @@ public class OrbManager : MonoBehaviour
 
         hintDisplayManager = FindObjectOfType<HintDisplayManager>();
         
+        /*
         hintCounter = FindObjectOfType<HintCounter>();
 
         if (hintCounter != null)
         {
             hintCounter.OnHintCounterChanged += UpdateHints;  // Subscribe to the hint counter change event
-        }
+        }*/
 
         GenerateRandomCorrectCodes();
         ResetOrbs();
@@ -68,6 +69,7 @@ public class OrbManager : MonoBehaviour
     private void OnCollectedHintDronesChanged(int newAmount)
     {
         dronesCollected = newAmount;
+        Debug.Log("New Amount of Collect Drones: " + newAmount);
     }
 
     private void ResetDecodedHints()

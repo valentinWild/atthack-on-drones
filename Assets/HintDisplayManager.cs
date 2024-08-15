@@ -35,6 +35,7 @@ public class HintDisplayManager : MonoBehaviour
         UpdateHintVisibility(0); // Initially set to 0
 
         // Subscribe to the hint counter change event
+        /*
         HintCounter hintCounterScript = FindObjectOfType<HintCounter>();
         if (hintCounterScript != null)
         {
@@ -44,6 +45,7 @@ public class HintDisplayManager : MonoBehaviour
         {
             Debug.LogError("HintCounter could not be found in the scene.");
         }
+        */
     }
 
     private void OnEnable()
