@@ -5,21 +5,34 @@ using UnityEngine;
 public class PotionManager : MonoBehaviour
 {
 
-    public void setActivePotion(string potionType) 
+    
+
+    private void OnEnable()
+    {
+        if(GameSyncManager.Instance) {
+            GameSyncManager.OnActivePotionChanged += OnActivePotionChanged;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if(GameSyncManager.Instance) {
+            GameSyncManager.OnActivePotionChanged -= OnActivePotionChanged;
+        }
+    }
+
+    private void OnActivePotionChanged(string potionType)
     {
         if (potionType == "Health Potion")
         {
-            /* GameSyncManager.Instance.runnerHealth += 10 */;
             Debug.Log("Health Potion activated, increased Player Health");
         }
         else if (potionType == "Death Potion")
         {
-            /* GameSyncManager.Instance.runnerHealth -= 10; */
             Debug.Log("Death Potion activated, decreased Player Health");
         }
         else if (potionType == "Shield Potion")
         {
-            // Shield aktivieren
             Debug.Log("Shield Potion activated");
         }
         else if (potionType == "Attack Potion")
@@ -27,6 +40,12 @@ public class PotionManager : MonoBehaviour
             // Double Lasers or something
             Debug.Log("Attack Potion activated");
         }
+
+    }
+
+    private void setPotionMessage (string message)
+    {
+
     }
 
 }
