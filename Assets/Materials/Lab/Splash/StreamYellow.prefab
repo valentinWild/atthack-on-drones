@@ -3621,7 +3621,7 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 1
+    enabled: 0
     serializedVersion: 4
     type: 1
     collisionMode: 0
@@ -4886,14 +4886,14 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0
   m_Height: 0.12048888
   m_Direction: 1
-  m_Center: {x: -0.012223521, y: 0.038568392, z: 0.0065229572}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5238570228697279498
 GameObject:
   m_ObjectHideFlags: 0

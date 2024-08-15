@@ -10,8 +10,8 @@ public class MixingVial : MonoBehaviour
     public Material healthPotion;
     public Material shieldPotion;
     public Material deathPotion;
-    public Material water;
-    public Material originalFluid; 
+    public Material water; // Default material after reset
+    public Material whiteLiquid;
     public GameObject fluid; // Reference to the fluid inside the vial
     public GameObject mixingVial;
     public AudioSource creation;
@@ -24,7 +24,11 @@ public class MixingVial : MonoBehaviour
     // UI Elements for Speech Bubble
     public GameObject speechBubble; // The speech bubble GameObject
     public TextMeshProUGUI speechText; // The TextMeshPro component for the speech bubble text
+    public TextMeshProUGUI tutorialText;
     public float speechBubbleDuration = 2.0f; // Duration the speech bubble stays visible
+
+    // Tutorial Text
+    public string tutorialMessage = "Combine two vials by pouring or smashing them to create a new potion!"; // Default tutorial text
 
     // Potion Reset Parameters
     public float potionResetDelay = 3.0f; // Time to reset after potion creation
@@ -40,6 +44,7 @@ public class MixingVial : MonoBehaviour
 
     private Renderer vialRenderer;
     private Material originalVialMaterial;
+    private bool showingPotionMessage = false; // Track whether a potion message is being shown
 
     private void Start()
     {
@@ -48,10 +53,13 @@ public class MixingVial : MonoBehaviour
         originalVialMaterial = vialRenderer.material;
 
         // Initially hide the speech bubble
-        speechBubble.SetActive(false);
+        speechBubble.SetActive(true);
+
+        // Set the default tutorial message
+        ShowTutorialMessage();
 
         // Set the fluid to its default material (e.g., water)
-        fluid.GetComponent<Renderer>().material = originalFluid;
+        fluid.GetComponent<Renderer>().material = whiteLiquid;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -112,13 +120,6 @@ public class MixingVial : MonoBehaviour
             potionName = "Health Potion";
             Debug.Log("Created a new material by mixing Blue and Red");
             creation.Play();
-            if (GameSyncManager.Instance != null)
-            {
-                // GameSyncManager.Instance.RpcSetRunnerPotion(potionName);
-                GameSyncManager.Instance.RpcIncreaseRunnerHealth(20);
-                Debug.Log("Sent potion to runner");
-            }
-
         }
         else if (pouredLiquids.Contains("BlueParticle") && pouredLiquids.Contains("GreenParticle"))
         {
@@ -132,12 +133,6 @@ public class MixingVial : MonoBehaviour
             fluid.GetComponent<Renderer>().material = deathPotion; // Death potion overrides others
             potionName = "Death Potion";
             Debug.Log("Black liquid mixed, created death potion");
-            if (GameSyncManager.Instance != null)
-            {
-                // GameSyncManager.Instance.RpcSetRunnerPotion(potionName);
-                GameSyncManager.Instance.RpcDecreaseRunnerHealth(20);
-                Debug.Log("Sent potion to runner");
-            }
         }
         else
         {
@@ -150,24 +145,38 @@ public class MixingVial : MonoBehaviour
         if (potionCreated)
         {
             // Show the speech bubble with the created potion name
-            ShowSpeechBubble(potionName);
+            ShowPotionMessage("Potion created: " + potionName);
 
             // Reset potion creation after a delay
             StartCoroutine(ResetPotion());
         }
     }
 
-    private void ShowSpeechBubble(string message)
+    private void ShowPotionMessage(string message)
     {
+        showingPotionMessage = true; // Indicate that we're showing a potion message
         speechText.text = message; // Update the text
         speechBubble.SetActive(true); // Show the speech bubble
-        StartCoroutine(HideSpeechBubbleAfterDelay()); // Hide after delay
+        StartCoroutine(HidePotionMessageAfterDelay()); // Hide after delay
     }
 
-    private IEnumerator HideSpeechBubbleAfterDelay()
+    private IEnumerator HidePotionMessageAfterDelay()
     {
         yield return new WaitForSeconds(speechBubbleDuration);
         speechBubble.SetActive(false); // Hide the speech bubble
+        showingPotionMessage = false; // Reset the flag
+
+        // Revert to the tutorial message
+        ShowTutorialMessage();
+    }
+
+    private void ShowTutorialMessage()
+    {
+        if (!showingPotionMessage) // Only show the tutorial if we're not showing a potion message
+        {
+            tutorialText.text = tutorialMessage; // Set the tutorial text
+            speechBubble.SetActive(true); // Ensure the speech bubble is visible
+        }
     }
 
     private IEnumerator ResetPotion()
@@ -176,7 +185,7 @@ public class MixingVial : MonoBehaviour
         yield return new WaitForSeconds(potionResetDelay);
 
         // Reset the fluid material to the default (e.g., water)
-        fluid.GetComponent<Renderer>().material = originalFluid;
+        fluid.GetComponent<Renderer>().material = whiteLiquid;
 
         // Clear the lists so the next potion requires two new liquids
         pouredLiquids.Clear();
@@ -184,5 +193,4 @@ public class MixingVial : MonoBehaviour
 
         Debug.Log("Potion has been reset, ready for a new combination.");
     }
-
 }
