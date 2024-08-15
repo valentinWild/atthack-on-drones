@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e6292b2c06870d4495f009f912b9600, type: 3}
-  m_Name: Main Camera Profile
+  m_Name: FrameEffect Profile 2
   m_EditorClassIdentifier: 
   settings:
-  - {fileID: 1863226001329211859}
---- !u!114 &1863226001329211859
+  - {fileID: 855554696236348220}
+--- !u!114 &855554696236348220
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -35,13 +35,13 @@ MonoBehaviour:
     value: 0
   color:
     overrideState: 1
-    value: {r: 0.5188679, g: 0, b: 0, a: 1}
+    value: {r: 0.6981132, g: 0, b: 0, a: 1}
   center:
     overrideState: 0
     value: {x: 0.5, y: 0.5}
   intensity:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 1
   smoothness:
     overrideState: 0
     value: 0.2

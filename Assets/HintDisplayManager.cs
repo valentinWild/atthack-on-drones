@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 
-public class HintManager : MonoBehaviour
+public class HintDisplayManager : MonoBehaviour
 {
     public GameObject hint1; // Reference to Hint1
     public GameObject hint2; // Reference to Hint2

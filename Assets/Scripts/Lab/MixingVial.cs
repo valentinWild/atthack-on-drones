@@ -150,7 +150,7 @@ public class MixingVial : MonoBehaviour
         if (potionCreated)
         {
             // Show the speech bubble with the created potion name
-            ShowSpeechBubble("Potion created: " + potionName);
+            ShowSpeechBubble(potionName);
 
             // Reset potion creation after a delay
             StartCoroutine(ResetPotion());
