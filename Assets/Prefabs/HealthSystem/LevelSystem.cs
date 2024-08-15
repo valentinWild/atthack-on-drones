@@ -23,7 +23,7 @@ public class LevelSystem : MonoBehaviour
     void Start()
     {
         UpdateXpUI();
-        levelText.text = level.ToString();  
+        levelText.text = level.ToString();
     }
 
     // Update is called once per frame
@@ -72,14 +72,14 @@ public class LevelSystem : MonoBehaviour
             }
         }
 
-        xpText.text = $"{completedChallenges}/{totalChallenges} Challenges";
+        //xpText.text = $"{completedChallenges}/{totalChallenges} Challenges";
     }
 
-    public void CompleteChallenge()
+    public void SetChallengeProgress(int progress)
     {
-        if (completedChallenges < totalChallenges)
+        if (progress >= 1 && progress <= totalChallenges)
         {
-            completedChallenges++;
+            completedChallenges = progress;
             lerpTimer = 0f;
             delayTimer = 0f;
         }
@@ -91,6 +91,6 @@ public class LevelSystem : MonoBehaviour
         completedChallenges = 0;
         frontXpBar.fillAmount = 0f;
         backXpBar.fillAmount = 0f;
-        levelText.text = "Level " + level;
+        levelText.text = level.ToString();  // Nur die Zahl anzeigen
     }
 }
