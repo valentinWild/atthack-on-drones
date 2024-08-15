@@ -9,6 +9,7 @@ public class GameSyncManager : NetworkBehaviour
     public static event Action<int> OnDecodedHintsChanged;
     public static event Action<string> OnActivePotionChanged;
     public static event Action<int> OnCurrentLevelChanged;
+    public static event Action<int> OnCollectedDronesChanged;
 
     // Networked properties that will be synchronized across all clients
     [Networked] public float gameTimer { get; set; }
@@ -49,33 +50,6 @@ public class GameSyncManager : NetworkBehaviour
         {
             // Update the timer every second;
             // GameTimer += Time.deltaTime;
-        }
-    }
-
-    // Networked RPC to allow clients to request Collected Hint Drones Changes
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    public void RpcUpdateCollectedHintDrones(int currentAmount)
-    {
-        if (HasStateAuthority)
-        {
-            collectedHintDrones = currentAmount;
-        }
-
-        GameObject orbManager = GameObject.Find("OrbManager");
-        var orbManagerScript = orbManager.GetComponent<OrbManager>();
-
-        if (orbManagerScript != null)
-        {
-            orbManagerScript.SetHintCounter(collectedHintDrones);
-        }
-    }
-
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    public void RpcIncrementCollectedHintDrones()
-    {
-        if (HasStateAuthority)
-        {
-            collectedHintDrones++;
         }
     }
 
@@ -161,6 +135,29 @@ public class GameSyncManager : NetworkBehaviour
         if (HasStateAuthority)
         {
             currentLevel = newLevel;
+        }
+    }
+
+    // Networked RPC to allow clients to request Collected Hint Drones Changes
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void RpcIncreaseCollectedHintDrones()
+    {
+        int newAmount = collectedHintDrones + 1;
+        UpdateCollectedHintDrones(newAmount);
+        OnCollectedDronesChanged?.Invoke(newAmount);
+    }
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void RpcResetCollectedHintDrones()
+    {
+        int newAmount = 0;
+        UpdateCollectedHintDrones(newAmount);
+        OnCollectedDronesChanged?.Invoke(newAmount);
+    }
+    private void UpdateCollectedHintDrones(int currentAmount) 
+    {
+        if (HasStateAuthority)
+        {
+            collectedHintDrones = currentAmount;
         }
     }
 
