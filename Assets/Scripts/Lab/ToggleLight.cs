@@ -27,7 +27,7 @@ public class ToggleLight : MonoBehaviour
     // Detect when the hand enters the collider
     private void OnTriggerEnter(Collider other)
     {
-        if (!isDebouncing) // Only toggle if we're not in the debounce period
+        if (!isDebouncing && other.CompareTag("Player")) // Only toggle if we're not in the debounce period
         {
             ToggleLightAndParticles();
             StartCoroutine(Debounce()); // Start the debounce timer

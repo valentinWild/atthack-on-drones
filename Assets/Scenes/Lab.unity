@@ -7771,7 +7771,7 @@ GameObject:
   - component: {fileID: 155083062}
   m_Layer: 0
   m_Name: Right Controller
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13265,6 +13265,8 @@ MonoBehaviour:
   speechBubble: {fileID: 0}
   speechText: {fileID: 0}
   speechBubbleDuration: 2
+  tutorialMessage: Combine two liquids into the vial in the middle by either pouring
+    or crushing them to create a new potion for your teammate!
   potionResetDelay: 3
 --- !u!4 &368531279 stripped
 Transform:
@@ -36013,7 +36015,7 @@ GameObject:
   - component: {fileID: 1201509569}
   m_Layer: 0
   m_Name: Left Controller
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -52460,6 +52462,8 @@ MonoBehaviour:
   speechBubble: {fileID: 1191518935}
   speechText: {fileID: 135178309}
   speechBubbleDuration: 3
+  tutorialMessage: Combine two liquids into the vial in the middle by either pouring
+    or crushing them to create a new potion for your teammate!
   potionResetDelay: 3
 --- !u!136 &1845850474
 CapsuleCollider:
