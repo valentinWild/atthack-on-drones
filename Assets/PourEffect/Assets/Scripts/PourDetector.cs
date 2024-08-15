@@ -33,7 +33,7 @@ public class PourDetector : MonoBehaviour
 
     private void StartPour()
     {
-        print("Start");
+        //print("Start");
         currentStream = CreateStream();
         currentStream.Begin();
         pouring.Play();
@@ -41,7 +41,7 @@ public class PourDetector : MonoBehaviour
 
     private void StopPour()
     {
-        print("End");
+        //print("End");
         currentStream.End();
         currentStream = null;
         pouring.Stop();
