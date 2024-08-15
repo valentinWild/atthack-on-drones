@@ -205,7 +205,7 @@ public class TileSpawner : MonoBehaviour
             obstaclePosition += new Vector3(0, 0, Random.Range(2f, 3f));
         }
 
-        Vector3 newObstaclePosition = new Vector3(currentTileLocation.x, currentTileLocation.y + 1f, currentTileLocation.z);
+        Vector3 newObstaclePosition = new Vector3(currentTileLocation.x, currentTileLocation.y + 50f, currentTileLocation.z);
 
         // Instantiate the obstacle
         Quaternion obstacleRotation = obstaclePrefab.gameObject.transform.rotation * Quaternion.LookRotation(currentTileDirection, Vector3.up);

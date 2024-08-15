@@ -9,30 +9,30 @@ public class CorrectCode
     public bool[] code; // 4-bit binary code represented as a boolean array
 }
 
+
 public class OrbManager : MonoBehaviour
 {
     [SerializeField] private CorrectCode[] correctCodes; // Array to hold 4 correct code sequences
-    [SerializeField] private bool[] orbStates; // Tracks the player's input for the current level
+    [SerializeField] public String[] correctCodesDecimal; // Array to hold 4 hints
+    [SerializeField] public bool[] hintWasDecoded; // Array to hold state of decoding
+    [SerializeField] private bool[] orbStates;
 
-    public GameObject crateObject;
-    private Animation crateAnimation;
-    public string openAnimationName = "Crate_Open";
-    public string closeAnimationName = "Crate_Close";
-
-    private bool isCrateOpen = false; // Tracks whether the crate is currently open
-
-    // UI references to display the codes and hints
+    // UI references to display the codes and hints for testing
     [SerializeField] public TextMeshProUGUI codeDisplayText;
     [SerializeField] public TextMeshProUGUI hintDisplayText;
 
-    [SerializeField] private HintCounter hintCounter; // Reference to the HintCounter
-    private int dronesCollected;
+    private HintManager hintManager;
+    private HintCounter hintCounter; // Reference to the HintCounter
+    private int dronesCollected; //Future hintCounter when networking
 
     private void Start()
     {
         correctCodes = new CorrectCode[4];
+        correctCodesDecimal = new String[4];
+        hintWasDecoded = new bool[4];
         orbStates = new bool[4];
 
+        hintManager = FindObjectOfType<HintManager>();
         hintCounter = FindObjectOfType<HintCounter>();
 
         if (hintCounter != null)
@@ -41,21 +41,17 @@ public class OrbManager : MonoBehaviour
         }
 
         GenerateRandomCorrectCodes();
-
-        if (crateObject != null)
-        {
-            crateAnimation = crateObject.GetComponentInChildren<Animation>();
-            if (crateAnimation == null)
-            {
-                Debug.LogWarning("Animation component not found on the crate object or its children.");
-            }
-        }
-        else
-        {
-            Debug.LogWarning("Crate object is not assigned.");
-        }
-
         ResetOrbs();
+        ResetDecodedHints();
+    }
+
+    private void ResetDecodedHints()
+    {
+        for (int i = 0; i < hintWasDecoded.Length; i++)
+        {
+            hintWasDecoded[i] = false;
+        }
+
     }
 
     private void GenerateRandomCorrectCodes()
@@ -74,6 +70,7 @@ public class OrbManager : MonoBehaviour
 
             generatedCodes.Add(newCode);
             correctCodes[i].code = newCode;
+            correctCodesDecimal[i] = ConvertCodeToDecimal(newCode);
 
             Debug.Log($"Generated Code {i + 1}: {BoolArrayToBinaryString(newCode)} (Decimal: {ConvertCodeToDecimal(newCode)})");
         }
@@ -139,7 +136,6 @@ public class OrbManager : MonoBehaviour
         }
         return codes;
     }
-
     public void UpdateOrbState(int orbIndex, bool isOn)
     {
         if (orbIndex < 0 || orbIndex >= orbStates.Length)
@@ -149,52 +145,55 @@ public class OrbManager : MonoBehaviour
         }
 
         orbStates[orbIndex] = isOn;
+        Debug.Log($"Orb {orbIndex} state updated: {isOn}");
 
-        bool codeIsCorrect = false;
-        foreach (var correctCode in correctCodes)
+        // Get the current hint counter value
+        int currentHintCounter = hintCounter != null ? hintCounter.HintCounterValue : 0;
+
+        for (int i = 0; i < correctCodes.Length; i++)
         {
-            if (AreCodesEqual(orbStates, correctCode.code))
+            Debug.Log($"Checking if entered code matches {BoolArrayToBinaryString(correctCodes[i].code)}");
+            if (AreCodesEqual(orbStates, correctCodes[i].code))
             {
-                codeIsCorrect = true;
+                if (currentHintCounter >= i + 1)  // Ensure the hintCounter is high enough
+                {
+                    Debug.Log($"Entered code is correct and hint counter is sufficient ({currentHintCounter} >= {i + 1})!");
+                    hintManager.ChangeHintColor(i, Color.black); // Change hint text color to black
+                    hintWasDecoded[i] = true;
+
+                    // Check if all hints are decoded
+                    if (CheckAllHintsDecoded())
+                    {
+                        TriggerAllHintsDecodedAction();
+                    }
+                }
+                else
+                {
+                    Debug.Log($"Hint counter is too low to decode hint {i + 1}. Current counter: {currentHintCounter}");
+                }
                 break;
             }
         }
-
-        if (codeIsCorrect && !isCrateOpen)
-        {
-            OpenCrate();
-        }
-        else if (!codeIsCorrect && isCrateOpen)
-        {
-            CloseCrate();
-        }
     }
 
-    private void OpenCrate()
+    private bool CheckAllHintsDecoded()
     {
-        if (crateAnimation != null && !isCrateOpen)
+        foreach (bool decoded in hintWasDecoded)
         {
-            crateAnimation.Play(openAnimationName);
-            isCrateOpen = true;
+            if (!decoded)
+            {
+                return false;
+            }
         }
-        else if (crateAnimation == null)
-        {
-            Debug.LogWarning("Crate Animation component is missing.");
-        }
+        return true;
     }
 
-    private void CloseCrate()
+    private void TriggerAllHintsDecodedAction()
     {
-        if (crateAnimation != null && isCrateOpen)
-        {
-            crateAnimation.Play(closeAnimationName);
-            isCrateOpen = false;
-        }
-        else if (crateAnimation == null)
-        {
-            Debug.LogWarning("Crate Animation component is missing.");
-        }
+        Debug.Log("All hints decoded!");
+        // TODO: increment level
     }
+
 
     public void ResetOrbs()
     {
@@ -230,7 +229,7 @@ public class OrbManager : MonoBehaviour
         }
     }
 
-    public void setHintCounter(int newValue)
+    public void SetHintCounter(int newValue)
     {
         dronesCollected = newValue;
     }

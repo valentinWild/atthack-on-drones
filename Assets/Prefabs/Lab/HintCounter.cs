@@ -9,11 +9,12 @@ public class HintCounter : MonoBehaviour
 
     // Event to notify when the hint counter changes
     public event Action<int> OnHintCounterChanged;
+    public int HintCounterValue => hintCounter;
+
 
     private void Start()
     {
         hintCounterText = GetComponent<TextMeshProUGUI>();  // Get the attached TextMeshProUGUI component
-
         UpdateHintCounterDisplay();  // Initial update of the display
     }
 
@@ -21,14 +22,16 @@ public class HintCounter : MonoBehaviour
     public void IncreaseCounter()
     {
         hintCounter++;
+        Debug.Log($"HintCounter increased to {hintCounter}");
         UpdateHintCounterDisplay();
-        OnHintCounterChanged?.Invoke(hintCounter);  // Notify subscribers (like OrbManager)
+        OnHintCounterChanged?.Invoke(hintCounter);  // Notify subscribers (like HintManager)
     }
 
     // Method to reset the hint counter to zero
     public void ResetCounter()
     {
         hintCounter = 0;
+        Debug.Log("HintCounter reset to 0");
         UpdateHintCounterDisplay();
         OnHintCounterChanged?.Invoke(hintCounter);
     }
@@ -53,5 +56,4 @@ public class HintCounter : MonoBehaviour
             UpdateHintCounterDisplay();
         }
     }
-
 }

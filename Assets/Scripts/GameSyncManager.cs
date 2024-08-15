@@ -60,7 +60,7 @@ public class GameSyncManager : NetworkBehaviour
 
         if (orbManagerScript != null)
         {
-            orbManagerScript.setHintCounter(collectedHintDrones);
+            orbManagerScript.SetHintCounter(collectedHintDrones);
         }
     }
 
