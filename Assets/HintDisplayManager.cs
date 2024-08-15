@@ -46,6 +46,22 @@ public class HintDisplayManager : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        if (GameSyncManager.Instance)
+        {
+            GameSyncManager.OnCollectedDronesChanged += UpdateHintVisibility;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (GameSyncManager.Instance)
+        {
+            GameSyncManager.OnCollectedDronesChanged -= UpdateHintVisibility;
+        }
+    }
+
     public void UpdateHintVisibility(int hintCounter)
     {
         Debug.Log($"UpdateHintVisibility called with hintCounter: {hintCounter}");
