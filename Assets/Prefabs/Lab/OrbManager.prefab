@@ -322,7 +322,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5754751161188642923, guid: 11d98f4044b9f02408d52c9fc6b9f852, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6032132168542280747, guid: 11d98f4044b9f02408d52c9fc6b9f852, type: 3}
       propertyPath: orbManager
