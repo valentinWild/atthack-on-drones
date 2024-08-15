@@ -5,6 +5,10 @@ public class FriendDroneCollector : MonoBehaviour
     [SerializeField] private string friendTag = "Friend";// Tag für freundliche Drohnen
     private PlayerHealth playerHealth; // Referenz auf das PlayerHealth-Skript
 
+    private void OnEnable() {
+        DroneCounter.RegisterEvents();
+    }
+
     private void Start()
     {
         // Findet das GameObject "Sphere" und das PlayerHealth-Skript darauf
