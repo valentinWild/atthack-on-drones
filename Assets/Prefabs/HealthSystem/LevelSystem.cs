@@ -7,8 +7,8 @@ using TMPro;
 public class LevelSystem : MonoBehaviour
 {
     public int level;
-    public float currentXp;
-    public float requiredXp;
+    public int completedChallenges;
+    private const int totalChallenges = 4;
 
     private float lerpTimer;
     private float delayTimer;
@@ -17,25 +17,13 @@ public class LevelSystem : MonoBehaviour
     public Image backXpBar;
 
     public TextMeshProUGUI levelText;
-    public TextMeshProUGUI xpText;
-
-
-    [Header("Multipliers")]
-    [Range(1f, 300)]
-    public float additionMultiplier = 300;
-    [Range(2f, 4f)]
-    public float powerMultiplier = 2;
-    [Range(7f, 14f)]
-    public float divisionMultiplier = 7;
-
+    //public TextMeshProUGUI xpText;
 
     // Start is called before the first frame update
     void Start()
     {
-        frontXpBar.fillAmount = currentXp / requiredXp;
-        backXpBar.fillAmount = currentXp / requiredXp;
-        requiredXp = CalculateRequiredXp();
-        levelText.text = "Level " + level;
+        UpdateXpUI();
+        levelText.text = level.ToString();
     }
 
     // Update is called once per frame
@@ -43,21 +31,33 @@ public class LevelSystem : MonoBehaviour
     {
         UpdateXpUI();
 
-        if (Input.GetKeyDown(KeyCode.B))
+        // Tastatureingaben abfragen
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            GainExperienceFlatRate(20);
+            SetChallengeProgress(1);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            SetChallengeProgress(2);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            SetChallengeProgress(3);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            SetChallengeProgress(4);
         }
 
-        if (currentXp > requiredXp)
+        if (completedChallenges >= totalChallenges)
         {
-            levelUp();
+            LevelUp();
         }
-
     }
 
     public void UpdateXpUI()
     {
-        float xpFraction = currentXp / requiredXp;
+        float xpFraction = (float)completedChallenges / totalChallenges;
         float FXP = frontXpBar.fillAmount;
 
         if (FXP < xpFraction)
@@ -72,51 +72,25 @@ public class LevelSystem : MonoBehaviour
             }
         }
 
-        xpText.text = currentXp + "/" + requiredXp;
+        //xpText.text = $"{completedChallenges}/{totalChallenges} Challenges";
     }
 
-    public void GainExperienceFlatRate(float xpGained)
+    public void SetChallengeProgress(int progress)
     {
-        currentXp += xpGained;
-        lerpTimer = 0f;
-        delayTimer = 0f;
+        if (progress >= 1 && progress <= totalChallenges)
+        {
+            completedChallenges = progress;
+            lerpTimer = 0f;
+            delayTimer = 0f;
+        }
     }
 
-    public void GainExperienceScalable (float xpGained, int passedLevel)
-    {
-        if (passedLevel < level)
-        {
-            float multiplier = 1 + (level - passedLevel) * 0.1f;
-            currentXp += xpGained * multiplier;
-        }
-        else
-        {
-            currentXp += xpGained;
-        }
-        lerpTimer = 0f;
-        delayTimer = 0f;
-    }
-
-    public void levelUp()
+    public void LevelUp()
     {
         level++;
+        completedChallenges = 0;
         frontXpBar.fillAmount = 0f;
         backXpBar.fillAmount = 0f;
-        currentXp = Mathf.RoundToInt(currentXp - requiredXp);
-        GetComponent<PlayerHealth>().IncreaseHealth(level);
-        requiredXp = CalculateRequiredXp();
-        levelText.text = "Level " + level;
-    }
-
-    private int CalculateRequiredXp()
-    {
-        int solveForRequiredXp = 0;
-        for (int levelCycle = 1; levelCycle <= level; levelCycle++)
-        {
-            solveForRequiredXp += (int)Mathf.Floor(levelCycle + additionMultiplier * Mathf.Pow(powerMultiplier, levelCycle / divisionMultiplier));
-        }
-
-        return solveForRequiredXp / 4;
+        levelText.text = level.ToString();  // Nur die Zahl anzeigen
     }
 }
-
