@@ -6,14 +6,17 @@ public class GameSyncManager : NetworkBehaviour
 {
     public static GameSyncManager Instance { get; set; }
     public static event Action<float> OnRunnerHealthChanged;
+    public static event Action<int> OnDecodedHintsChanged;
+    public static event Action<string> OnActivePotionChanged;
+    public static event Action<int> OnCurrentLevelChanged;
 
     // Networked properties that will be synchronized across all clients
     [Networked] public float gameTimer { get; set; }
     [Networked] public int collectedHintDrones { get; set; }
     [Networked] public float runnerHealth { get; set; }
     [Networked] public string activePotion { get; set; }
-
-    private ChangeDetector _changeDetector;
+    [Networked] public int decodedHints { get; set; }
+    [Networked] public int currentLevel { get; set; }
 
     private void Awake()
     {
@@ -33,6 +36,7 @@ public class GameSyncManager : NetworkBehaviour
         if (HasStateAuthority)
         {
             // Initialize values if this is the authoritative instance
+            currentLevel = 1;
             gameTimer = 0f;
             collectedHintDrones = 0;
             runnerHealth = 100;
@@ -43,8 +47,8 @@ public class GameSyncManager : NetworkBehaviour
     {
         if (HasStateAuthority)
         {
-            // Update the timer every second
-            //GameTimer += Time.deltaTime;
+            // Update the timer every second;
+            // GameTimer += Time.deltaTime;
         }
     }
 
@@ -75,15 +79,13 @@ public class GameSyncManager : NetworkBehaviour
         }
     }
 
-    // Networked RPC to allow clients to request Health changes
+    // RPC to change the Health of the Runner
     [Rpc(RpcSources.All, RpcTargets.All)]
     public void RpcUpdateRunnerHealth(float newHealth)
     {
         UpdateRunnerHealth(newHealth);
         OnRunnerHealthChanged?.Invoke(newHealth);
     }
-
-    // Networked RPC to allow clients to request Health changes
     [Rpc(RpcSources.All, RpcTargets.All)]
     public void RpcIncreaseRunnerHealth(float amount)
     {
@@ -91,8 +93,6 @@ public class GameSyncManager : NetworkBehaviour
         UpdateRunnerHealth(newHealth);
         OnRunnerHealthChanged?.Invoke(newHealth);
     }
-
-    // Networked RPC to allow clients to request Health changes
     [Rpc(RpcSources.All, RpcTargets.All)]
     public void RpcDecreaseRunnerHealth(float amount)
     {
@@ -100,68 +100,68 @@ public class GameSyncManager : NetworkBehaviour
         UpdateRunnerHealth(newHealth);
         OnRunnerHealthChanged?.Invoke(newHealth);
     }
-
     private void UpdateRunnerHealth(float newHealth)
     {
         if (HasStateAuthority)
         {
-            // Only the authoritative instance should modify the Score
             runnerHealth = newHealth;
         }
     }
+
+    // Networked RPC to change the amount of decoded Hints
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    public void RpcUpdateDecodedHints(int currentAmount)
+    {
+        UpdateDecodedHints(currentAmount);
+        OnDecodedHintsChanged?.Invoke(currentAmount);
+    }
+    private void UpdateDecodedHints(int currentAmount)
+    {
+        if (HasStateAuthority)
+        {
+            decodedHints = currentAmount;
+        }
+    }
+
 
     // Networked RPC to communicate active potions for the runner
     [Rpc(RpcSources.All, RpcTargets.All)]
     public void RpcSetRunnerPotion(string potionType)
     {
 
+        UpdateRunnerPotion(potionType);
+        OnActivePotionChanged?.Invoke(potionType);
+    }
+    private void UpdateRunnerPotion(string potionType)
+    {
         if (HasStateAuthority)
         {
             activePotion = potionType;
-          
+        }
+    }
 
-        }
-
-        if (potionType == "Health Potion")
+    // Networked RPC to increase the level
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    public void RpcIncreaseLevel()
+    {
+        int newLevel = currentLevel + 1;
+        UpdateCurrentLevel(newLevel);
+        OnCurrentLevelChanged?.Invoke(newLevel);
+    }
+    // Networked RPC to reset the level to 1
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    public void RpcResetLevel()
+    {
+        int newLevel = 1;
+        UpdateCurrentLevel(newLevel);
+        OnCurrentLevelChanged?.Invoke(newLevel);
+    }
+    private void UpdateCurrentLevel(int newLevel)
+    {
+        if (HasStateAuthority)
         {
-            if (HasStateAuthority)
-            {
-                runnerHealth += 10;
-            }
-            //GameSyncManager.Instance.runnerHealth += 10;
-            Debug.Log("Health Potion activated, increased Player Health");
+            currentLevel = newLevel;
         }
-        else if (potionType == "Death Potion")
-        {
-            //GameSyncManager.Instance.runnerHealth -= 10;
-            if (HasStateAuthority)
-            {
-                runnerHealth -= 10;
-            }
-            Debug.Log("Death Potion activated, decreased Player Health");
-        }
-        else if (potionType == "Shield Potion")
-        {
-            // Shield aktivieren
-            Debug.Log("Shield Potion activated");
-        }
-        else if (potionType == "Attack Potion")
-        {
-            // Double Lasers or something
-            Debug.Log("Attack Potion activated");
-        }
-
-        GameObject gameManager = GameObject.Find("GameManager");
-        if (gameManager == null)
-        {
-            return;
-        }
-        var potionManager = gameManager.GetComponent<PotionManager>();
-        if (potionManager != null)
-        {
-            potionManager.setActivePotion(potionType);
-        }
-
     }
 
 }
