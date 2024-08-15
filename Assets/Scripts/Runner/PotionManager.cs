@@ -5,7 +5,16 @@ using UnityEngine;
 public class PotionManager : MonoBehaviour
 {
 
-    
+    private void Start() {
+        	StartCoroutine(testPotion(10f));
+    }
+
+    private IEnumerator testPotion(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        GameSyncManager.Instance.RpcSetRunnerPotion("Health Potion");
+    }
+
 
     private void OnEnable()
     {
