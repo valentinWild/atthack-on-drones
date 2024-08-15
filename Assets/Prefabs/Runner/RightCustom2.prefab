@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 7315909554771666013}
   m_Layer: 9
   m_Name: Turn Failed Collider
-  m_TagString: TurnLeftFailed
+  m_TagString: TurnRightFailed
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -851,7 +851,7 @@ GameObject:
   - component: {fileID: 7709597924023028516}
   m_Layer: 6
   m_Name: RightCustom2
-  m_TagString: TurnRightFailed
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
