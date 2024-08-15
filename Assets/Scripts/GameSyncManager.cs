@@ -102,7 +102,6 @@ public class GameSyncManager : NetworkBehaviour
     [Rpc(RpcSources.All, RpcTargets.All)]
     public void RpcSetRunnerPotion(string potionType)
     {
-
         UpdateRunnerPotion(potionType);
         OnActivePotionChanged?.Invoke(potionType);
     }
@@ -111,6 +110,16 @@ public class GameSyncManager : NetworkBehaviour
         if (HasStateAuthority)
         {
             activePotion = potionType;
+            if (potionType == "Health Potion")
+            {
+                runnerHealth = runnerHealth + 20f;
+                OnRunnerHealthChanged?.Invoke(runnerHealth);
+            }
+            else if (potionType == "Death Potion")
+            {
+                runnerHealth = runnerHealth - 20f;
+                OnRunnerHealthChanged?.Invoke(runnerHealth);
+            }
         }
     }
 
