@@ -5995,14 +5995,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 52751892}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -1.1534, y: 0.325, z: 4.423}
-  m_LocalScale: {x: 0.1939, y: 0.09315538, z: 0.1939}
+  m_LocalRotation: {x: 0.5, y: 0.5, z: -0.5, w: 0.5}
+  m_LocalPosition: {x: 5.5869, y: 1.2533911, z: -1.1574794}
+  m_LocalScale: {x: 2.2670126, y: 1.6952752, z: 0.16860873}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1161780000}
   - {fileID: 1629771515}
-  m_Father: {fileID: 120990116}
+  m_Father: {fileID: 1982895413}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &62772144
 GameObject:
@@ -6922,7 +6922,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2072947858}
-  - {fileID: 52751893}
   - {fileID: 1982895413}
   - {fileID: 1438607467}
   - {fileID: 1669479204}
@@ -49808,6 +49807,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 3719707278178068206, guid: e387b1f4d59f4c04c92c73715fc3e666, type: 3}
+      propertyPath: m_text
+      value: touch the orbs to decipher the code
+      objectReference: {fileID: 0}
+    - target: {fileID: 3719707278178068206, guid: e387b1f4d59f4c04c92c73715fc3e666, type: 3}
+      propertyPath: m_fontSize
+      value: 19.2
+      objectReference: {fileID: 0}
     - target: {fileID: 5837956006669475869, guid: e387b1f4d59f4c04c92c73715fc3e666, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -49818,7 +49825,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 2016242484119876169, guid: e387b1f4d59f4c04c92c73715fc3e666, type: 3}
+      insertIndex: 0
+      addedObject: {fileID: 52751893}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e387b1f4d59f4c04c92c73715fc3e666, type: 3}
 --- !u!4 &1982895413 stripped
