@@ -9915,6 +9915,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 198866534812435342, guid: 9ce4142b18056ab4b813713b878856ca, type: 3}
+      propertyPath: LightsModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198866534812435342, guid: 9ce4142b18056ab4b813713b878856ca, type: 3}
       propertyPath: InitialModule.startColor.maxColor.b
       value: 0.98490566
       objectReference: {fileID: 0}

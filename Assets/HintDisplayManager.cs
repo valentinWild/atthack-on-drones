@@ -35,6 +35,7 @@ public class HintDisplayManager : MonoBehaviour
         UpdateHintVisibility(0); // Initially set to 0
 
         // Subscribe to the hint counter change event
+        /*
         HintCounter hintCounterScript = FindObjectOfType<HintCounter>();
         if (hintCounterScript != null)
         {
@@ -43,6 +44,23 @@ public class HintDisplayManager : MonoBehaviour
         else
         {
             Debug.LogError("HintCounter could not be found in the scene.");
+        }
+        */
+    }
+
+    private void OnEnable()
+    {
+        if (GameSyncManager.Instance)
+        {
+            GameSyncManager.OnCollectedDronesChanged += UpdateHintVisibility;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (GameSyncManager.Instance)
+        {
+            GameSyncManager.OnCollectedDronesChanged -= UpdateHintVisibility;
         }
     }
 
