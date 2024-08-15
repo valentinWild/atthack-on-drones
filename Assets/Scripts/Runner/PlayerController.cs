@@ -146,7 +146,12 @@ public class PlayerController : MonoBehaviour
         turnEvent.Invoke(targetDirection);
         Turn(direction, turnPosition.Value);
         StartCoroutine(freezeTurning());
-    }
+
+            if (fadeInOutScript != null)
+            {
+                fadeInOutScript.StartCoroutine(fadeInOutScript.FadeInAndOut());
+            }
+        }
 
     private void PlayerSlide(InputAction.CallbackContext context) {
 

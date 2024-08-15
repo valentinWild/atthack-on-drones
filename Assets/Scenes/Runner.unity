@@ -4344,7 +4344,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42521a28cf82e4141a571277183324f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: 0
+  level: 1
   completedChallenges: 0
   frontXpBar: {fileID: 973334995}
   backXpBar: {fileID: 191187524}

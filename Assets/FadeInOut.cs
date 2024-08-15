@@ -7,7 +7,7 @@ public class FadeInOut : MonoBehaviour
     private CanvasGroup canvasGroup;
 
     [SerializeField]
-    private float fadeDuration = 2.0f; 
+    private float fadeDuration = 1.0f; 
 
     [SerializeField]
     private bool fadeIn = false;
@@ -23,26 +23,6 @@ public class FadeInOut : MonoBehaviour
             FadeOut();
         }
     }
-
-    /*private void Update()
-    {
-        // Check if the Return key is pressed
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            // Toggle fadeIn and trigger the appropriate fade effect
-            if (fadeIn)
-            {
-                FadeOut();
-            }
-            else
-            {
-                StartCoroutine(FadeInAndOut());
-            }
-
-            // Toggle the state for the next key press
-            fadeIn = !fadeIn;
-        }
-    }*/
 
     public IEnumerator FadeInAndOut()
     {
