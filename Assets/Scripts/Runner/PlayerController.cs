@@ -25,6 +25,9 @@ public class PlayerController : MonoBehaviour
     private LayerMask turnLayer;
     [SerializeField]
     private LayerMask turnFailedLayer;
+        
+    [SerializeField] 
+    private FrameEffectAnimator frameEffectAnimator;
 
 
     private float playerSpeed;
@@ -98,7 +101,11 @@ public class PlayerController : MonoBehaviour
         Debug.Log("New Target Direction: " + targetDirection);
         turnEvent.Invoke(targetDirection);
         Turn(direction, turnPosition.Value);
-    }
+
+        // Rufe die Methode zur Animation des Vignette-Effekts auf
+        frameEffectAnimator.AnimateVignetteEffect(0.5f, 5f);
+
+        }
 
     private void PlayerJump(InputAction.CallbackContext context) {
         if (IsGrounded())
