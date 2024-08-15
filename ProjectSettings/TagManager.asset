@@ -21,6 +21,7 @@ TagManager:
   - TurnLeftFailed
   - TurnRightFailed
   - TurnSidewaysFailed
+  - Floor
   layers:
   - Default
   - TransparentFX
