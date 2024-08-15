@@ -7,6 +7,7 @@ public class ToggleLight : MonoBehaviour
     public Light lightOrb; // Reference to the Light component on the orb
     public ParticleSystem orbParticles; // Reference to the Particle System on the orb
     public OrbManager orbManager; // Reference to the OrbManager
+    public AudioSource zap; 
 
     public int orbIndex; // Index of this orb in the OrbManager
 
@@ -30,6 +31,7 @@ public class ToggleLight : MonoBehaviour
         {
             ToggleLightAndParticles();
             StartCoroutine(Debounce()); // Start the debounce timer
+            zap.Play();
         }
     }
 
