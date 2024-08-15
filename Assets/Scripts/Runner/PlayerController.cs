@@ -26,6 +26,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private LayerMask turnFailedLayer;
 
+    [SerializeField]
+    private TakeDamageScript takeDamageScript;
+
 
     private float playerSpeed;
     private float gravity;
@@ -100,7 +103,12 @@ public class PlayerController : MonoBehaviour
         }
         turnEvent.Invoke(targetDirection);
         Turn(direction, turnPosition.Value);
-    }
+
+        if (takeDamageScript != null)
+        {
+          StartCoroutine(takeDamageScript.TakeDamageEffect());
+        }
+     }
 
     private void PlayerJump(InputAction.CallbackContext context) {
         if (IsGrounded())
