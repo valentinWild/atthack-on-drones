@@ -12,10 +12,15 @@ public class MixingVial : MonoBehaviour
     public Material deathPotion;
     public Material water; // Default material after reset
     public Material whiteLiquid;
+
+    // Mixing Vial
     public GameObject fluid; // Reference to the fluid inside the vial
     public GameObject mixingVial;
+
+    // Audio Sources
     public AudioSource creation;
     public AudioSource fail;
+    public AudioSource fluidAdded;
 
     // Glow Effect Parameters
     public Material glowMaterial; // The material with a glow effect
@@ -72,9 +77,10 @@ public class MixingVial : MonoBehaviour
             detectedLiquids.Add(other.tag); // Add the tag to the set to avoid reprocessing
             pouredLiquids.Add(other.tag);
             Debug.Log($"{other.tag} detected");
-
+            fluidAdded.Play();
             // Trigger the glow effect on the vial
             StartCoroutine(GlowVial());
+            
 
             // If two liquids have been added, mix them
             if (pouredLiquids.Count == 2)
@@ -135,6 +141,7 @@ public class MixingVial : MonoBehaviour
             fluid.GetComponent<Renderer>().material = deathPotion; // Death potion overrides others
             potionName = "Death Potion";
             Debug.Log("Black liquid mixed, created death potion");
+            creation.Play();
         }
         else
         {
