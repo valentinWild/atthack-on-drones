@@ -25,9 +25,9 @@ public class PlayerController : MonoBehaviour
     private LayerMask turnLayer;
     [SerializeField]
     private LayerMask turnFailedLayer;
-        
-    [SerializeField] 
-    private FrameEffectAnimator frameEffectAnimator;
+
+    [SerializeField]
+    private TakeDamageScript takeDamageScript;
 
 
     private float playerSpeed;
@@ -104,10 +104,11 @@ public class PlayerController : MonoBehaviour
         turnEvent.Invoke(targetDirection);
         Turn(direction, turnPosition.Value);
 
-        // Rufe die Methode zur Animation des Vignette-Effekts auf
-        frameEffectAnimator.AnimateVignetteEffect(0.5f, 5f);
-
+        if (takeDamageScript != null)
+        {
+          StartCoroutine(takeDamageScript.TakeDamageEffect());
         }
+     }
 
     private void PlayerJump(InputAction.CallbackContext context) {
         if (IsGrounded())
