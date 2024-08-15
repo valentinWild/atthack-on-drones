@@ -12,7 +12,8 @@ public class WeaponHandler : MonoBehaviour
     public Transform spawnPoint;
     public float fireSpeed = 50f;
 
-    private AudioSource audioSource; 
+    public AudioClip shootSound;
+    private AudioSource audioSource;
 
     private void OnEnable()
     {
@@ -60,13 +61,20 @@ public class WeaponHandler : MonoBehaviour
         Destroy(spawnedBullet, 5);
 
         // Schuss-Sound abspielen
-        if (audioSource != null)
+        if (audioSource != null && shootSound != null)
         {
-            audioSource.Play();
+            audioSource.PlayOneShot(shootSound); // Spielt den zugewiesenen AudioClip ab
         }
         else
         {
-            Debug.LogWarning("AudioSource is not assigned or missing.");
+            if (shootSound == null)
+            {
+                Debug.LogWarning("No AudioClip assigned for shooting sound.");
+            }
+            else
+            {
+                Debug.LogWarning("AudioSource is not assigned or missing.");
+            }
         }
     }
 }

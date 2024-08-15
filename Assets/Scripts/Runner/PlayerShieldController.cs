@@ -4,17 +4,24 @@ using UnityEngine;
 
 public class PlayerShieldController : MonoBehaviour
 {
-    public GameObject playerShieldPrefab; // Das Prefab des Shields
+    public GameObject playerShieldPrefab;
     public float shieldDistance = 2f; // Abstand des Shields vor der Kamera
     public float shieldDuration = 10f; // Dauer, wie lange das Shield sichtbar bleibt
+    public AudioClip shieldActivateSound;
 
-    private GameObject currentShield; // Referenz auf das aktuell aktive Shield
-    private Camera mainCamera; // Referenz zur Hauptkamera
+    private GameObject currentShield; 
+    private Camera mainCamera;
+    private AudioSource audioSource;
 
     void Start()
     {
         // Die Hauptkamera finden
         mainCamera = Camera.main;
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
     }
 
     void Update()
@@ -49,7 +56,38 @@ public class PlayerShieldController : MonoBehaviour
         // Richte das Shield an der Kamera aus
         currentShield.transform.SetParent(mainCamera.transform);
 
+        if (shieldActivateSound != null)
+        {
+            audioSource.clip = shieldActivateSound;
+            audioSource.Play();
+            StartCoroutine(FadeOutVolume());
+        }
+
         // Zerstöre das Shield nach der festgelegten Dauer
         Destroy(currentShield, shieldDuration);
+    }
+
+    private IEnumerator FadeOutVolume()
+    {
+        float startVolume = audioSource.volume;
+        float fadeStartTime = 7f;
+        float fadeDuration = 3f;
+
+        
+        yield return new WaitForSeconds(fadeStartTime);
+
+        float timeElapsed = 0f;
+        while (timeElapsed < fadeDuration)
+        {
+            timeElapsed += Time.deltaTime;
+            audioSource.volume = Mathf.Lerp(startVolume, 0f, timeElapsed / fadeDuration);
+            yield return null;
+        }
+
+        
+        audioSource.volume = 0f;
+
+        
+        audioSource.Stop();
     }
 }

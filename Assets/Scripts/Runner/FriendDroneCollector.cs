@@ -2,8 +2,11 @@ using UnityEngine;
 
 public class FriendDroneCollector : MonoBehaviour
 {
-    [SerializeField] private string friendTag = "Friend";// Tag für freundliche Drohnen
-    private PlayerHealth playerHealth; // Referenz auf das PlayerHealth-Skript
+    [SerializeField] private string friendTag = "Friend";
+    private PlayerHealth playerHealth; 
+
+    [SerializeField] private AudioClip collectSound;
+    private AudioSource audioSource;
 
     private void OnEnable() {
         DroneCounter.RegisterEvents();
@@ -22,6 +25,12 @@ public class FriendDroneCollector : MonoBehaviour
         {
             Debug.LogError("PlayerHealth script not found on Sphere object.");
         }
+
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
     }
 
 
@@ -33,6 +42,22 @@ public class FriendDroneCollector : MonoBehaviour
             Debug.Log("Drone collected: " + other.gameObject.name);
             Destroy(other.gameObject); // Drone nach collection zerstören
             DroneCounter.IncrementCollectedCounter(); // Zähler erhöhen für eingesammelte Drohnen
+
+            if (audioSource != null && collectSound != null)
+            {
+                audioSource.PlayOneShot(collectSound);
+            }
+            else
+            {
+                if (collectSound == null)
+                {
+                    Debug.LogWarning("No AudioClip assigned for collection sound.");
+                }
+                else
+                {
+                    Debug.LogWarning("AudioSource is not assigned or missing.");
+                }
+            }
 
             if (playerHealth != null)
             {
