@@ -26,6 +26,9 @@ public class MixingVial : MonoBehaviour
     public TextMeshProUGUI speechText; // The TextMeshPro component for the speech bubble text
     public float speechBubbleDuration = 2.0f; // Duration the speech bubble stays visible
 
+    // Tutorial Text
+    public string tutorialMessage = "Combine two liquids into the vial in the middle by either pouring or crushing them to create a new potion for your teammate!"; // Default tutorial text
+
     // Potion Reset Parameters
     public float potionResetDelay = 3.0f; // Time to reset after potion creation
 
@@ -40,6 +43,8 @@ public class MixingVial : MonoBehaviour
 
     private Renderer vialRenderer;
     private Material originalVialMaterial;
+    private bool showingPotionMessage = false; // Track whether a potion message is being shown
+
 
     private void Start()
     {
@@ -49,6 +54,9 @@ public class MixingVial : MonoBehaviour
 
         // Initially hide the speech bubble
         speechBubble.SetActive(false);
+
+        // Set the default tutorial message
+        ShowTutorialMessage();
 
         // Set the fluid to its default material (e.g., water)
         fluid.GetComponent<Renderer>().material = originalFluid;
@@ -159,6 +167,7 @@ public class MixingVial : MonoBehaviour
 
     private void ShowSpeechBubble(string message)
     {
+        showingPotionMessage = true; // Indicate that we're showing a potion message
         speechText.text = message; // Update the text
         speechBubble.SetActive(true); // Show the speech bubble
         StartCoroutine(HideSpeechBubbleAfterDelay()); // Hide after delay
@@ -168,6 +177,19 @@ public class MixingVial : MonoBehaviour
     {
         yield return new WaitForSeconds(speechBubbleDuration);
         speechBubble.SetActive(false); // Hide the speech bubble
+        showingPotionMessage = false; // Reset the flag
+
+        // Revert to the tutorial message
+        ShowTutorialMessage();
+    }
+
+    private void ShowTutorialMessage()
+    {
+        if (!showingPotionMessage) // Only show the tutorial if we're not showing a potion message
+        {
+            speechText.text = tutorialMessage; // Set the tutorial text
+            speechBubble.SetActive(true); // Ensure the speech bubble is visible
+        }
     }
 
     private IEnumerator ResetPotion()

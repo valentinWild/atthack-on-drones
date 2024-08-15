@@ -7745,7 +7745,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 55aa7f02a0afa614ab4c070acfe8cff3, type: 3}
-  m_Color: {r: 0.025524942, g: 0.6227684, b: 0.90188676, a: 0.5686275}
+  m_Color: {r: 0.025524942, g: 0.6227684, b: 0.90188676, a: 0.73333335}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -13973,6 +13973,10 @@ PrefabInstance:
       propertyPath: zap
       value: 
       objectReference: {fileID: 763820127}
+    - target: {fileID: 2457988247446604426, guid: e9a23873313c052459c3f0f1f80ebd75, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2824462064833743475, guid: e9a23873313c052459c3f0f1f80ebd75, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.076
@@ -52453,7 +52457,7 @@ MonoBehaviour:
   fail: {fileID: 1845850479}
   glowMaterial: {fileID: 2100000, guid: eb9de8575087dd24dbf60c3f58f10a37, type: 2}
   glowDuration: 0.5
-  speechBubble: {fileID: 0}
+  speechBubble: {fileID: 1191518935}
   speechText: {fileID: 135178309}
   speechBubbleDuration: 3
   potionResetDelay: 3
