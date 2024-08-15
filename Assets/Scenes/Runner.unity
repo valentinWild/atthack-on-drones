@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1062,12 +1062,12 @@ GameObject:
   - component: {fileID: 334788082}
   - component: {fileID: 334788083}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: RunnerManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &334788080
 Transform:
   m_ObjectHideFlags: 0
@@ -3608,8 +3608,9 @@ GameObject:
   - component: {fileID: 1492771070}
   - component: {fileID: 1492771071}
   - component: {fileID: 1492771072}
+  - component: {fileID: 1492771073}
   m_Layer: 0
-  m_Name: PlayerObject
+  m_Name: RunnerManager
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3704,6 +3705,18 @@ MonoBehaviour:
   playerShieldPrefab: {fileID: 4091185618273536117, guid: 7a74cefa165d819469fe8cd5660ce245, type: 3}
   shieldDistance: 2
   shieldDuration: 10
+--- !u!114 &1492771073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1492771067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75e8a3a567523f54d90313df1464b148, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1561327543
 GameObject:
   m_ObjectHideFlags: 0

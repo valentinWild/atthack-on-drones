@@ -1,9 +1,11 @@
 using Fusion;
 using UnityEngine;
+using System;
 
 public class GameSyncManager : NetworkBehaviour
 {
     public static GameSyncManager Instance { get; set; }
+    public static event Action<float> OnRunnerHealthChanged;
 
     // Networked properties that will be synchronized across all clients
     [Networked] public float gameTimer { get; set; }
@@ -74,14 +76,37 @@ public class GameSyncManager : NetworkBehaviour
     }
 
     // Networked RPC to allow clients to request Health changes
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    [Rpc(RpcSources.All, RpcTargets.All)]
     public void RpcUpdateRunnerHealth(float newHealth)
+    {
+        UpdateRunnerHealth(newHealth);
+        OnRunnerHealthChanged?.Invoke(newHealth);
+    }
+
+    // Networked RPC to allow clients to request Health changes
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    public void RpcIncreaseRunnerHealth(float amount)
+    {
+        float newHealth = runnerHealth + amount;
+        UpdateRunnerHealth(newHealth);
+        OnRunnerHealthChanged?.Invoke(newHealth);
+    }
+
+    // Networked RPC to allow clients to request Health changes
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    public void RpcDecreaseRunnerHealth(float amount)
+    {
+        float newHealth = runnerHealth - amount;
+        UpdateRunnerHealth(newHealth);
+        OnRunnerHealthChanged?.Invoke(newHealth);
+    }
+
+    private void UpdateRunnerHealth(float newHealth)
     {
         if (HasStateAuthority)
         {
             // Only the authoritative instance should modify the Score
             runnerHealth = newHealth;
-
         }
     }
 
@@ -126,7 +151,7 @@ public class GameSyncManager : NetworkBehaviour
             Debug.Log("Attack Potion activated");
         }
 
-        GameObject gameManager = GameObject.Find("gameManager");
+        GameObject gameManager = GameObject.Find("GameManager");
         if (gameManager == null)
         {
             return;

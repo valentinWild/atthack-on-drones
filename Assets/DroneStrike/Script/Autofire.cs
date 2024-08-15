@@ -24,7 +24,7 @@ public class Autofire : MonoBehaviour
     private void Start()
     {
         // Suche das PlayerObject in der Szene und speichere seinen Transform
-        GameObject playerObject = GameObject.Find("PlayerObject");
+        GameObject playerObject = GameObject.Find("RunnerManager");
         if (playerObject != null)
         {
             playerTransform = playerObject.transform;

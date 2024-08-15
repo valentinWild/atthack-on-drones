@@ -8,7 +8,7 @@ public class FriendDroneCollector : MonoBehaviour
     private void Start()
     {
         // Findet das GameObject "Sphere" und das PlayerHealth-Skript darauf
-        GameObject playerObject = GameObject.Find("PlayerObject");
+        GameObject playerObject = GameObject.Find("RunnerManager");
         if (playerObject != null)
         {
             playerHealth = playerObject.GetComponent<PlayerHealth>();
