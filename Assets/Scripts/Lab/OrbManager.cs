@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 [Serializable]
 public class CorrectCode
@@ -21,9 +21,12 @@ public class OrbManager : MonoBehaviour
     [SerializeField] public TextMeshProUGUI codeDisplayText;
     [SerializeField] public TextMeshProUGUI hintDisplayText;
 
-    private HintManager hintManager;
+    private HintDisplayManager hintDisplayManager;
     private HintCounter hintCounter; // Reference to the HintCounter
+    private int numberOfDecodedHints;
     private int dronesCollected; //Future hintCounter when networking
+
+    private GameSyncManager gameSyncManager;
 
     private void Start()
     {
@@ -32,7 +35,12 @@ public class OrbManager : MonoBehaviour
         hintWasDecoded = new bool[4];
         orbStates = new bool[4];
 
-        hintManager = FindObjectOfType<HintManager>();
+        gameSyncManager = GameSyncManager.Instance;
+
+        numberOfDecodedHints = 0;
+
+        hintDisplayManager = FindObjectOfType<HintDisplayManager>();
+        
         hintCounter = FindObjectOfType<HintCounter>();
 
         if (hintCounter != null)
@@ -52,6 +60,11 @@ public class OrbManager : MonoBehaviour
             hintWasDecoded[i] = false;
         }
 
+    }
+
+    private void IncrementNumberOfDecodedHints()
+    {
+        numberOfDecodedHints++;
     }
 
     private void GenerateRandomCorrectCodes()
@@ -158,7 +171,7 @@ public class OrbManager : MonoBehaviour
                 if (currentHintCounter >= i + 1)  // Ensure the hintCounter is high enough
                 {
                     Debug.Log($"Entered code is correct and hint counter is sufficient ({currentHintCounter} >= {i + 1})!");
-                    hintManager.ChangeHintColor(i, Color.black); // Change hint text color to black
+                    hintDisplayManager.ChangeHintColor(i, Color.black); // Change hint text color to black
                     hintWasDecoded[i] = true;
 
                     // Check if all hints are decoded
@@ -191,9 +204,14 @@ public class OrbManager : MonoBehaviour
     private void TriggerAllHintsDecodedAction()
     {
         Debug.Log("All hints decoded!");
-        // TODO: increment level
+        IncrementLevel();
     }
 
+    private void IncrementLevel()
+    {
+        Debug.Log("Incremented level. Current Level: ");
+        //todo: call increment level function in gameSyncManager
+    }
 
     public void ResetOrbs()
     {
