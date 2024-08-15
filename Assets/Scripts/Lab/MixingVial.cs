@@ -54,6 +54,8 @@ public class MixingVial : MonoBehaviour
 
         // Initially hide the speech bubble
         speechBubble.SetActive(true);
+        tutorialText.gameObject.SetActive(true); // Ensure the tutorial text is visible at the start
+
 
         // Set the default tutorial message
         ShowTutorialMessage();
@@ -155,6 +157,7 @@ public class MixingVial : MonoBehaviour
     private void ShowPotionMessage(string message)
     {
         showingPotionMessage = true; // Indicate that we're showing a potion message
+        tutorialText.gameObject.SetActive(false); // Hide the tutorial text
         speechText.text = message; // Update the text
         speechBubble.SetActive(true); // Show the speech bubble
         StartCoroutine(HidePotionMessageAfterDelay()); // Hide after delay
@@ -174,8 +177,9 @@ public class MixingVial : MonoBehaviour
     {
         if (!showingPotionMessage) // Only show the tutorial if we're not showing a potion message
         {
+            tutorialText.gameObject.SetActive(true);
             tutorialText.text = tutorialMessage; // Set the tutorial text
-            speechBubble.SetActive(true); // Ensure the speech bubble is visible
+            //speechBubble.SetActive(true); // Ensure the speech bubble is visible
         }
     }
 

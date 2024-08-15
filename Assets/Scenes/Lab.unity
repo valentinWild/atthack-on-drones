@@ -6917,7 +6917,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 53, y: -48}
+  m_AnchoredPosition: {x: 83, y: -3}
   m_SizeDelta: {x: 364.5, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &135178309
@@ -6950,7 +6950,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4278716425
-  m_fontColor: {r: 0.36153013, g: 0.036375877, b: 0.4943396, a: 1}
+  m_fontColor: {r: 0.9811255, g: 0.9718975, b: 0.98490566, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -27003,8 +27003,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 69, y: 37}
-  m_SizeDelta: {x: 364.5, y: 50}
+  m_AnchoredPosition: {x: 87, y: 44}
+  m_SizeDelta: {x: 400, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &954098499
 MonoBehaviour:
@@ -46671,7 +46671,7 @@ MonoBehaviour:
   speechText: {fileID: 135178309}
   tutorialText: {fileID: 954098499}
   speechBubbleDuration: 3
-  tutorialMessage: Combine two potions to create a new one!
+  tutorialMessage: Combine two fluids by pouring or smashing it to create a new potion!
   potionResetDelay: 3
 --- !u!136 &1845850474
 CapsuleCollider:
@@ -47141,7 +47141,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1853007537
 Transform:
   m_ObjectHideFlags: 0
