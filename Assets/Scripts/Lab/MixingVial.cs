@@ -11,6 +11,7 @@ public class MixingVial : MonoBehaviour
     public Material shieldPotion;
     public Material deathPotion;
     public Material water;
+    public Material originalFluid; 
     public GameObject fluid; // Reference to the fluid inside the vial
     public GameObject mixingVial;
     public AudioSource creation;
@@ -24,6 +25,9 @@ public class MixingVial : MonoBehaviour
     public GameObject speechBubble; // The speech bubble GameObject
     public TextMeshProUGUI speechText; // The TextMeshPro component for the speech bubble text
     public float speechBubbleDuration = 2.0f; // Duration the speech bubble stays visible
+
+    // Potion Reset Parameters
+    public float potionResetDelay = 3.0f; // Time to reset after potion creation
 
     // List to track poured liquids
     private List<string> pouredLiquids = new List<string>();
@@ -45,6 +49,9 @@ public class MixingVial : MonoBehaviour
 
         // Initially hide the speech bubble
         speechBubble.SetActive(false);
+
+        // Set the fluid to its default material (e.g., water)
+        fluid.GetComponent<Renderer>().material = originalFluid;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -63,9 +70,6 @@ public class MixingVial : MonoBehaviour
             if (pouredLiquids.Count == 2)
             {
                 MixLiquids();
-                // Clear the list for the next mixing
-                pouredLiquids.Clear();
-                detectedLiquids.Clear(); // Reset detection for the next round of mixing
             }
         }
     }
@@ -85,6 +89,8 @@ public class MixingVial : MonoBehaviour
     private void MixLiquids()
     {
         string potionName = "";
+        bool potionCreated = true;
+
         // Example: Mixing logic based on two liquids
         if (pouredLiquids.Contains("YellowParticle") && pouredLiquids.Contains("RedParticle"))
         {
@@ -106,7 +112,13 @@ public class MixingVial : MonoBehaviour
             potionName = "Health Potion";
             Debug.Log("Created a new material by mixing Blue and Red");
             creation.Play();
-            
+            if (GameSyncManager.Instance != null)
+            {
+                // GameSyncManager.Instance.RpcSetRunnerPotion(potionName);
+                GameSyncManager.Instance.RpcIncreaseRunnerHealth(20);
+                Debug.Log("Sent potion to runner");
+            }
+
         }
         else if (pouredLiquids.Contains("BlueParticle") && pouredLiquids.Contains("GreenParticle"))
         {
@@ -120,23 +132,29 @@ public class MixingVial : MonoBehaviour
             fluid.GetComponent<Renderer>().material = deathPotion; // Death potion overrides others
             potionName = "Death Potion";
             Debug.Log("Black liquid mixed, created death potion");
+            if (GameSyncManager.Instance != null)
+            {
+                // GameSyncManager.Instance.RpcSetRunnerPotion(potionName);
+                GameSyncManager.Instance.RpcDecreaseRunnerHealth(20);
+                Debug.Log("Sent potion to runner");
+            }
         }
         else
         {
             // Default case for invalid combinations
             Debug.Log("Failed to mix the liquids");
             fail.Play(); // Play failure sound
-            return; // Exit early, no potion was created
+            potionCreated = false;
         }
-        // Show the speech bubble with the created potion name
-        ShowSpeechBubble("Potion created: " + potionName);
 
-        // Send potion to runner
-        if (GameSyncManager.Instance != null)
+        if (potionCreated)
         {
-            GameSyncManager.Instance.RpcSetRunnerPotion(potionName);
-            Debug.Log("Sent potion to runner");
-        }   
+            // Show the speech bubble with the created potion name
+            ShowSpeechBubble("Potion created: " + potionName);
+
+            // Reset potion creation after a delay
+            StartCoroutine(ResetPotion());
+        }
     }
 
     private void ShowSpeechBubble(string message)
@@ -150,6 +168,21 @@ public class MixingVial : MonoBehaviour
     {
         yield return new WaitForSeconds(speechBubbleDuration);
         speechBubble.SetActive(false); // Hide the speech bubble
+    }
+
+    private IEnumerator ResetPotion()
+    {
+        // Wait for the potion reset delay
+        yield return new WaitForSeconds(potionResetDelay);
+
+        // Reset the fluid material to the default (e.g., water)
+        fluid.GetComponent<Renderer>().material = originalFluid;
+
+        // Clear the lists so the next potion requires two new liquids
+        pouredLiquids.Clear();
+        detectedLiquids.Clear();
+
+        Debug.Log("Potion has been reset, ready for a new combination.");
     }
 
 }

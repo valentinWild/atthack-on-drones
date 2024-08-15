@@ -13185,6 +13185,7 @@ MonoBehaviour:
   shieldPotion: {fileID: 0}
   deathPotion: {fileID: 0}
   water: {fileID: 0}
+  originalFluid: {fileID: 0}
   fluid: {fileID: 0}
   mixingVial: {fileID: 0}
   creation: {fileID: 0}
@@ -13194,6 +13195,7 @@ MonoBehaviour:
   speechBubble: {fileID: 0}
   speechText: {fileID: 0}
   speechBubbleDuration: 2
+  potionResetDelay: 3
 --- !u!4 &368531279 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1044230619016210068, guid: 1836ec5a4a9706d42b8941d84940196f, type: 3}
@@ -14082,7 +14084,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8201826039759979897, guid: e9a23873313c052459c3f0f1f80ebd75, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1743726662}
   m_SourcePrefab: {fileID: 100100000, guid: e9a23873313c052459c3f0f1f80ebd75, type: 3}
 --- !u!1 &416478813
 GameObject:
@@ -47896,7 +47901,7 @@ GameObject:
   - component: {fileID: 1573124979}
   - component: {fileID: 1573124980}
   m_Layer: 0
-  m_Name: Pouring
+  m_Name: PouringSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50592,14 +50597,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1737153861}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.70710653, z: -0, w: 0.70710707}
-  m_LocalPosition: {x: -0.21, y: 1.39, z: -2.23}
+  m_LocalRotation: {x: -0, y: 0.9990762, z: -0, w: 0.04297453}
+  m_LocalPosition: {x: -0.148, y: 1.39, z: -2.351}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 251435978}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 175.074, z: 0}
 --- !u!1001 &1740852539
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -50789,6 +50794,29 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1741959878}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1743726660 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8201826039759979897, guid: e9a23873313c052459c3f0f1f80ebd75, type: 3}
+  m_PrefabInstance: {fileID: 415165504}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1743726662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1743726660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb79c54106a7c8f42bbd7e30991b639a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  materialProperties: {fileID: 0}
+  breakable: 0
+  yieldDistance: 0.03
+  mustBeGrabbed: 0
+  requiresThumb: 0
+  minimumFingers: 1
 --- !u!1 &1750217560
 GameObject:
   m_ObjectHideFlags: 0
@@ -52057,6 +52085,7 @@ MonoBehaviour:
   shieldPotion: {fileID: 2100000, guid: 875519f0ad10d244abbcfbe1025b6478, type: 2}
   deathPotion: {fileID: 2100000, guid: 95c9fe72eb62e2349a03de8ce6804474, type: 2}
   water: {fileID: 2100000, guid: b447be96f227dbd4f98a2b23dff63527, type: 2}
+  originalFluid: {fileID: 2100000, guid: 36480bb31c1d46141802a1cbc70018bf, type: 2}
   fluid: {fileID: 1652581156}
   mixingVial: {fileID: 1845850456}
   creation: {fileID: 1845850480}
@@ -52066,6 +52095,7 @@ MonoBehaviour:
   speechBubble: {fileID: 30208740}
   speechText: {fileID: 135178309}
   speechBubbleDuration: 2
+  potionResetDelay: 3
 --- !u!136 &1845850474
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -55520,7 +55550,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1044230619016210068, guid: 1836ec5a4a9706d42b8941d84940196f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.127
+      value: -0.898
       objectReference: {fileID: 0}
     - target: {fileID: 1044230619016210068, guid: 1836ec5a4a9706d42b8941d84940196f, type: 3}
       propertyPath: m_LocalPosition.y
