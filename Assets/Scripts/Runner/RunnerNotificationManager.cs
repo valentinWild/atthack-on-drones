@@ -24,7 +24,7 @@ public class RunnerNotificationController : MonoBehaviour
 
     private void OnActivePotionChanged(string potionType)
     {
-        string message = potionType + "activated";
+        string message = potionType + " activated";
         ShowTextFor3Seconds(message);
     }
 
