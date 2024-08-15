@@ -71,7 +71,7 @@ MonoBehaviour:
       outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 0
+    m_RotationOrder: 4
   duration_s: 0.2
   amplitude: 1
   intendedLocation: 2

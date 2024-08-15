@@ -98,7 +98,9 @@ public class PlayerController : MonoBehaviour
             return;
         }
         Vector3 targetDirection = Quaternion.AngleAxis(90 * direction, Vector3.up) * movementDirection;
-        Debug.Log("New Target Direction: " + targetDirection);
+        if(GameSyncManager.Instance) {
+            GameSyncManager.Instance.RpcDecreaseRunnerHealth(20);
+        }
         turnEvent.Invoke(targetDirection);
         Turn(direction, turnPosition.Value);
 

@@ -28,6 +28,20 @@ public class PlayerHealth : MonoBehaviour
         health = maxHealth;
     }
 
+    private void OnEnable()
+    {
+        if(GameSyncManager.Instance) {
+            GameSyncManager.OnRunnerHealthChanged += OnRunnerHealthChanged;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if(GameSyncManager.Instance) {
+            GameSyncManager.OnRunnerHealthChanged -= OnRunnerHealthChanged;
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -79,15 +93,23 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        var newHealth = health - damage;
-        UpdateHealth(newHealth);
+        /* var newHealth = health - damage;
+        UpdateHealth(newHealth); */
+        if(GameSyncManager.Instance) 
+        {
+            GameSyncManager.Instance.RpcDecreaseRunnerHealth(damage);
+        }
         lerpTimer = 0f;
     }
 
     public void RestoreHealth(float healAmount)
     {
-        var newHealth = health + healAmount;
-        UpdateHealth(newHealth);
+        /* var newHealth = health + healAmount;
+        UpdateHealth(newHealth); */
+        if(GameSyncManager.Instance) 
+        {
+            GameSyncManager.Instance.RpcIncreaseRunnerHealth(healAmount);
+        }
         lerpTimer = 0f;
     }
 
@@ -95,17 +117,19 @@ public class PlayerHealth : MonoBehaviour
     private void UpdateHealth(float newHealth)
     {
         health = newHealth;
-        //healthUpdateEvent.Invoke(health);
-        if (GameSyncManager.Instance) {
-            GameSyncManager.Instance.RpcUpdateRunnerHealth(health);
-        }
-        //Debug.Log("Update Health, new Value: " + health);
+        UpdateHealthUI();
     }
 
     public void IncreaseHealth(int level)
     {
         maxHealth += (health * 0.01f)* ((100 - level) * 0.1f);
         UpdateHealth(maxHealth);
+    }
+
+    private void OnRunnerHealthChanged(float newHealth) 
+    {
+        health = newHealth;
+        UpdateHealthUI();
     }
 
     public void UpdateFriendCounter(int friendCount)
