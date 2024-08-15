@@ -6,7 +6,6 @@ public class HintCounter : MonoBehaviour
 {
     [SerializeField] private int hintCounter = 0;  // Keeps track of the number of hints
     private TextMeshProUGUI hintCounterText;  // Reference to the UI Text element displaying the hint counter
-
     // Event to notify when the hint counter changes
     public event Action<int> OnHintCounterChanged;
     public int HintCounterValue => hintCounter;
