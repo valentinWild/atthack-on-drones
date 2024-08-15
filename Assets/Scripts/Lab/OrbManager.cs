@@ -26,7 +26,21 @@ public class OrbManager : MonoBehaviour
     private int numberOfDecodedHints;
     private int dronesCollected; //Future hintCounter when networking
 
-    private GameSyncManager gameSyncManager;
+    private void OnEnable()
+    {
+        if (GameSyncManager.Instance)
+        {
+            GameSyncManager.OnCollectedDronesChanged += OnCollectedHintDronesChanged;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (GameSyncManager.Instance)
+        {
+            GameSyncManager.OnCollectedDronesChanged -= OnCollectedHintDronesChanged;
+        }
+    }
 
     private void Start()
     {
@@ -35,22 +49,27 @@ public class OrbManager : MonoBehaviour
         hintWasDecoded = new bool[4];
         orbStates = new bool[4];
 
-        gameSyncManager = GameSyncManager.Instance;
-
         numberOfDecodedHints = 0;
 
         hintDisplayManager = FindObjectOfType<HintDisplayManager>();
         
+        /*
         hintCounter = FindObjectOfType<HintCounter>();
 
         if (hintCounter != null)
         {
             hintCounter.OnHintCounterChanged += UpdateHints;  // Subscribe to the hint counter change event
-        }
+        }*/
 
         GenerateRandomCorrectCodes();
         ResetOrbs();
         ResetDecodedHints();
+    }
+
+    private void OnCollectedHintDronesChanged(int newAmount)
+    {
+        dronesCollected = newAmount;
+        Debug.Log("New Amount of Collect Drones: " + newAmount);
     }
 
     private void ResetDecodedHints()

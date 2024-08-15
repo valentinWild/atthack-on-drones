@@ -7,9 +7,19 @@ public static class DroneCounter
     private static int droneExplosionCount = 0;
     private static int collectedDroneCount = 0;
 
+    public static void RegisterEvents() {
+        if(GameSyncManager.Instance) {
+            GameSyncManager.OnCollectedDronesChanged += OnCollectedDronesChanged;
+        }
+    }
+
     public static void IncrementExplosionCounter()
     {
         droneExplosionCount++;
+    }
+
+    private static void OnCollectedDronesChanged(int amount) {
+        collectedDroneCount = amount;
     }
 
     public static int GetExplosionCounter()
@@ -19,18 +29,10 @@ public static class DroneCounter
 
     public static void IncrementCollectedCounter()
     {
-        var newAmount = collectedDroneCount + 1;
-        UpdateCollectedCounter(newAmount);
-    }
-
-    private static void UpdateCollectedCounter(int newAmount)
-    {
         if(GameSyncManager.Instance) 
         {
-            GameSyncManager.Instance.RpcUpdateCollectedHintDrones(newAmount);
-            collectedDroneCount = newAmount;
-        } else {
-            collectedDroneCount = newAmount;
+            //collectedDroneCount = GameSyncManager.Instance.collectedHintDrones + 1;
+            GameSyncManager.Instance.RpcIncreaseCollectedHintDrones();
         }
     }
 
