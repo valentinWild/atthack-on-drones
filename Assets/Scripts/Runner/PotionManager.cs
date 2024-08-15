@@ -6,7 +6,7 @@ public class PotionManager : MonoBehaviour
 {
 
     private void Start() {
-        	StartCoroutine(testPotion(10f));
+        //StartCoroutine(testPotion(10f));
     }
 
     private IEnumerator testPotion(float delay)

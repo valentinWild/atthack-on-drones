@@ -7,12 +7,36 @@ public class DroneExplosion : MonoBehaviour
 
     public GameObject droneExplosion;
 
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    private int defaultDroneHealth = 3;
+    [SerializeField]
+    private int decreasedDroneHealth = 1;
+    [SerializeField]
+    private float decreasedHealthTime = 10f;
+
+    private float droneHealth = 3;
+
+    private void OnEnable()
     {
-        
+        if(GameSyncManager.Instance) {
+            GameSyncManager.OnActivePotionChanged += OnActivePotionChanged;
+        }
     }
 
+    private void OnDisable()
+    {
+        if(GameSyncManager.Instance) {
+            GameSyncManager.OnActivePotionChanged -= OnActivePotionChanged;
+        }
+    }
+
+    private void OnActivePotionChanged(string potionType)
+    {
+        if (potionType == "Attack Potion")
+        {
+            StartCoroutine(SetTemporarlyHealth(decreasedHealthTime));
+        }
+    }
 
     void OnTriggerEnter(Collider other)
     {
@@ -37,5 +61,12 @@ public class DroneExplosion : MonoBehaviour
 
         // Increment the counter
         DroneCounter.IncrementExplosionCounter();
+    }
+
+    private IEnumerator SetTemporarlyHealth(float duration)
+    {
+        droneHealth = decreasedDroneHealth;
+        yield return new WaitForSeconds(duration);
+        droneHealth = defaultDroneHealth;
     }
 }
