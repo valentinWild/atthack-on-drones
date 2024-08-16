@@ -83,7 +83,7 @@ public class MixingVial : MonoBehaviour
             fluidAdded.Play();
             // Trigger the glow effect on the vial
             StartCoroutine(GlowVial());
-            
+
 
             // If two liquids have been added, mix them
             if (pouredLiquids.Count == 2)
@@ -130,7 +130,7 @@ public class MixingVial : MonoBehaviour
             fluid.GetComponent<Renderer>().material = healthPotion; // Another combination
             potionName = "Health Potion";
             Debug.Log("Created a new material by mixing Blue and Red");
-            creation.Play();           
+            creation.Play();
         }
         else if (pouredLiquids.Contains("BlueParticle") && pouredLiquids.Contains("GreenParticle"))
         {
@@ -139,11 +139,18 @@ public class MixingVial : MonoBehaviour
             Debug.Log("Created a new material by mixing Blue and Green");
             creation.Play();
         }
-        else if (pouredLiquids.Contains("BlackParticle") && pouredLiquids.Contains("RedParticle")
+        else if (pouredLiquids.Contains("BlackParticle") && pouredLiquids.Contains("RedParticle"))
         {
             fluid.GetComponent<Renderer>().material = deathPotion; // Death potion overrides others
             potionName = "Death Potion";
-            Debug.Log("Black liquid mixed, created death potion");
+            Debug.Log("Created a new material by mixing Black and Red");
+            creation.Play();
+        }
+        else if (pouredLiquids.Contains("BlackParticle") && pouredLiquids.Contains("BlueParticle"))
+        {
+            fluid.GetComponent<Renderer>().material = speedPotion;
+            potionName = "Speed Potion";
+            Debug.Log("Created a new material by mixing Black and Blue");
             creation.Play();
         }
         else
@@ -187,7 +194,7 @@ public class MixingVial : MonoBehaviour
         tutorialText.gameObject.SetActive(true);
 
         // Revert to the tutorial message
-       // ShowTutorialMessage();
+        // ShowTutorialMessage();
     }
 
     /*
