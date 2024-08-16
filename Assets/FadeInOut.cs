@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FadeInOut : MonoBehaviour
 {
@@ -11,6 +12,18 @@ public class FadeInOut : MonoBehaviour
 
     [SerializeField]
     private bool fadeIn = false;
+
+    public static FadeInOut Instance { get; set; }
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject); // Destroy the duplicate
+            return;
+        }
+        Instance = this;
+    }
 
     private void Start()
     {
@@ -38,6 +51,15 @@ public class FadeInOut : MonoBehaviour
     public void FadeOut()
     {
         StartCoroutine(FadeCanvasGroup(canvasGroup, 1, 0, fadeDuration));
+    }
+
+    public void setColor(Color color)
+    {
+        Image image = GetComponentInChildren<Image>();
+        if (image != null)
+        {
+            image.color = color;
+        }
     }
 
     private IEnumerator FadeCanvasGroup(CanvasGroup cg, float start, float end, float duration)
