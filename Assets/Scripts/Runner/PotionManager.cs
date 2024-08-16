@@ -6,13 +6,19 @@ public class PotionManager : MonoBehaviour
 {
 
     private void Start() {
-        //StartCoroutine(testPotion(10f));
+        StartCoroutine(testPotion(10f));
     }
 
     private IEnumerator testPotion(float delay)
     {
         yield return new WaitForSeconds(delay);
         GameSyncManager.Instance.RpcSetRunnerPotion("Health Potion");
+        yield return new WaitForSeconds(delay);
+        GameSyncManager.Instance.RpcSetRunnerPotion("Shield Potion");
+        yield return new WaitForSeconds(delay);
+        GameSyncManager.Instance.RpcSetRunnerPotion("Death Potion");
+        yield return new WaitForSeconds(delay);
+        GameSyncManager.Instance.RpcSetRunnerPotion("Attack Potion");
     }
 
 
@@ -34,11 +40,19 @@ public class PotionManager : MonoBehaviour
     {
         if (potionType == "Health Potion")
         {
-            Debug.Log("Health Potion activated, increased Player Health");
+            if (GameSyncManager.Instance)
+            {
+                GameSyncManager.Instance.RpcIncreaseRunnerHealth(20f);        
+                Debug.Log("Health Potion activated, increased Player Health");     
+            }
         }
         else if (potionType == "Death Potion")
         {
-            Debug.Log("Death Potion activated, decreased Player Health");
+            if (GameSyncManager.Instance)
+            {
+                GameSyncManager.Instance.RpcDecreaseRunnerHealth(20f);        
+                Debug.Log("Death Potion activated, decreased Player Health");
+            }
         }
         else if (potionType == "Shield Potion")
         {
@@ -49,11 +63,6 @@ public class PotionManager : MonoBehaviour
             // Double Lasers or something
             Debug.Log("Attack Potion activated");
         }
-
-    }
-
-    private void setPotionMessage (string message)
-    {
 
     }
 
