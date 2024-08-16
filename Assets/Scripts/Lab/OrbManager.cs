@@ -29,8 +29,6 @@ public class OrbManager : MonoBehaviour
 
     private Light[] orbLights; // Array to store references to the orb lights
 
-
-
     private void OnEnable()
     {
         if (GameSyncManager.Instance)
@@ -169,6 +167,7 @@ public class OrbManager : MonoBehaviour
         }
         return codes;
     }
+    /* Green Light
     public void UpdateOrbState(int orbIndex, bool isOn)
     {
 
@@ -190,12 +189,13 @@ public class OrbManager : MonoBehaviour
                 if (dronesCollected >= i + 1)  // Ensure the hintCounter is high enough
                 {
                     Debug.Log($"Entered code is correct and hint counter is sufficient ({dronesCollected} >= {i + 1})!");
-                    if (!hintWasDecoded[i]) // Ensure Hint hasn't been decoded
+
+                    if (!hintWasDecoded[dronesCollected - 1]) // Ensure Hint hasn't been decoded
                     {
+                        hintWasDecoded[dronesCollected - 1] = true;
+                        IncrementNumberOfDecodedHints();
                         // Change the color of all orbs to green
                         ChangeOrbLightColors(Color.green);
-                        hintWasDecoded[i] = true;
-                        IncrementNumberOfDecodedHints();
                         hintDisplayManager.ChangeHintColor(i, Color.black); // Change hint text color to black
                         // Wait a few seconds before resetting the lights
                         StartCoroutine(ResetLightsAfterDelay(3.0f));
@@ -220,7 +220,49 @@ public class OrbManager : MonoBehaviour
             }
         }
     }
+    */
 
+    public void UpdateOrbState(int orbIndex, bool isOn)
+    {
+
+        Debug.Log("UpdateOrbState function called in OrbManager");
+        if (orbIndex < 0 || orbIndex >= orbStates.Length)
+        {
+            Debug.LogWarning("Orb index out of bounds.");
+            return;
+        }
+
+        orbStates[orbIndex] = isOn;
+        Debug.Log($"Orb {orbIndex} state updated: {isOn}");
+
+        for (int i = 0; i < correctCodes.Length; i++)
+        {
+            Debug.Log($"Checking if entered code matches {BoolArrayToBinaryString(correctCodes[i].code)}");
+            if (AreCodesEqual(orbStates, correctCodes[i].code))
+            {
+                if (dronesCollected >= i + 1)  // Ensure the hintCounter is high enough
+                {
+                    Debug.Log($"Entered code is correct and hint counter is sufficient ({dronesCollected} >= {i + 1})!");
+                    hintDisplayManager.ChangeHintColor(i, Color.black); // Change hint text color to black
+                    hintWasDecoded[i] = true;
+                    Debug.Log("Hint Number " + i + "was set to:" + hintWasDecoded[i]);
+                    Debug.Log("New state of decoded hints: " + string.Join(", ", hintWasDecoded));
+
+                    // Check if all hints are decoded
+                    if (CheckAllHintsDecoded())
+                    {
+                        TriggerAllHintsDecodedAction();
+                    }
+
+                }
+                else
+                {
+                    Debug.Log($"Hint counter is too low to decode hint {i + 1}. Current counter: {dronesCollected}");
+                }
+                break;
+            }
+        }
+    }
     private IEnumerator ResetLightsAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -284,13 +326,8 @@ public class OrbManager : MonoBehaviour
     private void TriggerAllHintsDecodedAction()
     {
         Debug.Log("All hints decoded!");
-        IncrementLevel();
-    }
-
-    private void IncrementLevel()
-    {
-        Debug.Log("Incremented level. Current Level: ");
-        //todo: call increment level function in gameSyncManager
+        //IncrementLevel();
+        // todo: show button
     }
 
     public void ResetOrbs()
