@@ -42,7 +42,7 @@ public class HintDisplayManager : MonoBehaviour
     {
         if (GameSyncManager.Instance)
         {
-            GameSyncManager.OnCollectedDronesChanged += UpdateHintVisibility;
+            GameSyncManager.OnUnlockedHintsChanged += UpdateHintVisibility;
         }
     }
 
@@ -50,7 +50,7 @@ public class HintDisplayManager : MonoBehaviour
     {
         if (GameSyncManager.Instance)
         {
-            GameSyncManager.OnCollectedDronesChanged -= UpdateHintVisibility;
+            GameSyncManager.OnUnlockedHintsChanged -= UpdateHintVisibility;
         }
     }
 
@@ -60,7 +60,7 @@ public class HintDisplayManager : MonoBehaviour
         Debug.Log($"UpdateHintVisibility called with hintCounter: {hintCounter}");
 
         // Clamp the hintCounter value to ensure it doesn't exceed 4
-        hintCounter = Mathf.Clamp(hintCounter, 0, 4);
+        //hintCounter = Mathf.Clamp(hintCounter, 0, 4);
 
         if (hintCounter == 0)
         {
