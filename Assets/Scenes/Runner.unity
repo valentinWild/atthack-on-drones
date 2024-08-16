@@ -2382,7 +2382,7 @@ GameObject:
   m_Component:
   - component: {fileID: 800551082}
   - component: {fileID: 800551084}
-  - component: {fileID: 800551083}
+  - component: {fileID: 800551085}
   m_Layer: 10
   m_Name: PostProcessingHealthPotion
   m_TagString: Untagged
@@ -2405,19 +2405,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 571944008}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &800551083
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 800551081}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9d036bb7db17a54e9108054f49c6fd1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  intensity: 1000
 --- !u!114 &800551084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2435,6 +2422,19 @@ MonoBehaviour:
   blendDistance: 0
   weight: 1
   priority: 0
+--- !u!114 &800551085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800551081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e4ed0f3d7cc1104f9a93b378fc05e1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  intensity: 1000
 --- !u!1 &802138021
 GameObject:
   m_ObjectHideFlags: 0
