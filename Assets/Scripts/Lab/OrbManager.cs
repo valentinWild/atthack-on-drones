@@ -339,8 +339,6 @@ public class OrbManager : MonoBehaviour
         Debug.Log("All hints decoded!");
         endPotion.gameObject.SetActive(true);
         creation.Play();
-        //IncrementLevel();
-        // todo: show button
     }
 
     public void ResetOrbs()
