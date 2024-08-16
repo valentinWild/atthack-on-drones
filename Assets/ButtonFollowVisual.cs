@@ -26,7 +26,7 @@ public class ButtonFollowVisual : MonoBehaviour
 
         interactable = GetComponent<XRBaseInteractable>();
         interactable.hoverEntered.AddListener(Follow);
-        interactable.hoverExited.AddListener(Reset);
+        interactable.hoverExited.AddListener(ResetButton);
         interactable.selectEntered.AddListener(Freeze);
     }
 
@@ -44,7 +44,7 @@ public class ButtonFollowVisual : MonoBehaviour
         }
     }
 
-    public void Reset(BaseInteractionEventArgs hover)
+    public void ResetButton(BaseInteractionEventArgs hover)
     {
         if (hover.interactorObject is XRPokeInteractor)
         {
