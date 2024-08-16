@@ -14,7 +14,9 @@ public class ToggleLight : MonoBehaviour
 
     private bool isLightOn = false;
     private bool isDebouncing = false; // To track if we're in the debounce period
-    public float debounceTime = 0.5f; // Time in seconds to wait before allowing another toggle
+    public float debounceTime = 0.3f; // Time in seconds to wait before allowing another toggle
+
+    private readonly Color defaultColor = new Color(0.31f, 0f, 1f); // Set default color for light
 
     private void Start()
     {
@@ -72,5 +74,30 @@ public class ToggleLight : MonoBehaviour
         isLightOn = false;
         lightOrb.enabled = false;
         orbParticles.Stop();
+        lightOrb.color = defaultColor;
     }
+
+    public void ActivateLightAndParticles()
+    {
+        isLightOn = true;
+        lightOrb.enabled = true;
+        orbParticles.Play();
+    }
+
+    public void ChangeLightColor(Color newColor)
+    {
+        lightOrb.color = newColor;
+
+        // Ensure the light is turned on when the color is changed
+        if (!isLightOn)
+        {
+            lightOrb.enabled = true;
+        }
+    }
+
+    public void ResetToDefaultColor()
+    {
+        lightOrb.color = defaultColor;
+    }
+
 }

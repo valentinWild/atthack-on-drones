@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
@@ -72,13 +73,11 @@ public class PlayerController : MonoBehaviour
         turnAction.performed += PlayerTurn;
         //leanAction.performed += PlayerTurn;
         jumpAction.performed += PlayerJump;
-        slideAction.performed += PlayerSlide;
     }
 
     private void OnDisable() {
         turnAction.performed -= PlayerTurn;
         jumpAction.performed -= PlayerJump;
-        slideAction.performed -= PlayerSlide;
     }
 
     private void Start() {
@@ -97,14 +96,14 @@ public class PlayerController : MonoBehaviour
         Vector3 targetDirection = Quaternion.AngleAxis(90 * context.ReadValue<float>(), Vector3.up) * movementDirection;
         Debug.Log("New Target Direction: " + targetDirection);
         Debug.Log("Current Movement Direction: " + movementDirection);
-        turnEvent.Invoke(targetDirection);
-        Turn(context.ReadValue<float>(), turnPosition.Value);
 
-            if (fadeInOutScript != null)
-            {
-                fadeInOutScript.StartCoroutine(fadeInOutScript.FadeInAndOut());
-            }
+        if (fadeInOutScript != null)
+        {
+            FadeInOut.Instance.setColor(Color.black);
+            fadeInOutScript.StartCoroutine(fadeInOutScript.FadeInAndOut());
         }
+        StartCoroutine(TurnPlayerWithDelay(0.5f,targetDirection, context.ReadValue<float>(), turnPosition));
+    }
 
     public void ForcePlayerTurn(float direction) {
         Debug.Log("Forcing Player Turn in Player Controller");
@@ -117,13 +116,12 @@ public class PlayerController : MonoBehaviour
         if(GameSyncManager.Instance) {
             GameSyncManager.Instance.RpcDecreaseRunnerHealth(20);
         }
-        turnEvent.Invoke(targetDirection);
-        Turn(direction, turnPosition.Value);
-
-        if (takeDamageScript != null)
+        if (fadeInOutScript)
         {
-          StartCoroutine(takeDamageScript.TakeDamageEffect());
+            fadeInOutScript.setColor(Color.red);
+            StartCoroutine(fadeInOutScript.FadeInAndOut());
         }
+        StartCoroutine(TurnPlayerWithDelay(0.5f,targetDirection, direction, turnPosition));
      }
 
     private void PlayerJump(InputAction.CallbackContext context) {
@@ -143,18 +141,20 @@ public class PlayerController : MonoBehaviour
         }
         Debug.Log("Invoke Player turn by Leaning");
         Vector3 targetDirection = Quaternion.AngleAxis(90 * direction, Vector3.up) * movementDirection;
-        turnEvent.Invoke(targetDirection);
-        Turn(direction, turnPosition.Value);
         StartCoroutine(freezeTurning());
 
-            if (fadeInOutScript != null)
-            {
-                fadeInOutScript.StartCoroutine(fadeInOutScript.FadeInAndOut());
-            }
+        if (fadeInOutScript != null)
+        {
+            fadeInOutScript.setColor(Color.black);
+            fadeInOutScript.StartCoroutine(fadeInOutScript.FadeInAndOut());
         }
+        StartCoroutine(TurnPlayerWithDelay(0.5f,targetDirection, direction, turnPosition));
+    }
 
-    private void PlayerSlide(InputAction.CallbackContext context) {
-
+    private IEnumerator TurnPlayerWithDelay(float delay, Vector3 targetDirection, float direction, Vector3? turnPosition) {
+        yield return new WaitForSeconds(delay);
+        turnEvent.Invoke(targetDirection);
+        Turn(direction, turnPosition.Value); 
     }
 
     private void Update() {
