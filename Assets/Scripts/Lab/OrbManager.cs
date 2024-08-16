@@ -69,7 +69,7 @@ public class OrbManager : MonoBehaviour
     private void OnCollectedHintDronesChanged(int newAmount)
     {
         dronesCollected = newAmount;
-        Debug.Log("New Amount of Collect Drones: " + newAmount);
+        Debug.Log("New Amount of Collect Drones: " + newAmount + "and dronesCollected set to " + dronesCollected);
     }
 
     private void ResetDecodedHints()
@@ -84,6 +84,7 @@ public class OrbManager : MonoBehaviour
     private void IncrementNumberOfDecodedHints()
     {
         numberOfDecodedHints++;
+        Debug.Log("incremented number of decoded hints");
     }
 
     private void GenerateRandomCorrectCodes()
@@ -170,6 +171,8 @@ public class OrbManager : MonoBehaviour
     }
     public void UpdateOrbState(int orbIndex, bool isOn)
     {
+
+        Debug.Log("UpdateOrbState function called in OrbManager");
         if (orbIndex < 0 || orbIndex >= orbStates.Length)
         {
             Debug.LogWarning("Orb index out of bounds.");
@@ -238,6 +241,8 @@ public class OrbManager : MonoBehaviour
         {
             orbStates[i] = false;
         }
+
+        Debug.Log("Reset orb state");
     }
 
     // This method updates the hints displayed based on the current hint counter
