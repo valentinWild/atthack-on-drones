@@ -11,6 +11,8 @@ public class WeaponHandler : MonoBehaviour
     public GameObject bullet;
     public Transform spawnPoint;
     public float fireSpeed = 50f;
+    public float reloadTime = 3f;
+    private bool weaponLoaded = true;
 
     public AudioClip shootSound;
     private AudioSource audioSource;
@@ -40,13 +42,17 @@ public class WeaponHandler : MonoBehaviour
     private void OnShoot(InputAction.CallbackContext context)
     {
         Debug.Log("On Shoot triggered");
-        FireBullet();
+        if(weaponLoaded){
+            FireBullet();
+            StartCoroutine(ReloadWeapon());
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private IEnumerator ReloadWeapon()
     {
-        
+        weaponLoaded = false;
+        yield return new WaitForSeconds(reloadTime);
+        weaponLoaded = true;
     }
 
     public void FireBullet() 

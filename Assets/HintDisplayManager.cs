@@ -59,10 +59,9 @@ public class HintDisplayManager : MonoBehaviour
         Debug.Log($"UpdateHintVisibility called with hintCounter: {hintCounter}");
 
         // Clamp the hintCounter value to ensure it doesn't exceed 4
-        //hintCounter = Mathf.Clamp(hintCounter, 0, 4);
+        hintCounter = Mathf.Clamp(hintCounter, 0, 4);
 
-        // set 
-        if (hintCounter == 0 )
+        if (hintCounter == 0)
         {
             Debug.Log("HintCounter is 0");
             hint1.SetActive(false);
@@ -70,67 +69,67 @@ public class HintDisplayManager : MonoBehaviour
             hint3.SetActive(false);
             hint4.SetActive(false);
             displayGuideText.text = "waiting for runner to unlock hints...";
-        } else if (hintCounter >= 1 ) {
-        {
-            Debug.Log("HintCounter is bigger than 1");
-            displayGuideText.text = "touch the orbs to decipher the codes";
-            if (hintCounter >= 1)
+        } else if (hintCounter > 0)
             {
-                hint1.SetActive(true);
-                hint1Text.text = $"code 1\n{orbManager.correctCodesDecimal[0]}";
-                Debug.Log($"Hint 1 set to: {hint1Text.text}");
-            }
-            
+                Debug.Log("HintCounter is bigger than 1");
+                displayGuideText.text = "touch the orbs to decipher the codes";
+                if (hintCounter >= 1)
+                {
+                    hint1.SetActive(true);
+                    hint1Text.text = $"code 1\n{orbManager.correctCodesDecimal[0]}";
+                    Debug.Log($"Hint 1 set to: {hint1Text.text}");
+                }
 
-            if (hintCounter >= 2)
-            {
-                hint2.SetActive(true);
-                hint2Text.text = $"code 2\n{orbManager.correctCodesDecimal[1]}";
-                Debug.Log($"Hint 2 set to: {hint2Text.text}");
-            }
-            
 
-            if (hintCounter >= 3)
-            {
-                hint3.SetActive(true);
-                hint3Text.text = $"code 3\n{orbManager.correctCodesDecimal[2]}";
-                Debug.Log($"Hint 3 set to: {hint3Text.text}");
-            }
-           
+                if (hintCounter >= 2)
+                {
+                    hint2.SetActive(true);
+                    hint2Text.text = $"code 2\n{orbManager.correctCodesDecimal[1]}";
+                    Debug.Log($"Hint 2 set to: {hint2Text.text}");
+                }
 
-            if (hintCounter == 4)
-            {
-                hint4.SetActive(true);
-                hint4Text.text = $"code 4\n{orbManager.correctCodesDecimal[3]}";
-                Debug.Log($"Hint 4 set to: {hint4Text.text}");
+
+                if (hintCounter >= 3)
+                {
+                    hint3.SetActive(true);
+                    hint3Text.text = $"code 3\n{orbManager.correctCodesDecimal[2]}";
+                    Debug.Log($"Hint 3 set to: {hint3Text.text}");
+                }
+
+
+                if (hintCounter == 4)
+                {
+                    hint4.SetActive(true);
+                    hint4Text.text = $"code 4\n{orbManager.correctCodesDecimal[3]}";
+                    Debug.Log($"Hint 4 set to: {hint4Text.text}");
+                }
+
             }
-           
+
+            // Set the visibility of the hints based on the hintCounter value
+
         }
 
-        // Set the visibility of the hints based on the hintCounter value
-        
-    }
-
-    public void ChangeHintColor(int index, Color color)
-    {
-        switch (index)
+        public void ChangeHintColor(int index, Color color)
         {
-            case 0:
-                hint1Text.color = color;
-                break;
-            case 1:
-                hint2Text.color = color;
-                break;
-            case 2:
-                hint3Text.color = color;
-                break;
-            case 3:
-                hint4Text.color = color;
-                break;
-            default:
-                Debug.LogWarning("Invalid hint index for color change.");
-                break;
+            switch (index)
+            {
+                case 0:
+                    hint1Text.color = color;
+                    break;
+                case 1:
+                    hint2Text.color = color;
+                    break;
+                case 2:
+                    hint3Text.color = color;
+                    break;
+                case 3:
+                    hint4Text.color = color;
+                    break;
+                default:
+                    Debug.LogWarning("Invalid hint index for color change.");
+                    break;
+            }
         }
-    }
 
-}
+    }
