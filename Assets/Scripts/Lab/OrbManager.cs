@@ -29,8 +29,6 @@ public class OrbManager : MonoBehaviour
 
     private Light[] orbLights; // Array to store references to the orb lights
 
-
-
     private void OnEnable()
     {
         if (GameSyncManager.Instance)
@@ -237,9 +235,6 @@ public class OrbManager : MonoBehaviour
         orbStates[orbIndex] = isOn;
         Debug.Log($"Orb {orbIndex} state updated: {isOn}");
 
-        // Get the current hint counter value
-        //int currentHintCounter = hintCounter != null ? hintCounter.HintCounterValue : 0;
-
         for (int i = 0; i < correctCodes.Length; i++)
         {
             Debug.Log($"Checking if entered code matches {BoolArrayToBinaryString(correctCodes[i].code)}");
@@ -250,6 +245,8 @@ public class OrbManager : MonoBehaviour
                     Debug.Log($"Entered code is correct and hint counter is sufficient ({dronesCollected} >= {i + 1})!");
                     hintDisplayManager.ChangeHintColor(i, Color.black); // Change hint text color to black
                     hintWasDecoded[i] = true;
+                    Debug.Log("Hint Number " + i + "was set to:" + hintWasDecoded[i]);
+                    Debug.Log("New state of decoded hints: " + string.Join(", ", hintWasDecoded));
 
                     // Check if all hints are decoded
                     if (CheckAllHintsDecoded())
@@ -329,13 +326,8 @@ public class OrbManager : MonoBehaviour
     private void TriggerAllHintsDecodedAction()
     {
         Debug.Log("All hints decoded!");
-        IncrementLevel();
-    }
-
-    private void IncrementLevel()
-    {
-        Debug.Log("Incremented level. Current Level: ");
-        //todo: call increment level function in gameSyncManager
+        //IncrementLevel();
+        // todo: show button
     }
 
     public void ResetOrbs()
