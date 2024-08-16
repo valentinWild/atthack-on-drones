@@ -24,6 +24,11 @@ public class LevelSystem : MonoBehaviour
     private float lerpTimer;
     private float delayTimer;
 
+    [Header("Audio")]
+    public AudioClip levelUpSound;
+
+    private AudioSource audioSource;
+
     [Header("UI")]
     public Image frontXpBar;
     public Image backXpBar;
