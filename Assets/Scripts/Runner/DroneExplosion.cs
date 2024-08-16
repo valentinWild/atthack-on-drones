@@ -40,10 +40,14 @@ public class DroneExplosion : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        // �berpr�fe, ob das Projektil die Drone trifft
+        // Überprüfe, ob das Projektil die Drone trifft
         if (other.CompareTag("PlayerShot"))
         {
-            // Explosion ausl�sen
+            droneHealth--;
+        }
+        
+        if (droneHealth <= 0)
+        {
             TriggerExplosion();
         }
     }
