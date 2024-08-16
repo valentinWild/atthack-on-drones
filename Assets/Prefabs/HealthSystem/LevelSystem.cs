@@ -61,6 +61,12 @@ public class LevelSystem : MonoBehaviour
         frontXpBar.fillAmount = currentXp / requiredXp;
         backXpBar.fillAmount = currentXp / requiredXp;
         levelText.text = level.ToString();
+
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
     }
 
     void Update()
@@ -115,5 +121,10 @@ public class LevelSystem : MonoBehaviour
         frontXpBar.fillAmount = 0f;
         backXpBar.fillAmount = 0f;
         levelText.text = level.ToString();
+
+        if (levelUpSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(levelUpSound);
+        }
     }
 }
