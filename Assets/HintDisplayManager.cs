@@ -59,9 +59,8 @@ public class HintDisplayManager : MonoBehaviour
         Debug.Log($"UpdateHintVisibility called with hintCounter: {hintCounter}");
 
         // Clamp the hintCounter value to ensure it doesn't exceed 4
-        //hintCounter = Mathf.Clamp(hintCounter, 0, 4);
+        hintCounter = Mathf.Clamp(hintCounter, 0, 4);
 
-        // set 
         if (hintCounter == 0)
         {
             Debug.Log("HintCounter is 0");

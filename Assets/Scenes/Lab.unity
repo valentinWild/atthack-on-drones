@@ -31238,46 +31238,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
-    - target: {fileID: 2285127142258231128, guid: e387b1f4d59f4c04c92c73715fc3e666, type: 3}
-      propertyPath: m_text
-      value: 'code 3
-
-        00'
-      objectReference: {fileID: 0}
-    - target: {fileID: 2759138377155829975, guid: e387b1f4d59f4c04c92c73715fc3e666, type: 3}
-      propertyPath: m_text
-      value: 'code 2
-
-        00'
-      objectReference: {fileID: 0}
-    - target: {fileID: 3337403944128287304, guid: e387b1f4d59f4c04c92c73715fc3e666, type: 3}
-      propertyPath: m_text
-      value: 'code 4
-
-        00'
-      objectReference: {fileID: 0}
-    - target: {fileID: 3719707278178068206, guid: e387b1f4d59f4c04c92c73715fc3e666, type: 3}
-      propertyPath: m_text
-      value: guide text
-      objectReference: {fileID: 0}
-    - target: {fileID: 3719707278178068206, guid: e387b1f4d59f4c04c92c73715fc3e666, type: 3}
-      propertyPath: m_fontSize
-      value: 32.65
-      objectReference: {fileID: 0}
-    - target: {fileID: 3796548756529413052, guid: e387b1f4d59f4c04c92c73715fc3e666, type: 3}
-      propertyPath: m_text
-      value: 'code 1
-
-        00'
-      objectReference: {fileID: 0}
-    - target: {fileID: 3796548756529413052, guid: e387b1f4d59f4c04c92c73715fc3e666, type: 3}
-      propertyPath: m_hasFontAssetChanged
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5837956006669475869, guid: e387b1f4d59f4c04c92c73715fc3e666, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6226239643734712555, guid: e387b1f4d59f4c04c92c73715fc3e666, type: 3}
       propertyPath: m_Name
       value: Display
