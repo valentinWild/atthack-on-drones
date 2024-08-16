@@ -167,7 +167,7 @@ public class GameSyncManager : NetworkBehaviour
             if (HasStateAuthority)
             {
                 unlockedHints++;
-                OnUnlockedHintsChanged?.Invoke(requiredDrones);
+                OnUnlockedHintsChanged?.Invoke(unlockedHints);
             }
         }
     }
