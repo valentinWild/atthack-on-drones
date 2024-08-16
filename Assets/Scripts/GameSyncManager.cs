@@ -110,7 +110,7 @@ public class GameSyncManager : NetworkBehaviour
         if (HasStateAuthority)
         {
             activePotion = potionType;
-            if (potionType == "Health Potion")
+/*             if (potionType == "Health Potion")
             {
                 runnerHealth = runnerHealth + 20f;
                 OnRunnerHealthChanged?.Invoke(runnerHealth);
@@ -119,7 +119,7 @@ public class GameSyncManager : NetworkBehaviour
             {
                 runnerHealth = runnerHealth - 20f;
                 OnRunnerHealthChanged?.Invoke(runnerHealth);
-            }
+            } */
         }
     }
 
