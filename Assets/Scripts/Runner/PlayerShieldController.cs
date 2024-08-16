@@ -5,17 +5,32 @@ using UnityEngine;
 public class PlayerShieldController : MonoBehaviour
 {
     public GameObject playerShieldPrefab;
-    public float shieldDistance = 2f; // Abstand des Shields vor der Kamera
-    public float shieldDuration = 10f; // Dauer, wie lange das Shield sichtbar bleibt
+    public float shieldDistance = 2f; 
+    public float shieldDuration = 10f;
     public AudioClip shieldActivateSound;
 
     private GameObject currentShield; 
     private Camera mainCamera;
     private AudioSource audioSource;
 
+    private void OnEnable()
+    {
+        if (GameSyncManager.Instance)
+        {
+            GameSyncManager.OnActivePotionChanged += OnActivePotionChanged;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (GameSyncManager.Instance)
+        {
+            GameSyncManager.OnActivePotionChanged -= OnActivePotionChanged;
+        }
+    }
+
     void Start()
     {
-        // Die Hauptkamera finden
         mainCamera = Camera.main;
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
@@ -24,15 +39,17 @@ public class PlayerShieldController : MonoBehaviour
         }
     }
 
-    void Update()
+    private void OnActivePotionChanged(string potionType)
     {
-        // Überprüfe, ob die Leertaste gedrückt wurde
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (potionType == "Shield Potion")
         {
             ActivateShield();
         }
+    }
 
-        // Positioniere das Shield kontinuierlich vor der Kamera
+    void Update()
+    {
+        // Shield erscheint kontinuierlich vor der Kamera
         if (currentShield != null)
         {
             Vector3 shieldPosition = mainCamera.transform.position + mainCamera.transform.forward * shieldDistance;
@@ -43,17 +60,16 @@ public class PlayerShieldController : MonoBehaviour
 
     public void ActivateShield()
     {
-        // Falls bereits ein Shield aktiv ist, zerstöre es
         if (currentShield != null)
         {
             Destroy(currentShield);
         }
 
-        // Erstelle ein neues Shield 2 Meter vor der Kamera
+        // Shield 2 Meter vor der Kamera
         Vector3 shieldPosition = mainCamera.transform.position + mainCamera.transform.forward * shieldDistance;
         currentShield = Instantiate(playerShieldPrefab, shieldPosition, Quaternion.identity);
 
-        // Richte das Shield an der Kamera aus
+        // Ausrichtung des Shields an der Kamera
         currentShield.transform.SetParent(mainCamera.transform);
 
         if (shieldActivateSound != null)
