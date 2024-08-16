@@ -54,6 +54,7 @@ public class LevelSystem : MonoBehaviour
     private void OnDecodedHintsChanged(int amount)
     {
         completedChallenges = amount;
+        UpdateXpUI(amount);
     }
 
     void Start()
