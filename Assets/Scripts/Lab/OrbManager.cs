@@ -23,7 +23,8 @@ public class OrbManager : MonoBehaviour
     [SerializeField] public TextMeshProUGUI codeDisplayText;
     [SerializeField] public TextMeshProUGUI hintDisplayText;
 
-    public GameObject endPotion; 
+    public GameObject endPotion;
+    public AudioSource creation;
 
     private HintDisplayManager hintDisplayManager;
     private int dronesCollected; //Future hintCounter when networking
@@ -332,6 +333,7 @@ public class OrbManager : MonoBehaviour
     {
         Debug.Log("All hints decoded!");
         endPotion.gameObject.SetActive(true);
+        creation.Play();
         //IncrementLevel();
         // todo: show button
     }
