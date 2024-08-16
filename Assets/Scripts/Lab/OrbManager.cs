@@ -84,7 +84,7 @@ public class OrbManager : MonoBehaviour
     private void IncrementNumberOfDecodedHints()
     {
         numberOfDecodedHints++;
-        Debug.Log("incremented number of decoded hints");
+        Debug.Log("incremented number of decoded hints. Hints decoded: " + numberOfDecodedHints);
     }
 
     private void GenerateRandomCorrectCodes()
@@ -190,13 +190,20 @@ public class OrbManager : MonoBehaviour
                 if (dronesCollected >= i + 1)  // Ensure the hintCounter is high enough
                 {
                     Debug.Log($"Entered code is correct and hint counter is sufficient ({dronesCollected} >= {i + 1})!");
-                    hintDisplayManager.ChangeHintColor(i, Color.black); // Change hint text color to black
-                    hintWasDecoded[i] = true;
-                    // Change the color of all orbs to green
-                    ChangeOrbLightColors(Color.green);
-
-                    // Wait a few seconds before resetting the lights (optional)
-                    StartCoroutine(ResetLightsAfterDelay(3.0f));
+                    if (!hintWasDecoded[i]) // Ensure Hint hasn't been decoded
+                    {
+                        // Change the color of all orbs to green
+                        ChangeOrbLightColors(Color.green);
+                        hintWasDecoded[i] = true;
+                        IncrementNumberOfDecodedHints();
+                        hintDisplayManager.ChangeHintColor(i, Color.black); // Change hint text color to black
+                        // Wait a few seconds before resetting the lights
+                        StartCoroutine(ResetLightsAfterDelay(3.0f));
+                    }
+                    else
+                    {
+                        Debug.Log("Hint Number " + i + 1 + " has already been decoded");
+                    }
 
                     // Check if all hints are decoded
                     if (CheckAllHintsDecoded())
@@ -229,7 +236,7 @@ public class OrbManager : MonoBehaviour
         }
 
         // Optionally change the orb light colors back to their original color
-        ChangeOrbLightColors(Color.white);
+        ResetOrbLightColors();
     }
 
     // Helper method to change the color of all orb lights
@@ -243,6 +250,20 @@ public class OrbManager : MonoBehaviour
             if (toggleLight != null)
             {
                 toggleLight.ChangeLightColor(newColor);  // Use the method inside ToggleLight to change the light color
+            }
+        }
+    }
+
+    private void ResetOrbLightColors()
+    {
+        // Assuming that orbLights contains the references to the parent orb GameObjects (not just the Light components)
+        foreach (var orbLight in orbLights)
+        {
+            // Get the ToggleLight script attached to the orb GameObject
+            ToggleLight toggleLight = orbLight.GetComponentInParent<ToggleLight>();
+            if (toggleLight != null)
+            {
+                toggleLight.ResetToDefaultColor();  // Use the method inside ToggleLight to change the light color
             }
         }
     }
