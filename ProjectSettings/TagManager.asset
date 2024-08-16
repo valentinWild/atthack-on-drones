@@ -23,6 +23,7 @@ TagManager:
   - TurnSidewaysFailed
   - Floor
   - Arrow
+  - GoldParticle
   layers:
   - Default
   - TransparentFX
