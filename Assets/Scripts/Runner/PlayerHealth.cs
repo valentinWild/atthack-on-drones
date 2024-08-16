@@ -129,6 +129,7 @@ public class PlayerHealth : MonoBehaviour
     private void OnRunnerHealthChanged(float newHealth) 
     {
         health = newHealth;
+        Debug.Log("Updating Runner health to: " + newHealth);
         UpdateHealthUI();
     }
 

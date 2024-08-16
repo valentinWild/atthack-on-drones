@@ -12,11 +12,11 @@ public class PotionManager : MonoBehaviour
     private IEnumerator testPotion(float delay)
     {
         yield return new WaitForSeconds(delay);
+        GameSyncManager.Instance.RpcSetRunnerPotion("Death Potion");
+        yield return new WaitForSeconds(delay);
         GameSyncManager.Instance.RpcSetRunnerPotion("Health Potion");
         yield return new WaitForSeconds(delay);
         GameSyncManager.Instance.RpcSetRunnerPotion("Shield Potion");
-        yield return new WaitForSeconds(delay);
-        GameSyncManager.Instance.RpcSetRunnerPotion("Death Potion");
         yield return new WaitForSeconds(delay);
         GameSyncManager.Instance.RpcSetRunnerPotion("Attack Potion");
     }
