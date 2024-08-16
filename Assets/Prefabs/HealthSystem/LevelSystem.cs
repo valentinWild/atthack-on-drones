@@ -7,90 +7,144 @@ using TMPro;
 public class LevelSystem : MonoBehaviour
 {
     public int level;
-    public int completedChallenges;
-    private const int totalChallenges = 4;
+    private int _completedChallenges;
+    public int completedChallenges
+    {
+        get { return _completedChallenges; }
+        set
+        {
+            _completedChallenges = Mathf.Clamp(value, 0, (int)requiredXp);
+            currentXp = _completedChallenges; 
+            UpdateXpUI(); 
+        }
+    }
+    public float currentXp;
+    public const float requiredXp = 4; // Immer 4 Herausforderungen für den Levelaufstieg
 
     private float lerpTimer;
     private float delayTimer;
+
     [Header("UI")]
     public Image frontXpBar;
     public Image backXpBar;
-
     public TextMeshProUGUI levelText;
-    //public TextMeshProUGUI xpText;
+    public TextMeshProUGUI xpText;
 
-    // Start is called before the first frame update
     void Start()
     {
-        UpdateXpUI();
+        frontXpBar.fillAmount = currentXp / requiredXp;
+        backXpBar.fillAmount = currentXp / requiredXp;
         levelText.text = level.ToString();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        UpdateXpUI();
-
-        // Tastatureingaben abfragen
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        // Tastatureingaben für Testzwecke
+        if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            SetChallengeProgress(1);
+            completedChallenges++; // Erhöht die Anzahl der abgeschlossenen Herausforderungen
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            SetChallengeProgress(2);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            SetChallengeProgress(3);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            SetChallengeProgress(4);
+            completedChallenges--; // Verringert die Anzahl der abgeschlossenen Herausforderungen
         }
 
-        if (completedChallenges >= totalChallenges)
+        // Sicherstellen, dass completedChallenges innerhalb der Grenzen bleibt
+        completedChallenges = Mathf.Clamp(completedChallenges, 0, (int)requiredXp);
+
+        if (currentXp >= requiredXp)
         {
             LevelUp();
         }
     }
 
-    public void UpdateXpUI()
+    /*void UpdateXpUI()
     {
-        float xpFraction = (float)completedChallenges / totalChallenges;
+        float xpFraction = currentXp / requiredXp;
         float FXP = frontXpBar.fillAmount;
 
+        // Schritt 1: BackXpBar sofort auf den neuen Wert setzen
+        backXpBar.fillAmount = xpFraction;
+
+        // Schritt 2: FrontXpBar nach einer kurzen Verzögerung animieren
         if (FXP < xpFraction)
         {
             delayTimer += Time.deltaTime;
-            backXpBar.fillAmount = xpFraction;
-            if (delayTimer > 3)
+
+            if (delayTimer > 0.5f)  // Kürzere Verzögerung als vorher, z.B. 0.5 Sekunden
             {
                 lerpTimer += Time.deltaTime;
-                float percentComplete = lerpTimer / 1;
-                frontXpBar.fillAmount = Mathf.Lerp(FXP, backXpBar.fillAmount, percentComplete);
+                float percentComplete = lerpTimer / 0.3f; // Schneller animieren, indem der Wert verkleinert wird
+                frontXpBar.fillAmount = Mathf.Lerp(FXP, xpFraction, percentComplete);
+
+                if (frontXpBar.fillAmount >= xpFraction)
+                {
+                    lerpTimer = 0f; // Reset des Timers nach Abschluss der Animation
+                    delayTimer = 0f; // Reset der Verzögerung
+                }
             }
         }
 
-        //xpText.text = $"{completedChallenges}/{totalChallenges} Challenges";
-    }
+        xpText.text = $"{currentXp}/{requiredXp} Challenges";
+    }*/
 
-    public void SetChallengeProgress(int progress)
+
+    void UpdateXpUI()
     {
-        if (progress >= 1 && progress <= totalChallenges)
+        float xpFraction = currentXp / requiredXp;
+        float FXP = frontXpBar.fillAmount;
+
+        // Schritt 1: BackXpBar sofort auf den neuen Wert setzen
+        if (backXpBar.fillAmount < xpFraction)
         {
-            completedChallenges = progress;
-            lerpTimer = 0f;
-            delayTimer = 0f;
+            backXpBar.fillAmount = Mathf.MoveTowards(backXpBar.fillAmount, xpFraction, Time.deltaTime);
         }
+
+        // Schritt 2: FrontXpBar nach dem vollständigen Laden der BackXpBar animieren
+        if (backXpBar.fillAmount >= xpFraction)
+        {
+            delayTimer += Time.deltaTime;
+
+            if (delayTimer > 0.5f)  // Kürzere Verzögerung als vorher, z.B. 0.5 Sekunden
+            {
+                lerpTimer += Time.deltaTime;
+                frontXpBar.fillAmount = Mathf.MoveTowards(FXP, xpFraction, Time.deltaTime);
+
+                // Sicherstellen, dass die FrontXPBar am Ende exakt den Zielwert erreicht
+                if (Mathf.Abs(frontXpBar.fillAmount - xpFraction) < 0.01f)
+                {
+                    frontXpBar.fillAmount = xpFraction;
+                    lerpTimer = 0f; // Reset des Timers nach Abschluss der Animation
+                    delayTimer = 0f; // Reset der Verzögerung
+
+                    // Wenn die XP-Bar vollständig geladen ist (100%)
+                    if (frontXpBar.fillAmount >= 1.0f && currentXp >= requiredXp)
+                    {
+                        LevelUp(); // Nächstes Level starten und XP-Bars zurücksetzen
+                    }
+                }
+            }
+        }
+
+        xpText.text = $"{completedChallenges}/{requiredXp}";
     }
 
     public void LevelUp()
     {
         level++;
-        completedChallenges = 0;
+        completedChallenges = 0; // Setzt completedChallenges zurück, was auch currentXp auf 0 setzt
+        currentXp = 0f; // Reset der aktuellen XP
         frontXpBar.fillAmount = 0f;
         backXpBar.fillAmount = 0f;
-        levelText.text = level.ToString();  // Nur die Zahl anzeigen
+        levelText.text = level.ToString();
     }
+
+    /*public void LevelUp()
+    {
+        level++;
+        completedChallenges = 0; // Setzt completedChallenges zurück, was auch currentXp auf 0 setzt
+        frontXpBar.fillAmount = 0f;
+        backXpBar.fillAmount = 0f;
+        levelText.text = level.ToString();
+    }*/
 }
