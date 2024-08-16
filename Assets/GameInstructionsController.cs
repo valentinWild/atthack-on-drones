@@ -13,7 +13,7 @@ public class GameInstructionsController : MonoBehaviour
         
         if (guideCanvas != null)
         {
-            StartCoroutine(HideCanvasAfterDelay(10f));
+            StartCoroutine(HideCanvasAfterDelay(8f));
         }
         else
         {
