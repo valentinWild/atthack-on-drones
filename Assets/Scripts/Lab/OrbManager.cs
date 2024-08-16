@@ -23,6 +23,9 @@ public class OrbManager : MonoBehaviour
     [SerializeField] public TextMeshProUGUI codeDisplayText;
     [SerializeField] public TextMeshProUGUI hintDisplayText;
 
+    public GameObject endPotion;
+    public AudioSource creation;
+
     private HintDisplayManager hintDisplayManager;
     private int dronesCollected; //Future hintCounter when networking
     private int numberOfDecodedHints;
@@ -47,6 +50,9 @@ public class OrbManager : MonoBehaviour
 
     private void Start()
     {
+        // set end potion to invisible at the start
+        endPotion.gameObject.SetActive(false);
+
         correctCodes = new CorrectCode[4];
         correctCodesDecimal = new String[4];
         hintWasDecoded = new bool[4];
@@ -326,6 +332,8 @@ public class OrbManager : MonoBehaviour
     private void TriggerAllHintsDecodedAction()
     {
         Debug.Log("All hints decoded!");
+        endPotion.gameObject.SetActive(true);
+        creation.Play();
         //IncrementLevel();
         // todo: show button
     }
