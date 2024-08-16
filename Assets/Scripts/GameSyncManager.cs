@@ -142,6 +142,7 @@ public class GameSyncManager : NetworkBehaviour
         int newAmount = collectedHintDrones + 1;
         UpdateCollectedHintDrones(newAmount);
         OnCollectedDronesChanged?.Invoke(newAmount);
+        CheckUnlockHints(requiredDronesPerHint);
     }
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
     public void RpcResetCollectedHintDrones()
@@ -163,8 +164,11 @@ public class GameSyncManager : NetworkBehaviour
     {
         if (collectedHintDrones % 5 == 0 && unlockedHints < 4)
         {
-            unlockedHints++;
-            OnUnlockedHintsChanged?.Invoke(requiredDrones);
+            if (HasStateAuthority)
+            {
+                unlockedHints++;
+                OnUnlockedHintsChanged?.Invoke(requiredDrones);
+            }
         }
     }
 

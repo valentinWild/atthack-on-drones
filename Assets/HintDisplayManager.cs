@@ -42,7 +42,7 @@ public class HintDisplayManager : MonoBehaviour
     {
         if (GameSyncManager.Instance)
         {
-            GameSyncManager.OnCollectedDronesChanged += UpdateHintVisibility;
+            GameSyncManager.OnUnlockedHintsChanged += UpdateHintVisibility;
         }
     }
 
@@ -50,7 +50,7 @@ public class HintDisplayManager : MonoBehaviour
     {
         if (GameSyncManager.Instance)
         {
-            GameSyncManager.OnCollectedDronesChanged -= UpdateHintVisibility;
+            GameSyncManager.OnUnlockedHintsChanged -= UpdateHintVisibility;
         }
     }
 
