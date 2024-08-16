@@ -24,8 +24,8 @@ public class OrbManager : MonoBehaviour
     [SerializeField] public TextMeshProUGUI hintDisplayText;
 
     private HintDisplayManager hintDisplayManager;
-    private int dronesCollected; //Future hintCounter when networking
-    private int numberOfDecodedHints;
+    private int unlockedHints; //Future hintCounter when networking
+    private int decodedHints;
 
     private Light[] orbLights; // Array to store references to the orb lights
 
@@ -54,7 +54,7 @@ public class OrbManager : MonoBehaviour
         orbLights = GetComponentsInChildren<Light>();
 
 
-        numberOfDecodedHints = 0;
+        decodedHints = 0;
 
         hintDisplayManager = FindObjectOfType<HintDisplayManager>();
 
@@ -66,8 +66,8 @@ public class OrbManager : MonoBehaviour
 
     private void OnCollectedHintDronesChanged(int newAmount)
     {
-        dronesCollected = newAmount;
-        Debug.Log("New Amount of Collect Drones: " + newAmount + "and dronesCollected set to " + dronesCollected);
+        unlockedHints = newAmount;
+        Debug.Log("New Amount of Collect Drones: " + newAmount + "and dronesCollected set to " + unlockedHints);
     }
 
     private void ResetDecodedHints()
@@ -79,10 +79,14 @@ public class OrbManager : MonoBehaviour
 
     }
 
-    private void IncrementNumberOfDecodedHints()
+    private void IncrementDecodedHints()
     {
-        numberOfDecodedHints++;
-        Debug.Log("incremented number of decoded hints. Hints decoded: " + numberOfDecodedHints);
+        decodedHints++;
+        Debug.Log("incremented number of decoded hints. Solved Codes: " + decodedHints);
+        if (GameSyncManager.Instance)
+        {
+            GameSyncManager.Instance.RpcUpdateDecodedHints(decodedHints);
+        }
     }
 
     private void GenerateRandomCorrectCodes()
@@ -240,13 +244,14 @@ public class OrbManager : MonoBehaviour
             Debug.Log($"Checking if entered code matches {BoolArrayToBinaryString(correctCodes[i].code)}");
             if (AreCodesEqual(orbStates, correctCodes[i].code))
             {
-                if (dronesCollected >= i + 1)  // Ensure the hintCounter is high enough
+                if (unlockedHints >= i + 1 && !hintWasDecoded[i])  // Ensure the hintCounter is high enough
                 {
-                    Debug.Log($"Entered code is correct and hint counter is sufficient ({dronesCollected} >= {i + 1})!");
+                    Debug.Log($"Entered code is correct and hint counter is sufficient ({unlockedHints} >= {i + 1})!");
                     hintDisplayManager.ChangeHintColor(i, Color.black); // Change hint text color to black
                     hintWasDecoded[i] = true;
                     Debug.Log("Hint Number " + i + "was set to:" + hintWasDecoded[i]);
                     Debug.Log("New state of decoded hints: " + string.Join(", ", hintWasDecoded));
+                    IncrementDecodedHints();
 
                     // Check if all hints are decoded
                     if (CheckAllHintsDecoded())
@@ -257,7 +262,7 @@ public class OrbManager : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log($"Hint counter is too low to decode hint {i + 1}. Current counter: {dronesCollected}");
+                    Debug.Log($"Hint counter is too low to decode hint {i + 1}. Current counter: {unlockedHints}");
                 }
                 break;
             }
@@ -368,6 +373,6 @@ public class OrbManager : MonoBehaviour
 
     public void SetHintCounter(int newValue)
     {
-        dronesCollected = newValue;
+        unlockedHints = newValue;
     }
 }
