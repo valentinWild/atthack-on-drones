@@ -22,6 +22,7 @@ TagManager:
   - TurnRightFailed
   - TurnSidewaysFailed
   - Floor
+  - Arrow
   layers:
   - Default
   - TransparentFX
