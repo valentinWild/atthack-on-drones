@@ -46,6 +46,8 @@ public class GameSyncManager : NetworkBehaviour
             gameTimer = 0f;
             collectedHintDrones = 0;
             runnerHealth = 100;
+            decodedHints = 0;
+            unlockedHints = 0;
         }
     }
 
