@@ -11,7 +11,8 @@ public class WeaponHandler : MonoBehaviour
     public GameObject bullet;
     public Transform spawnPoint;
     public float fireSpeed = 50f;
-    public float reloadTime = 3f;
+    public float defaultReloadTime = 1.5f;
+    public float reloadTime = 1.5f;
     private bool weaponLoaded = true;
 
     public AudioClip shootSound;
@@ -20,17 +21,24 @@ public class WeaponHandler : MonoBehaviour
     private void OnEnable()
     {
         shootAction.action.performed += OnShoot;
+        if(GameSyncManager.Instance) {
+            GameSyncManager.OnActivePotionChanged += OnActivePotionChanged;
+        }
     }
 
     private void OnDisable()
     {
         shootAction.action.performed -= OnShoot;
+        if(GameSyncManager.Instance) {
+            GameSyncManager.OnActivePotionChanged -= OnActivePotionChanged;
+        }
     }
 
     private void Start()
     {
         // AudioSource-Komponente abrufen
         audioSource = GetComponent<AudioSource>();
+        reloadTime = defaultReloadTime;
 
         if (audioSource == null)
         {
@@ -48,11 +56,25 @@ public class WeaponHandler : MonoBehaviour
         }
     }
 
+    private void OnActivePotionChanged(string potionType)
+    {
+        if (potionType == "Attack Potion")
+        {
+            StartCoroutine(SetTemporarlyReloadTime(10f));
+        }
+    }
+
     private IEnumerator ReloadWeapon()
     {
         weaponLoaded = false;
         yield return new WaitForSeconds(reloadTime);
         weaponLoaded = true;
+    }
+
+    private IEnumerator SetTemporarlyReloadTime(float duration){
+        reloadTime = 0f;
+        yield return new WaitForSeconds(duration);
+        reloadTime = defaultReloadTime;
     }
 
     public void FireBullet() 

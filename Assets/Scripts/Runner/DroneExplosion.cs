@@ -11,7 +11,7 @@ public class DroneExplosion : MonoBehaviour
     [SerializeField]
     private int defaultDroneHealth = 3;
     [SerializeField]
-    private int decreasedDroneHealth = 1;
+    private int decreasedDroneHealth = 3;
     [SerializeField]
     private float decreasedHealthTime = 10f;
 
@@ -20,16 +20,16 @@ public class DroneExplosion : MonoBehaviour
 
     private void OnEnable()
     {
-        if(GameSyncManager.Instance) {
+/*         if(GameSyncManager.Instance) {
             GameSyncManager.OnActivePotionChanged += OnActivePotionChanged;
-        }
+        } */
     }
 
     private void OnDisable()
     {
-        if(GameSyncManager.Instance) {
+/*         if(GameSyncManager.Instance) {
             GameSyncManager.OnActivePotionChanged -= OnActivePotionChanged;
-        }
+        } */
     }
 
     private void OnActivePotionChanged(string potionType)
@@ -47,7 +47,7 @@ public class DroneExplosion : MonoBehaviour
         {
             droneHealth--;
         }
-        
+
         if (droneHealth <= 0)
         {
             TriggerExplosion();

@@ -54,12 +54,17 @@ public class LevelSystem : MonoBehaviour
     private void OnDecodedHintsChanged(int amount)
     {
         completedChallenges = amount;
+        UpdateXpUI();
     }
 
     void Start()
     {
         frontXpBar.fillAmount = currentXp / requiredXp;
         backXpBar.fillAmount = currentXp / requiredXp;
+        if (GameSyncManager.Instance)
+        {
+            level = GameSyncManager.Instance.currentLevel;
+        }
         levelText.text = level.ToString();
 
         audioSource = GetComponent<AudioSource>();

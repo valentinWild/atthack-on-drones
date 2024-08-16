@@ -23,13 +23,21 @@ public class MixingVial : MonoBehaviour
     public AudioSource creation;
     public AudioSource fail;
     public AudioSource fluidAdded;
+    public AudioSource backgroundMusic;
+    public AudioSource winningMusic;
 
     // Glow Effect Parameters
     public Material glowMaterial; // The material with a glow effect
     public float glowDuration = 0.5f; // Duration of the glow effect
 
+    // winning effects 
+    public ParticleSystem sparkle;
+    public ParticleSystem confetti;
+    public ParticleSystem shine;
+
     // UI Elements for Speech Bubble
-    //public GameObject speechBubble; // The speech bubble GameObject
+    public GameObject winDisplay; // The speech bubble GameObject
+    public GameObject uIDisplay;
     public TextMeshProUGUI potionText; // The TextMeshPro component for the speech bubble text
     public TextMeshProUGUI tutorialText;
     public float potionMessageDuration = 3.0f; // Duration the speech bubble stays visible
@@ -59,11 +67,21 @@ public class MixingVial : MonoBehaviour
         vialRenderer = mixingVial.GetComponent<Renderer>();
         originalVialMaterial = vialRenderer.material;
 
-        // Initially hide the speech bubble
-        //speechBubble.SetActive(true);
+        // set correct UI display at start
+        winDisplay.gameObject.SetActive(false);
+        uIDisplay.gameObject.SetActive(true);
+
+        // set correct text at start
         tutorialText.gameObject.SetActive(true); // Ensure the tutorial text is visible at the start
         potionText.gameObject.SetActive(false);
 
+        // disable particle effects at start
+        sparkle.gameObject.SetActive(false);
+        sparkle.Stop();
+        shine.gameObject.SetActive(false);
+        shine.Stop();
+        confetti.Stop();  
+        confetti.gameObject.SetActive(false);   
 
         // Set the default tutorial message
         //ShowTutorialMessage();
@@ -158,7 +176,20 @@ public class MixingVial : MonoBehaviour
             fluid.GetComponent<Renderer>().material = endPotion;
             potionName = "End Potion";
             Debug.Log("Created a new material by adding Gold");
+            // set sound effects and music
+            backgroundMusic.Stop();
             creation.Play();
+            winningMusic.Play();
+            // set winning display
+            uIDisplay.gameObject.SetActive(false);
+            winDisplay.gameObject.SetActive(true);
+            // activate particle systems
+            sparkle.gameObject.SetActive(true);
+            sparkle.Play();
+            shine.gameObject.SetActive(true);
+            shine.Play();   
+            confetti.gameObject.SetActive(true);
+            confetti.Play();
 
             if (GameSyncManager.Instance)
             {
