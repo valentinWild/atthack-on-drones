@@ -250,7 +250,7 @@ public class OrbManager : MonoBehaviour
             Debug.Log($"Checking if entered code matches {BoolArrayToBinaryString(correctCodes[i].code)}");
             if (AreCodesEqual(orbStates, correctCodes[i].code))
             {
-                if (unlockedHints >= i + 1 && !hintWasDecoded[i])  // Ensure the hintCounter is high enough
+                if (unlockedHints >= i + 1 && !hintWasDecoded[i])   // Ensure the hintCounter is high enough
                 {
                     Debug.Log($"Entered code is correct and hint counter is sufficient ({unlockedHints} >= {i + 1})!");
                     hintDisplayManager.ChangeHintColor(i, Color.black); // Change hint text color to black
@@ -258,6 +258,12 @@ public class OrbManager : MonoBehaviour
                     Debug.Log("Hint Number " + i + "was set to:" + hintWasDecoded[i]);
                     Debug.Log("New state of decoded hints: " + string.Join(", ", hintWasDecoded));
                     IncrementDecodedHints();
+
+                    //todo change orb colors
+                    //todo reset orbs
+
+                    ChangeOrbLightColors(Color.green);
+                    StartCoroutine(ResetLightsAfterDelay(3.0f));
 
                     // Check if all hints are decoded
                     if (CheckAllHintsDecoded())
@@ -277,7 +283,6 @@ public class OrbManager : MonoBehaviour
     private IEnumerator ResetLightsAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-
         // Reset the color and state of all orb lights
         foreach (var light in orbLights)
         {
