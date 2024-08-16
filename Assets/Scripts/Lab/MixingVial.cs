@@ -159,6 +159,11 @@ public class MixingVial : MonoBehaviour
             potionName = "End Potion";
             Debug.Log("Created a new material by adding Gold");
             creation.Play();
+
+            if (GameSyncManager.Instance)
+            {
+                GameSyncManager.Instance.RpcIncreaseLevel();
+            }
         }
         else
         {
