@@ -47,7 +47,7 @@ public class MixingVial : MonoBehaviour
     private HashSet<string> detectedLiquids = new HashSet<string>();
 
     // List of valid liquid tags
-    private HashSet<string> validLiquidTags = new HashSet<string> { "YellowParticle", "GreenParticle", "BlueParticle", "RedParticle", "BlackParticle" };
+    private HashSet<string> validLiquidTags = new HashSet<string> { "YellowParticle", "GreenParticle", "BlueParticle", "RedParticle", "BlackParticle", "GoldParticle" };
 
     private Renderer vialRenderer;
     private Material originalVialMaterial;
@@ -89,7 +89,7 @@ public class MixingVial : MonoBehaviour
             if (pouredLiquids.Count == 2)
             {
                 MixLiquids();
-            }
+            } else if (pouredLiquids.Contains("GoldParticle")) { MixLiquids();} // mix instantly if there is gold liquid
         }
     }
 
@@ -151,6 +151,13 @@ public class MixingVial : MonoBehaviour
             fluid.GetComponent<Renderer>().material = speedPotion;
             potionName = "Speed Potion";
             Debug.Log("Created a new material by mixing Black and Blue");
+            creation.Play();
+        }
+        else if (pouredLiquids.Contains("GoldParticle"))
+        {
+            fluid.GetComponent<Renderer>().material = endPotion;
+            potionName = "End Potion";
+            Debug.Log("Created a new material by adding Gold");
             creation.Play();
         }
         else
