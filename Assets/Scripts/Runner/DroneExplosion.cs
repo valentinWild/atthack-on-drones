@@ -6,6 +6,7 @@ public class DroneExplosion : MonoBehaviour
 {
 
     public GameObject droneExplosion;
+    public AudioClip explosionSound;
 
     [SerializeField]
     private int defaultDroneHealth = 3;
@@ -15,6 +16,7 @@ public class DroneExplosion : MonoBehaviour
     private float decreasedHealthTime = 10f;
 
     private float droneHealth = 3;
+    private AudioSource audioSource;
 
     private void OnEnable()
     {
@@ -54,16 +56,19 @@ public class DroneExplosion : MonoBehaviour
     
     void TriggerExplosion()
     {
-        // Instanziere die Explosion an der Position der Drone
-        GameObject explosion = Instantiate(droneExplosion, gameObject.transform.position, gameObject.transform.rotation);
 
-        // Zerst�re die Drone
+        GameObject explosion = Instantiate(droneExplosion, gameObject.transform.position, gameObject.transform.rotation);
+        
+        if (explosionSound != null)
+        {
+            audioSource.PlayOneShot(explosionSound);
+        }
+
         Destroy(gameObject);
 
-        // Zerstöre die Explosion
+
         Destroy(explosion, 2f);
 
-        // Increment the counter
         DroneCounter.IncrementExplosionCounter();
     }
 

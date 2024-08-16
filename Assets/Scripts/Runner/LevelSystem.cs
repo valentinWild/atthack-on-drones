@@ -60,6 +60,10 @@ public class LevelSystem : MonoBehaviour
     {
         frontXpBar.fillAmount = currentXp / requiredXp;
         backXpBar.fillAmount = currentXp / requiredXp;
+        if (GameSyncManager.Instance)
+        {
+            level = GameSyncManager.Instance.currentLevel;
+        }
         levelText.text = level.ToString();
 
         audioSource = GetComponent<AudioSource>();
