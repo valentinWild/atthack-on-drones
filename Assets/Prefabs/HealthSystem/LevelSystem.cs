@@ -18,6 +18,7 @@ public class LevelSystem : MonoBehaviour
             UpdateXpUI(); 
         }
     }
+
     public float currentXp;
     public const float requiredXp = 4; 
     private float lerpTimer;
@@ -75,22 +76,21 @@ public class LevelSystem : MonoBehaviour
             backXpBar.fillAmount = Mathf.MoveTowards(backXpBar.fillAmount, xpFraction, Time.deltaTime);
         }
 
-    
         if (backXpBar.fillAmount >= xpFraction)
         {
             delayTimer += Time.deltaTime;
 
-            if (delayTimer > 0.5f)  
+            if (delayTimer > 0.5f)
+            {
                 lerpTimer += Time.deltaTime;
                 frontXpBar.fillAmount = Mathf.MoveTowards(FXP, xpFraction, Time.deltaTime);
 
                 if (Mathf.Abs(frontXpBar.fillAmount - xpFraction) < 0.01f)
                 {
                     frontXpBar.fillAmount = xpFraction;
-                    lerpTimer = 0f; 
+                    lerpTimer = 0f;
                     delayTimer = 0f;
 
-                  
                     if (frontXpBar.fillAmount >= 1.0f && currentXp >= requiredXp)
                     {
                         LevelUp();
