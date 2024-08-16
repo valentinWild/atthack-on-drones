@@ -5,8 +5,12 @@ using System;
 public class GameSyncManager : NetworkBehaviour
 {
     public static GameSyncManager Instance { get; set; }
+
+    public static int requiredDronesPerHint = 5;
+
     public static event Action<float> OnRunnerHealthChanged;
     public static event Action<int> OnDecodedHintsChanged;
+    public static event Action<int> OnUnlockedHintsChanged;
     public static event Action<string> OnActivePotionChanged;
     public static event Action<int> OnCurrentLevelChanged;
     public static event Action<int> OnCollectedDronesChanged;
@@ -14,6 +18,7 @@ public class GameSyncManager : NetworkBehaviour
     // Networked properties that will be synchronized across all clients
     [Networked] public float gameTimer { get; set; }
     [Networked] public int collectedHintDrones { get; set; }
+    [Networked] public int unlockedHints { get; set; }
     [Networked] public float runnerHealth { get; set; }
     [Networked] public string activePotion { get; set; }
     [Networked] public int decodedHints { get; set; }
@@ -41,15 +46,6 @@ public class GameSyncManager : NetworkBehaviour
             gameTimer = 0f;
             collectedHintDrones = 0;
             runnerHealth = 100;
-        }
-    }
-
-    private void Update()
-    {
-        if (HasStateAuthority)
-        {
-            // Update the timer every second;
-            // GameTimer += Time.deltaTime;
         }
     }
 
@@ -110,16 +106,6 @@ public class GameSyncManager : NetworkBehaviour
         if (HasStateAuthority)
         {
             activePotion = potionType;
-/*             if (potionType == "Health Potion")
-            {
-                runnerHealth = runnerHealth + 20f;
-                OnRunnerHealthChanged?.Invoke(runnerHealth);
-            }
-            else if (potionType == "Death Potion")
-            {
-                runnerHealth = runnerHealth - 20f;
-                OnRunnerHealthChanged?.Invoke(runnerHealth);
-            } */
         }
     }
 
@@ -161,12 +147,22 @@ public class GameSyncManager : NetworkBehaviour
         int newAmount = 0;
         UpdateCollectedHintDrones(newAmount);
         OnCollectedDronesChanged?.Invoke(newAmount);
+        CheckUnlockHints(requiredDronesPerHint);
     }
     private void UpdateCollectedHintDrones(int currentAmount) 
     {
         if (HasStateAuthority)
         {
             collectedHintDrones = currentAmount;
+        }
+    }
+
+    private void CheckUnlockHints(int requiredDrones)
+    {
+        if (collectedHintDrones % 5 == 0 && unlockedHints < 4)
+        {
+            unlockedHints++;
+            OnUnlockedHintsChanged?.Invoke(requiredDrones);
         }
     }
 
