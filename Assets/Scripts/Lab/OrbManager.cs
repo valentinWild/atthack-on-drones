@@ -19,10 +19,6 @@ public class OrbManager : MonoBehaviour
     [SerializeField] private bool[] orbStates;
 
 
-    // UI references to display the codes and hints for testing
-    [SerializeField] public TextMeshProUGUI codeDisplayText;
-    [SerializeField] public TextMeshProUGUI hintDisplayText;
-
     public GameObject endPotion;
     public AudioSource creation;
 
@@ -30,13 +26,17 @@ public class OrbManager : MonoBehaviour
     private int unlockedHints; //Future hintCounter when networking
     private int decodedHints;
 
-    private Light[] orbLights; // Array to store references to the orb lights
+    public Light[] orbLights; // Array to store references to the orb lights
+    private readonly Color defaultColor = new Color(0.31f, 0f, 1f); // Set default color for light
+
+    public TextMeshProUGUI currentDecimalText; // Reference for current orb state to decimal display
+
 
     private void OnEnable()
     {
         if (GameSyncManager.Instance)
         {
-            GameSyncManager.OnCollectedDronesChanged += OnCollectedHintDronesChanged;
+            GameSyncManager.OnUnlockedHintsChanged += OnUnlockedHintsChanged;
         }
     }
 
@@ -44,7 +44,7 @@ public class OrbManager : MonoBehaviour
     {
         if (GameSyncManager.Instance)
         {
-            GameSyncManager.OnCollectedDronesChanged -= OnCollectedHintDronesChanged;
+            GameSyncManager.OnUnlockedHintsChanged -= OnUnlockedHintsChanged;
         }
     }
 
@@ -57,32 +57,28 @@ public class OrbManager : MonoBehaviour
         correctCodesDecimal = new String[4];
         hintWasDecoded = new bool[4];
         orbStates = new bool[4];
-        orbLights = GetComponentsInChildren<Light>();
 
 
         decodedHints = 0;
 
         hintDisplayManager = FindObjectOfType<HintDisplayManager>();
 
-
+        UpdateDecimalDisplay(ConvertCodeToDecimal(orbStates));
         GenerateRandomCorrectCodes();
         ResetOrbs();
         ResetDecodedHints();
     }
 
-    private void OnCollectedHintDronesChanged(int newAmount)
+    private void OnUnlockedHintsChanged(int newAmount)
     {
         unlockedHints = newAmount;
-        Debug.Log("New Amount of Collect Drones: " + newAmount + "and dronesCollected set to " + unlockedHints);
+        Debug.Log("New Amount of unlocked hints: " + newAmount);
     }
 
-    private void ResetDecodedHints()
+    public void UpdateDecimalDisplay(string newString)
     {
-        for (int i = 0; i < hintWasDecoded.Length; i++)
-        {
-            hintWasDecoded[i] = false;
-        }
-
+        Debug.Log($"CurrentDecimalDisplay updated decimal display");
+        currentDecimalText.text = newString;
     }
 
     private void IncrementDecodedHints()
@@ -115,8 +111,6 @@ public class OrbManager : MonoBehaviour
 
             Debug.Log($"Generated Code {i + 1}: {BoolArrayToBinaryString(newCode)} (Decimal: {ConvertCodeToDecimal(newCode)})");
         }
-
-        UpdateCodeDisplay();
     }
 
     private bool[] GenerateRandomCode()
@@ -244,6 +238,7 @@ public class OrbManager : MonoBehaviour
 
         orbStates[orbIndex] = isOn;
         Debug.Log($"Orb {orbIndex} state updated: {isOn}");
+        UpdateDecimalDisplay(ConvertCodeToDecimal(orbStates));
 
         for (int i = 0; i < correctCodes.Length; i++)
         {
@@ -255,9 +250,12 @@ public class OrbManager : MonoBehaviour
                     Debug.Log($"Entered code is correct and hint counter is sufficient ({unlockedHints} >= {i + 1})!");
                     hintDisplayManager.ChangeHintColor(i, Color.black); // Change hint text color to black
                     hintWasDecoded[i] = true;
-                    Debug.Log("Hint Number " + i + "was set to:" + hintWasDecoded[i]);
+                    Debug.Log("Hint Number " + i + 1 + " was set to: " + hintWasDecoded[i]);
                     Debug.Log("New state of decoded hints: " + string.Join(", ", hintWasDecoded));
                     IncrementDecodedHints();
+                    //todo: turn orbs green
+                    ChangeOrbLightColors(Color.green);
+                    StartCoroutine(ResetLightsAfterDelay(0.3f));
 
                     // Check if all hints are decoded
                     if (CheckAllHintsDecoded())
@@ -279,17 +277,14 @@ public class OrbManager : MonoBehaviour
         yield return new WaitForSeconds(delay);
 
         // Reset the color and state of all orb lights
-        foreach (var light in orbLights)
+        foreach (var orbLight in orbLights)
         {
-            ToggleLight toggleLight = light.GetComponent<ToggleLight>();
-            if (toggleLight != null)
+            if (orbLight != null)
             {
-                toggleLight.ResetLightAndParticles();
+                orbLight.enabled = false;
+                orbLight.color = defaultColor;
             }
         }
-
-        // Optionally change the orb light colors back to their original color
-        ResetOrbLightColors();
     }
 
     // Helper method to change the color of all orb lights
@@ -299,24 +294,10 @@ public class OrbManager : MonoBehaviour
         foreach (var orbLight in orbLights)
         {
             // Get the ToggleLight script attached to the orb GameObject
-            ToggleLight toggleLight = orbLight.GetComponentInParent<ToggleLight>();
-            if (toggleLight != null)
+            if (orbLight != null)
             {
-                toggleLight.ChangeLightColor(newColor);  // Use the method inside ToggleLight to change the light color
-            }
-        }
-    }
-
-    private void ResetOrbLightColors()
-    {
-        // Assuming that orbLights contains the references to the parent orb GameObjects (not just the Light components)
-        foreach (var orbLight in orbLights)
-        {
-            // Get the ToggleLight script attached to the orb GameObject
-            ToggleLight toggleLight = orbLight.GetComponentInParent<ToggleLight>();
-            if (toggleLight != null)
-            {
-                toggleLight.ResetToDefaultColor();  // Use the method inside ToggleLight to change the light color
+                orbLight.color = newColor;  // Use the method inside ToggleLight to change the light color
+                orbLight.enabled = true;
             }
         }
     }
@@ -337,7 +318,7 @@ public class OrbManager : MonoBehaviour
     private void TriggerAllHintsDecodedAction()
     {
         Debug.Log("All hints decoded!");
-        endPotion.gameObject.SetActive(true);
+        endPotion.gameObject.SetActive(true); //Show Golden Potion
         creation.Play();
     }
 
@@ -351,34 +332,12 @@ public class OrbManager : MonoBehaviour
         Debug.Log("Reset orb state");
     }
 
-    // This method updates the hints displayed based on the current hint counter
-    private void UpdateHints(int hintCount)
+    private void ResetDecodedHints()
     {
-        if (hintDisplayText != null)
+        for (int i = 0; i < hintWasDecoded.Length; i++)
         {
-            hintDisplayText.text = "Hints (Decimal):\n";
-            for (int i = 0; i < hintCount && i < correctCodes.Length; i++)
-            {
-                hintDisplayText.text += $"Hint {i + 1}: {ConvertCodeToDecimal(correctCodes[i].code)}\n";
-            }
+            hintWasDecoded[i] = false;
         }
-    }
 
-    // This method updates the code display for debugging purposes
-    private void UpdateCodeDisplay()
-    {
-        if (codeDisplayText != null)
-        {
-            codeDisplayText.text = "Generated Codes:\n";
-            for (int i = 0; i < correctCodes.Length; i++)
-            {
-                codeDisplayText.text += $"Code {i + 1}: {BoolArrayToBinaryString(correctCodes[i].code)}\n";
-            }
-        }
-    }
-
-    public void SetHintCounter(int newValue)
-    {
-        unlockedHints = newValue;
     }
 }

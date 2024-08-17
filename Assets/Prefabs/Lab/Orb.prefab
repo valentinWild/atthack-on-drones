@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 1753834607999689193}
   - component: {fileID: 6032132168542280747}
   - component: {fileID: 3642941046596643898}
+  - component: {fileID: 4666288278937669559}
   m_Layer: 0
   m_Name: Orb
   m_TagString: Untagged
@@ -5017,6 +5018,24 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4666288278937669559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4897592046126779823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb79c54106a7c8f42bbd7e30991b639a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  materialProperties: {fileID: 0}
+  breakable: 0
+  yieldDistance: 0.03
+  mustBeGrabbed: 0
+  requiresThumb: 0
+  minimumFingers: 1
 --- !u!1 &7377082058690716804
 GameObject:
   m_ObjectHideFlags: 0

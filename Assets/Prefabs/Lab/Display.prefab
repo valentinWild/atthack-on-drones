@@ -58,6 +58,7 @@ MonoBehaviour:
   hint2: {fileID: 1069795851906011543}
   hint3: {fileID: 2237731579699437212}
   hint4: {fileID: 4058217011755532459}
+  currentDecimal: {fileID: 0}
 --- !u!1 &1069795851906011543
 GameObject:
   m_ObjectHideFlags: 0

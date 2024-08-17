@@ -206,7 +206,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private Vector3? CheckForcedTurn() {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, .5f, turnFailedLayer);
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, .8f, turnFailedLayer);
         if (hitColliders.Length != 0)
         {
             Tile tile = hitColliders[0].transform.parent.GetComponent<Tile>();
