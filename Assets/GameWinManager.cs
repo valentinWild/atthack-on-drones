@@ -6,6 +6,7 @@ public class GameWinManager : MonoBehaviour
     public GameObject winCanvas; // Ziehe hier das Canvas GameObject hinein
     public AudioClip winSound;
     public PostProcessVolume postProcessingWin;
+    public GameObject canva;
 
     private AudioSource audioSource;
     private Vignette vignetteEffect;
@@ -39,6 +40,8 @@ public class GameWinManager : MonoBehaviour
             PlayWinSound();
 
             ActivateVignetteEffect();
+
+            HideCanva();
         }
     }
 
@@ -59,6 +62,18 @@ public class GameWinManager : MonoBehaviour
         if (vignetteEffect != null)
         {
             vignetteEffect.active = true; 
+        }
+    }
+
+    void HideCanva()
+    {
+        if (canva != null)
+        {
+            canva.SetActive(false); // "Canva" ausblenden
+        }
+        else
+        {
+            Debug.LogWarning("Canva-Objekt nicht zugewiesen.");
         }
     }
 }

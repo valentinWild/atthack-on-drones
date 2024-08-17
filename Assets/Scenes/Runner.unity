@@ -16995,6 +16995,7 @@ MonoBehaviour:
   winCanvas: {fileID: 938975794}
   winSound: {fileID: 8300000, guid: acd573f1df3a203429fe8bc4e1afeeb7, type: 3}
   postProcessingWin: {fileID: 914380415}
+  canva: {fileID: 456779208}
 --- !u!1 &1561327543
 GameObject:
   m_ObjectHideFlags: 0
