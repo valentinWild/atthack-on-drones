@@ -7530,6 +7530,10 @@ PrefabInstance:
       propertyPath: hintDisplayText
       value: 
       objectReference: {fileID: 809819818}
+    - target: {fileID: 7144758473183370346, guid: e9a23873313c052459c3f0f1f80ebd75, type: 3}
+      propertyPath: currentDecimalText
+      value: 
+      objectReference: {fileID: 1965761164}
     - target: {fileID: 8201826039759979897, guid: e9a23873313c052459c3f0f1f80ebd75, type: 3}
       propertyPath: m_Name
       value: OrbManager
@@ -26889,7 +26893,7 @@ Transform:
   m_GameObject: {fileID: 1737153861}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.90804154, z: -0, w: 0.4188801}
-  m_LocalPosition: {x: -0.803, y: 1.39, z: -2.779}
+  m_LocalPosition: {x: -0.492, y: 1.39, z: -2.414}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -30145,6 +30149,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1965761164 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3646209198247140490, guid: b31f7dbec78676a4991ffcc7d244f3dc, type: 3}
+  m_PrefabInstance: {fileID: 278357929}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1966087719
 PrefabInstance:
   m_ObjectHideFlags: 0
