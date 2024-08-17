@@ -1,3 +1,4 @@
+/*
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -88,7 +89,7 @@ public class PlayerLeanHandler : MonoBehaviour
         }
     }
 }
-/* 
+*/
 
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -100,7 +101,7 @@ using System.Collections;
 public class PlayerLeanHandler : MonoBehaviour
 {
     public Transform headTransform;
-    public float leanThreshold = 15f; // Angle threshold in degrees
+    public float leanThreshold = 10f; // Angle threshold in degrees
 
     public static event Action<float> OnLeanValueChanged;
 
@@ -116,16 +117,16 @@ public class PlayerLeanHandler : MonoBehaviour
 
     void Update()
     {
-        // Calculate the angle between the head's up vector and the world's up vector
-        float headInclination = Vector3.SignedAngle(Vector3.up, headTransform.up, headTransform.right);
+        // Calculate the tilt angle around the local z-axis (which determines left/right tilt)
+        float headTiltAngle = Vector3.SignedAngle(headTransform.up, Vector3.up, headTransform.forward);
 
-        // Determine the lean value based on the inclination angle
+        // Determine the lean value based on the tilt angle
         float leanValue = 0f;
-        if (headInclination > leanThreshold)
+        if (headTiltAngle > leanThreshold)
         {
             leanValue = 1f; // Leaning to the right
         }
-        else if (headInclination < -leanThreshold)
+        else if (headTiltAngle < -leanThreshold)
         {
             leanValue = -1f; // Leaning to the left
         }
@@ -144,4 +145,4 @@ public class PlayerLeanHandler : MonoBehaviour
         }
     }
 }
- */
+
