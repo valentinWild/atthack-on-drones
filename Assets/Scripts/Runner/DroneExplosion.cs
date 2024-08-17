@@ -46,6 +46,7 @@ public class DroneExplosion : MonoBehaviour
         if (other.CompareTag("PlayerShot"))
         {
             droneHealth--;
+            TriggerExplosion();
         }
 
         if (droneHealth <= 0)
@@ -59,10 +60,10 @@ public class DroneExplosion : MonoBehaviour
 
         GameObject explosion = Instantiate(droneExplosion, gameObject.transform.position, gameObject.transform.rotation);
         
-        if (explosionSound != null)
+/*         if (explosionSound != null)
         {
             audioSource.PlayOneShot(explosionSound);
-        }
+        } */
 
         Destroy(gameObject);
         Destroy(explosion, 2f);
