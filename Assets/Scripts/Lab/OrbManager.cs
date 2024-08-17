@@ -29,8 +29,7 @@ public class OrbManager : MonoBehaviour
     public Light[] orbLights; // Array to store references to the orb lights
     private readonly Color defaultColor = new Color(0.31f, 0f, 1f); // Set default color for light
 
-    //private CurrentDecimalDisplay currentDecimalDisplay;
-    public TextMeshProUGUI currentDecimalText;
+    public TextMeshProUGUI currentDecimalText; // Reference for current orb state to decimal display
 
 
     private void OnEnable()
@@ -63,7 +62,6 @@ public class OrbManager : MonoBehaviour
         decodedHints = 0;
 
         hintDisplayManager = FindObjectOfType<HintDisplayManager>();
-        //currentDecimalDisplay = FindObjectOfType<CurrentDecimalDisplay>();
 
         UpdateDecimalDisplay(ConvertCodeToDecimal(orbStates));
         GenerateRandomCorrectCodes();
