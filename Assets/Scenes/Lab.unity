@@ -28277,7 +28277,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8492788114577147220, guid: 15434b413b2050f46adb9611230aef06, type: 3}
       propertyPath: m_Name
-      value: WristCanvas
+      value: WristUI
       objectReference: {fileID: 0}
     - target: {fileID: 9134270714301796389, guid: 15434b413b2050f46adb9611230aef06, type: 3}
       propertyPath: m_Pivot.x
@@ -28321,7 +28321,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9134270714301796389, guid: 15434b413b2050f46adb9611230aef06, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.104
+      value: 0.059
       objectReference: {fileID: 0}
     - target: {fileID: 9134270714301796389, guid: 15434b413b2050f46adb9611230aef06, type: 3}
       propertyPath: m_LocalRotation.w
@@ -28341,11 +28341,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9134270714301796389, guid: 15434b413b2050f46adb9611230aef06, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.043
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 9134270714301796389, guid: 15434b413b2050f46adb9611230aef06, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.152
+      value: 0.091
       objectReference: {fileID: 0}
     - target: {fileID: 9134270714301796389, guid: 15434b413b2050f46adb9611230aef06, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
