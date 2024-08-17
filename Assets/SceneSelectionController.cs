@@ -87,5 +87,10 @@ public class SceneSelectionController : MonoBehaviour
         // Start the game as Client and load the RunnerScene
         SceneManager.LoadScene("Runner");
     }
+
+    public void LoadLobbyScene()
+    {
+        SceneManager.LoadScene("LobbySceneVR");
+    }
 }
 

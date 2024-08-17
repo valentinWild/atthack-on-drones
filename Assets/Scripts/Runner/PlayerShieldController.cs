@@ -49,8 +49,14 @@ public class PlayerShieldController : MonoBehaviour
 
     void Update()
     {
-        // Shield erscheint kontinuierlich vor der Kamera
-        if (currentShield != null)
+            /*if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+            {
+                ActivateShield();
+            }*/
+
+
+            // Shield erscheint kontinuierlich vor der Kamera
+            if (currentShield != null)
         {
             Vector3 shieldPosition = mainCamera.transform.position + mainCamera.transform.forward * shieldDistance;
             currentShield.transform.position = shieldPosition;
