@@ -46,7 +46,6 @@ public class DroneExplosion : MonoBehaviour
         if (other.CompareTag("PlayerShot"))
         {
             droneHealth--;
-            TriggerExplosion();
         }
 
         if (droneHealth <= 0)
