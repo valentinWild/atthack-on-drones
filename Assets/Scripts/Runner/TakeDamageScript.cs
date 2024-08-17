@@ -11,6 +11,7 @@ public class TakeDamageScript : MonoBehaviour
     PostProcessVolume _volume;
     Vignette _vignette;
 
+    public AudioSource audioSource;
 
     void Start()
     {
@@ -37,6 +38,11 @@ public class TakeDamageScript : MonoBehaviour
     public IEnumerator TakeDamageEffect()
     {
         intensity = 0.4f;
+
+        if (audioSource != null)
+        {
+            audioSource.Play();
+        }
 
         _vignette.enabled.Override(true);
         _vignette.intensity.Override(intensity);

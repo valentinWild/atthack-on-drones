@@ -332,7 +332,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   droneExplosion: {fileID: 1121192042590650, guid: e1b08032bec16ba4eb1ae23cbd572664, type: 3}
-  explosionSound: {fileID: 8300000, guid: f6239e91bf1a2d148a58ca49d1c356e4, type: 3}
+  audioSource: {fileID: 2825867034455761015}
   defaultDroneHealth: 3
   decreasedDroneHealth: 1
   decreasedHealthTime: 10
@@ -391,8 +391,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 8300000, guid: f6239e91bf1a2d148a58ca49d1c356e4, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
