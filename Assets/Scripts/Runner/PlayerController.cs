@@ -116,7 +116,7 @@ public class PlayerController : MonoBehaviour
         private IEnumerator SpeedBoostCoroutine()
         {
             float originalSpeed = 6.5f; 
-            playerSpeed = 7.5f; 
+            playerSpeed = 8.5f; 
 
             yield return new WaitForSeconds(10); 
 
