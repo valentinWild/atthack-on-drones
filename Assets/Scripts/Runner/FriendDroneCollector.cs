@@ -8,9 +8,9 @@ public class FriendDroneCollector : MonoBehaviour
     [SerializeField] private AudioClip collectSound;
     private AudioSource audioSource;
 
-    private void OnEnable() {
+/*     private void OnEnable() {
         DroneCounter.RegisterEvents();
-    }
+    } */
 
     private void Start()
     {
@@ -41,7 +41,12 @@ public class FriendDroneCollector : MonoBehaviour
         {
             Debug.Log("Drone collected: " + other.gameObject.name);
             Destroy(other.gameObject); // Drone nach collection zerstören
-            DroneCounter.IncrementCollectedCounter(); // Zähler erhöhen für eingesammelte Drohnen
+            //DroneCounter.IncrementCollectedCounter(); // Zähler erhöhen für eingesammelte Drohnen
+
+            if(GameSyncManager.Instance) 
+            {
+                GameSyncManager.Instance.RpcIncreaseCollectedHintDrones();
+            }
 
             if (audioSource != null && collectSound != null)
             {
