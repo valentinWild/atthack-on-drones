@@ -3,19 +3,33 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class GameWinManager : MonoBehaviour
 {
-    public GameObject winCanvas; // Ziehe hier das Canvas GameObject hinein
-    public AudioClip winSound;
+    public GameObject winCanvas;
     public PostProcessVolume postProcessingWin;
     public GameObject canva;
 
-    private AudioSource audioSource;
+    private AudioSource winSound;
     private Vignette vignetteEffect;
 
+    private void OnEnable()
+    {
+        if (GameSyncManager.Instance)
+        {
+            GameSyncManager.OnActivePotionChanged += OnActivePotionChanged;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (GameSyncManager.Instance)
+        {
+            GameSyncManager.OnActivePotionChanged -= OnActivePotionChanged;
+        }
+    }
 
     void Start()
     {
         winCanvas.SetActive(false);
-        audioSource = GetComponent<AudioSource>();
+        winSound = GetComponent<AudioSource>();
 
         
         {
@@ -31,25 +45,29 @@ public class GameWinManager : MonoBehaviour
         }
     }
 
-    void Update()
+    private void OnActivePotionChanged(string potionType)
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (potionType == "End Potion")
         {
-            winCanvas.SetActive(true);
-
-            PlayWinSound();
-
             ActivateVignetteEffect();
-
-            HideCanva();
         }
     }
 
+    void Update()
+    {
+        PlayWinSound();
+
+        ActivateVignetteEffect();  // This line is correct
+
+        HideCanva();
+    }
+
+
     void PlayWinSound()
     {
-        if (audioSource != null && winSound != null)
+        if (winSound != null)
         {
-            audioSource.PlayOneShot(winSound);
+            winSound.Play();
         }
         else
         {

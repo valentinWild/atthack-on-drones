@@ -36,13 +36,21 @@ public class ShieldCollisionHandler : MonoBehaviour
             
             if (other.CompareTag("Enemy"))
             {
-                DroneCounter.IncrementExplosionCounter();
+                //DroneCounter.IncrementExplosionCounter();
+                if (GameSyncManager.Instance)
+                {
+                    GameSyncManager.Instance.RpcIncreaseShotEnemyDrones(1);
+                }
                 Destroy(other.gameObject);
             }
 
             if (other.CompareTag("Friend"))
             {
-                DroneCounter.IncrementCollectedCounter();
+                //DroneCounter.IncrementCollectedCounter();
+                if (GameSyncManager.Instance)
+                {
+                    GameSyncManager.Instance.RpcIncreaseCollectedHintDrones();
+                }
                 Destroy(other.gameObject);
             }
         }

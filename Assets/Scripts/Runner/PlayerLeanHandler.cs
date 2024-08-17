@@ -75,7 +75,7 @@ public class PlayerLeanHandler : MonoBehaviour
 
     }
 
-/*     private void ChangeArrowColors(float direction) {
+    private void ChangeArrowColors(float direction) {
         GameObject[] arrows = GameObject.FindGameObjectsWithTag("Arrow");
         // Iterate through each GameObject and call the method on the ArrowController script
         foreach (GameObject arrow in arrows)
@@ -86,6 +86,62 @@ public class PlayerLeanHandler : MonoBehaviour
                 controller.OnLeanValueChanged(direction);  // Replace DoSomething with your desired method
             }
         }
-    } */
+    }
 }
+/* 
 
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.Events;
+using System;
+using System.Collections;
+
+public class PlayerLeanHandler : MonoBehaviour
+{
+    public Transform headTransform;
+    public float leanThreshold = 15f; // Angle threshold in degrees
+
+    public static event Action<float> OnLeanValueChanged;
+
+    private float currentLeanValue = 0f;
+
+    [SerializeField]
+    private UnityEvent<float> leanEvent;
+
+    private void Start()
+    {
+        Debug.Log("Player Leaning Handler started");
+    }
+
+    void Update()
+    {
+        // Calculate the angle between the head's up vector and the world's up vector
+        float headInclination = Vector3.SignedAngle(Vector3.up, headTransform.up, headTransform.right);
+
+        // Determine the lean value based on the inclination angle
+        float leanValue = 0f;
+        if (headInclination > leanThreshold)
+        {
+            leanValue = 1f; // Leaning to the right
+        }
+        else if (headInclination < -leanThreshold)
+        {
+            leanValue = -1f; // Leaning to the left
+        }
+
+        // Invoke the lean value change event if the lean value has changed
+        if (currentLeanValue != leanValue)
+        {
+            currentLeanValue = leanValue;
+            OnLeanValueChanged?.Invoke(currentLeanValue);
+        }
+
+        // Invoke the UnityEvent if the player is leaning
+        if (leanValue == 1 || leanValue == -1)
+        {
+            leanEvent.Invoke(leanValue);
+        }
+    }
+}
+ */

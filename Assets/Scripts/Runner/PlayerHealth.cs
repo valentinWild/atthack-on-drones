@@ -32,7 +32,8 @@ public class PlayerHealth : MonoBehaviour
     {
         if(GameSyncManager.Instance) {
             GameSyncManager.OnRunnerHealthChanged += OnRunnerHealthChanged;
-            //GameSyncManager.OnCollectedDronesChanged += OnCollectedDronesChanged;
+            GameSyncManager.OnCollectedDronesChanged += OnCollectedDronesChanged;
+            GameSyncManager.OnShotEnemyDronesChanged += OnShotEnemyDronesChanged;
         }
     }
 
@@ -40,6 +41,8 @@ public class PlayerHealth : MonoBehaviour
     {
         if(GameSyncManager.Instance) {
             GameSyncManager.OnRunnerHealthChanged -= OnRunnerHealthChanged;
+            GameSyncManager.OnCollectedDronesChanged -= OnCollectedDronesChanged;
+            GameSyncManager.OnShotEnemyDronesChanged -= OnShotEnemyDronesChanged;
             //GameSyncManager.OnCollectedDronesChanged -= OnCollectedDronesChanged;
         }
     }
@@ -51,8 +54,8 @@ public class PlayerHealth : MonoBehaviour
         health = Mathf.Clamp(health, 0, maxHealth); 
         UpdateHealthUI();
 
-        UpdateFriendCounter(DroneCounter.GetCollectedCounter());
-        UpdateEnemyCounter(DroneCounter.GetExplosionCounter());
+/*         UpdateFriendCounter(DroneCounter.GetCollectedCounter());
+        UpdateEnemyCounter(DroneCounter.GetExplosionCounter()); */
 
     }
 
@@ -123,11 +126,11 @@ public class PlayerHealth : MonoBehaviour
     }
 
     /*es müsste auskommentiert sein*/
-    public void IncreaseHealth(int level)
+/*     public void IncreaseHealth(int level)
     {
         maxHealth += (health * 0.01f)* ((100 - level) * 0.1f);
         UpdateHealth(maxHealth);
-    }
+    } */
 
     private void OnRunnerHealthChanged(float newHealth) 
     {
@@ -136,12 +139,24 @@ public class PlayerHealth : MonoBehaviour
         UpdateHealthUI();
     }
 
+    private void OnCollectedDronesChanged(int newAmount) 
+    {
+        Debug.Log("Updating Collected Drones to: " + newAmount);
+        UpdateFriendCounter(newAmount);
+    }
+
+    private void OnShotEnemyDronesChanged(int newAmount) 
+    {
+        Debug.Log("Updating Shot Enemy Drones to: " + newAmount);
+        UpdateEnemyCounter(newAmount);
+    }
+
     public void UpdateFriendCounter(int friendCount)
     {
         //Debug.Log("Friend Counter Updated: " + friendCount);
         // friendCounterText.text = "Hints: " + friendCount.ToString();
-        int collectedDrones = GameSyncManager.Instance.collectedHintDrones;
-        friendCounterText.text = "Hints: " + collectedDrones.ToString();
+        //int collectedDrones = GameSyncManager.Instance.collectedHintDrones;
+        friendCounterText.text = "Hints: " + friendCount.ToString();
     }
 
     public void UpdateEnemyCounter(int enemyCount)

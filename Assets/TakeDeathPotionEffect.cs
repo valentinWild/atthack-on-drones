@@ -11,8 +11,8 @@ public class TakeDeathPotionEffect : MonoBehaviour
     PostProcessVolume _volume;
     Vignette _vignette;
 
-    public AudioClip potionActivateSound;
-    private AudioSource audioSource;
+    //public AudioClip potionActivateSound;
+    //private AudioSource audioSource;
 
 
     private void OnEnable()
@@ -51,18 +51,18 @@ public class TakeDeathPotionEffect : MonoBehaviour
     {
         if (potionType == "Death Potion")
         {
-            StartCoroutine(TakeDamageEffect());
+            StartCoroutine(ActivateDeathPotionEffect());
         }
     }
 
-    public IEnumerator TakeDamageEffect()
+    public IEnumerator ActivateDeathPotionEffect()
     {
         intensity = 0.4f;
 
-        if (potionActivateSound != null)
+        /*if (potionActivateSound != null)
         {
             audioSource.PlayOneShot(potionActivateSound);
-        }
+        }*/
 
         _vignette.enabled.Override(true);
         _vignette.intensity.Override(intensity);

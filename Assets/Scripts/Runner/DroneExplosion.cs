@@ -6,17 +6,17 @@ public class DroneExplosion : MonoBehaviour
 {
 
     public GameObject droneExplosion;
-    public AudioClip explosionSound;
+   //public AudioClip explosionSound;
 
     [SerializeField]
-    private int defaultDroneHealth = 3;
+    private int defaultDroneHealth = 1;
     [SerializeField]
-    private int decreasedDroneHealth = 3;
+    private int decreasedDroneHealth = 1;
     [SerializeField]
     private float decreasedHealthTime = 10f;
 
-    private float droneHealth = 3;
-    private AudioSource audioSource;
+    private float droneHealth = 1;
+    //private AudioSource audioSource;
 
     private void OnEnable()
     {
@@ -59,17 +59,20 @@ public class DroneExplosion : MonoBehaviour
 
         GameObject explosion = Instantiate(droneExplosion, gameObject.transform.position, gameObject.transform.rotation);
         
-        if (explosionSound != null)
+/*         if (explosionSound != null)
         {
             audioSource.PlayOneShot(explosionSound);
-        }
+        } */
 
         Destroy(gameObject);
-
-
         Destroy(explosion, 2f);
 
-        DroneCounter.IncrementExplosionCounter();
+        if(GameSyncManager.Instance) 
+        {
+            GameSyncManager.Instance.RpcIncreaseShotEnemyDrones(1);
+        }
+
+        //DroneCounter.IncrementExplosionCounter();
     }
 
     private IEnumerator SetTemporarlyHealth(float duration)
