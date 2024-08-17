@@ -38,22 +38,22 @@ public class WristUI : MonoBehaviour
 
     private void ChangeRunnerHP(float currentHP)
     {
-        runnerHP.text = currentHP.ToString();
+        runnerHP.text = "hp\n" + currentHP.ToString();
     }
 
     private void ChangeActivePotion(string potionName)
     {
-        activePotion.text = potionName;
+        activePotion.text = "last potion\n" + potionName;
     }
 
     private void ChangeFriendDrones(int dronesCaught)
     {
-        friendDrones.text = dronesCaught.ToString();
+        friendDrones.text = "friend\ndrones\n" + dronesCaught.ToString();
     }
 
     private void ChangeEnemyDrones(int dronesShot)
     {
-        enemyDrones.text = dronesShot.ToString();
+        enemyDrones.text = "enemy\ndrones\n" + dronesShot.ToString();
     }
 
     // Start is called before the first frame update
