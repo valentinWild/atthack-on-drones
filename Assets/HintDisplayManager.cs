@@ -57,10 +57,7 @@ public class HintDisplayManager : MonoBehaviour
 
     public void UpdateHintVisibility(int hintCounter)
     {
-        Debug.Log($"UpdateHintVisibility called with hintCounter: {hintCounter}");
-
-        // Clamp the hintCounter value to ensure it doesn't exceed 4
-        //hintCounter = Mathf.Clamp(hintCounter, 0, 4);
+        Debug.Log($"UpdateHintVisibility called with hintCounter: " + "{hintCounter}");
 
         if (hintCounter == 0)
         {
@@ -70,7 +67,7 @@ public class HintDisplayManager : MonoBehaviour
             displayGuideText.text = "touch the orbs to decipher the codes";
         }
 
-        //Debug.Log("HintCounter is bigger than 1");
+        //Debug.Log("HDM: HintCounter is bigger than 1");
         if (hintCounter >= 1)
         {
             hint1.SetActive(true);
