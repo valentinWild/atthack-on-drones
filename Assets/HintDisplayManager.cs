@@ -57,7 +57,7 @@ public class HintDisplayManager : MonoBehaviour
 
     public void UpdateHintVisibility(int hintCounter)
     {
-        Debug.Log($"UpdateHintVisibility called with hintCounter: " + "{hintCounter}");
+        Debug.Log($"UpdateHintVisibility called with hintCounter: " + hintCounter);
 
         if (hintCounter == 0)
         {

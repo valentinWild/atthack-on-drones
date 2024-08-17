@@ -37,6 +37,7 @@ public class LoseScreenLabManager : MonoBehaviour
 
     private void ActivateLoseScreen()
     {
+        Debug.Log("Lose Screen Activated");
         backgroundMusic.Stop();
         lose.Play();
         loseScreenDisplay.gameObject.SetActive(true);

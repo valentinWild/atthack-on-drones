@@ -84,7 +84,8 @@ public class GameSyncManager : NetworkBehaviour
         }
         if (newHealth <= 0)
         {
-            OnRunnerDied.Invoke();
+            Debug.Log("Runner died");
+            OnRunnerDied?.Invoke();
         }
     }
 
@@ -173,7 +174,7 @@ public class GameSyncManager : NetworkBehaviour
     }
 
     // Networked RPC to allow clients to request Collected Hint Drones Changes
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    [Rpc(RpcSources.All, RpcTargets.All)]
     public void RpcIncreaseCollectedHintDrones()
     {
         int newAmount = collectedHintDrones + 1;
@@ -181,7 +182,7 @@ public class GameSyncManager : NetworkBehaviour
         OnCollectedDronesChanged?.Invoke(newAmount);
         CheckUnlockHints(requiredDronesPerHint);
     }
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    [Rpc(RpcSources.All, RpcTargets.All)]
     public void RpcResetCollectedHintDrones()
     {
         int newAmount = 0;
