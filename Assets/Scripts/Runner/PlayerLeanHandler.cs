@@ -97,7 +97,8 @@ using System;
 public class PlayerLeanHandler : MonoBehaviour
 {
     public Transform headTransform;  // Reference to the VR headset transform
-    public float leanThreshold = 15f;  // Angle threshold in degrees for detecting leaning
+    public float leanThreshold = 20f;  // Angle threshold in degrees for detecting leaning
+    public float deadZone = 5f;  // Dead zone around the center to ignore small tilts
 
     public static event Action<float> OnLeanValueChanged;
 
@@ -115,31 +116,30 @@ public class PlayerLeanHandler : MonoBehaviour
     {
         // Calculate the local tilt (roll) angle around the Z-axis
         float tiltAngle = headTransform.localEulerAngles.z;
-
+        Debug.Log("Player tilt head: " + tiltAngle);
         // Adjust the angle so that it ranges from -180 to 180
         if (tiltAngle > 180) tiltAngle -= 360;
 
-        // Determine Lean Value based on tilt angle
+        // Apply the dead zone filtering
         float leanValue = 0f;
-        if (tiltAngle > leanThreshold)
+        if (tiltAngle > leanThreshold + deadZone)
         {
             leanValue = 1f; // Leaning to the right
         }
-        else if (tiltAngle < -leanThreshold)
+        else if (tiltAngle < -leanThreshold - deadZone)
         {
             leanValue = -1f; // Leaning to the left
         }
 
-        // Trigger the event only if lean value changes
+        // Trigger the event only if the lean value changes significantly
         if (currentLeanValue != leanValue)
         {
             currentLeanValue = leanValue;
-            OnLeanValueChanged?.Invoke(currentLeanValue);
-        }
-
-        if (leanValue != 0)
-        {
-            leanEvent.Invoke(leanValue);
+            if (leanValue != 0)
+            {
+                OnLeanValueChanged?.Invoke(currentLeanValue);
+                leanEvent.Invoke(leanValue);
+            }
         }
     }
 }
