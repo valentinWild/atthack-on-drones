@@ -54,7 +54,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private UnityEvent<Vector3> turnEvent;
 
-    private void Awake() {
+        private Coroutine speedBoostCoroutine;
+
+        private void Awake() {
         playerInput = GetComponent<PlayerInput>();
         controller = GetComponent<CharacterController>();
         turnAction = playerInput.actions["Turn"];
@@ -125,7 +127,6 @@ public class PlayerController : MonoBehaviour
             speedBoostCoroutine = null; 
         }
 
-    }
 
         // Method that is called by pressing the left or right arrow key
         private void PlayerTurn(InputAction.CallbackContext context) {
