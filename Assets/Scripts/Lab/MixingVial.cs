@@ -211,7 +211,7 @@ public class MixingVial : MonoBehaviour
             Debug.Log("Failed to mix the liquids");
             fail.Play(); // Play failure sound
             potionCreated = false;
-            ShowPotionMessage("Unvalid combination");
+            ShowPotionMessage("Invalid combination");
             StartCoroutine(ResetPotion());
         }
 
