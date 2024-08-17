@@ -118,7 +118,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -3.6900067, y: -14.219989}
+  m_AnchoredPosition: {x: -3.6900067, y: -13.320006}
   m_SizeDelta: {x: 17.57, y: 2.25}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &7241117358091101329
@@ -649,7 +649,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 3.3099933, y: -14.219989}
+  m_AnchoredPosition: {x: 3.3099933, y: -13.32}
   m_SizeDelta: {x: 17.57, y: 1.96}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &1433228954519520796
@@ -766,6 +766,7 @@ GameObject:
   - component: {fileID: 6301618201286282734}
   - component: {fileID: 7090273996532773185}
   - component: {fileID: 179855211617199488}
+  - component: {fileID: 1906540616502942030}
   m_Layer: 5
   m_Name: WristUI
   m_TagString: Untagged
@@ -880,6 +881,22 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RaycastTriggerInteraction: 1
+--- !u!114 &1906540616502942030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8492788114577147220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b75e5d635ee197f4b9909a908c82d4ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  runnerHP: {fileID: 6424347530458154822}
+  activePotion: {fileID: 5703801005549630803}
+  enemyDrones: {fileID: 7365875091161462379}
+  friendDrones: {fileID: 5576819518895133745}
 --- !u!1 &9007946565579483684
 GameObject:
   m_ObjectHideFlags: 0
