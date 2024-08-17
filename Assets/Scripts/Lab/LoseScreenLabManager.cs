@@ -14,28 +14,35 @@ public class LoseScreenLabManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //loseScreenDisplay.gameObject.SetActive(false);
+        loseScreenDisplay.gameObject.SetActive(false);
     }
 
-    // Update is called once per frame
-    private void Update()
+   private void OnEnable()
     {
         if (GameSyncManager.Instance)
         {
-            if (GameSyncManager.Instance.runnerHealth == 0)
-            {
-                loseScreenDisplay.gameObject.SetActive(true);
-                GetPlayerStats();
-            }
+            GameSyncManager.OnRunnerDied += ActivateLoseScreen;
         }
-        
     }
 
-    private void GetPlayerStats()
+    private void OnDisable()
     {
-        string decodedHints = GameSyncManager.Instance.decodedHints.ToString();
-        string level = GameSyncManager.Instance.currentLevel.ToString();
-        // TODO: drone shot ?
-        playerStats.text = "Decoded hints: " + decodedHints + "@\nCurrent Level: " + level;
+        if (GameSyncManager.Instance)
+        {
+            GameSyncManager.OnRunnerDied -= ActivateLoseScreen;
+        }
+    }
+
+    private void ActivateLoseScreen()
+    {
+        loseScreenDisplay.gameObject.SetActive(true);
+        if (GameSyncManager.Instance)
+        {
+            string decodedHints = GameSyncManager.Instance.decodedHints.ToString();
+            string shotEnenemyDrones = GameSyncManager.Instance.shotEnemyDrones.ToString();
+            string level = GameSyncManager.Instance.currentLevel.ToString();
+            // TODO: drone shot ?
+            playerStats.text = "Decoded hints: " + decodedHints + "@\nShot Drones: " + shotEnenemyDrones + "@\nCurrent Level: " + level;
+        }   
     }
 }
