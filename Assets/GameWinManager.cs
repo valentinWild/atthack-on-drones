@@ -3,8 +3,7 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class GameWinManager : MonoBehaviour
 {
-    public GameObject winCanvas; // Ziehe hier das Canvas GameObject hinein
-    public AudioClip winSound;
+    public GameObject winCanvas;
     public PostProcessVolume postProcessingWin;
     public GameObject canva;
 
