@@ -51,11 +51,11 @@ public class TakeDeathPotionEffect : MonoBehaviour
     {
         if (potionType == "Death Potion")
         {
-            StartCoroutine(TakeDamageEffect());
+            StartCoroutine(ActivateDeathPotionEffect());
         }
     }
 
-    public IEnumerator TakeDamageEffect()
+    public IEnumerator ActivateDeathPotionEffect()
     {
         intensity = 0.4f;
 

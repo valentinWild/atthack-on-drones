@@ -9,15 +9,18 @@ public class GameSyncManager : NetworkBehaviour
     public static int requiredDronesPerHint = 5;
 
     public static event Action<float> OnRunnerHealthChanged;
+    public static event Action OnRunnerDied;
     public static event Action<int> OnDecodedHintsChanged;
     public static event Action<int> OnUnlockedHintsChanged;
     public static event Action<string> OnActivePotionChanged;
     public static event Action<int> OnCurrentLevelChanged;
     public static event Action<int> OnCollectedDronesChanged;
+    public static event Action<int> OnShotEnemyDronesChanged;
 
     // Networked properties that will be synchronized across all clients
     [Networked] public float gameTimer { get; set; }
     [Networked] public int collectedHintDrones { get; set; }
+    [Networked] public int shotEnemyDrones { get; set; }
     [Networked] public int unlockedHints { get; set; }
     [Networked] public float runnerHealth { get; set; }
     [Networked] public string activePotion { get; set; }
@@ -77,6 +80,39 @@ public class GameSyncManager : NetworkBehaviour
         if (HasStateAuthority)
         {
             runnerHealth = newHealth;
+        }
+        if (newHealth <= 0)
+        {
+            OnRunnerDied.Invoke();
+        }
+    }
+
+    // RPC to change the Health of the Runner
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    public void RpcUpdateShotEnemyDrones(int newAmount)
+    {
+        UpdateShotEnemyDrones(newAmount);
+        OnShotEnemyDronesChanged.Invoke(newAmount);
+    }
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    public void RpcIncreaseRunnerHealth(int amount)
+    {
+        int newAmount = shotEnemyDrones + amount;
+        UpdateShotEnemyDrones(newAmount);
+        OnShotEnemyDronesChanged.Invoke(newAmount);
+    }
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    public void RpcDecreaseShotEnemyDrones(int amount)
+    {
+        int newAmount = shotEnemyDrones - amount;
+        UpdateShotEnemyDrones(newAmount);
+        OnShotEnemyDronesChanged.Invoke(newAmount);
+    }
+    private void UpdateShotEnemyDrones(int newAmount)
+    {
+        if (HasStateAuthority)
+        {
+            shotEnemyDrones = newAmount;
         }
     }
 
