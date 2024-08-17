@@ -118,13 +118,6 @@ public class PlayerHealth : MonoBehaviour
         lerpTimer = 0f;
     }
 
-
-    private void UpdateHealth(float newHealth)
-    {
-        health = newHealth;
-        UpdateHealthUI();
-    }
-
     /*es müsste auskommentiert sein*/
 /*     public void IncreaseHealth(int level)
     {
