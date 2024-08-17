@@ -10,6 +10,8 @@ public class LoseScreenLabManager : MonoBehaviour
     public TextMeshProUGUI playerStats;
     public Button tryAgainButton;
     public Button quitGameButton;
+    public AudioSource lose;
+    public AudioSource backgroundMusic;
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +37,8 @@ public class LoseScreenLabManager : MonoBehaviour
 
     private void ActivateLoseScreen()
     {
+        backgroundMusic.Stop();
+        lose.Play();
         loseScreenDisplay.gameObject.SetActive(true);
         if (GameSyncManager.Instance)
         {

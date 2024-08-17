@@ -92,6 +92,7 @@ public class MixingVial : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        //Debug.Log("Fluid poured into vial: " + other.gameObject.name);
         // Add the liquid to the list
         if (validLiquidTags.Contains(other.tag) && !pouredLiquids.Contains(other.tag))
         {
@@ -101,6 +102,7 @@ public class MixingVial : MonoBehaviour
             fluidAdded.Play();
             // Trigger the glow effect on the vial
             StartCoroutine(GlowVial());
+            
 
 
             // If two liquids have been added, mix them
