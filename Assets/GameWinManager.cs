@@ -31,17 +31,21 @@ public class GameWinManager : MonoBehaviour
         winCanvas.SetActive(false);
         winSound = GetComponent<AudioSource>();
 
-        
+        if (postProcessingWin != null && postProcessingWin.gameObject.activeInHierarchy)
         {
-            postProcessingWin.profile.TryGetSettings(out vignetteEffect);
-            if (vignetteEffect != null)
+            if (postProcessingWin.profile.TryGetSettings(out vignetteEffect))
             {
+                Debug.Log("Vignette effect found and initialized.");
                 vignetteEffect.active = false;
             }
             else
             {
-                Debug.LogWarning("Vignette-Effekt nicht im PostProcessVolume gefunden.");
+                Debug.LogWarning("Vignette effect not found in PostProcessVolume.");
             }
+        }
+        else
+        {
+            Debug.LogWarning("PostProcessingWin is not active or not assigned.");
         }
     }
 
@@ -50,18 +54,21 @@ public class GameWinManager : MonoBehaviour
         if (potionType == "End Potion")
         {
             ActivateVignetteEffect();
+            ActivateWinCanvas();
         }
     }
 
     void Update()
     {
-        PlayWinSound();
-
-        ActivateVignetteEffect();  // This line is correct
-
-        HideCanva();
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+        {
+            // Perform the actions when Enter is pressed
+            PlayWinSound();
+            ActivateVignetteEffect();
+            HideCanva();
+            ActivateWinCanvas();
+        }
     }
-
 
     void PlayWinSound()
     {
@@ -71,7 +78,7 @@ public class GameWinManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("AudioSource oder WinSound nicht zugewiesen.");
+            Debug.LogWarning("AudioSource or WinSound is not assigned.");
         }
     }
 
@@ -79,7 +86,7 @@ public class GameWinManager : MonoBehaviour
     {
         if (vignetteEffect != null)
         {
-            vignetteEffect.active = true; 
+            vignetteEffect.active = true;
         }
     }
 
@@ -87,11 +94,23 @@ public class GameWinManager : MonoBehaviour
     {
         if (canva != null)
         {
-            canva.SetActive(false); // "Canva" ausblenden
+            canva.SetActive(false); // Hide "Canva"
         }
         else
         {
-            Debug.LogWarning("Canva-Objekt nicht zugewiesen.");
+            Debug.LogWarning("Canva object is not assigned.");
+        }
+    }
+
+    void ActivateWinCanvas()
+    {
+        if (winCanvas != null)
+        {
+            winCanvas.SetActive(true); // Aktiviert das WinCanvas
+        }
+        else
+        {
+            Debug.LogWarning("winCanvas ist nicht zugewiesen.");
         }
     }
 }
