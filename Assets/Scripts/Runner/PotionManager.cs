@@ -7,7 +7,21 @@ public class PotionManager : MonoBehaviour
 
     private void Start() {
         StartCoroutine(testPotion(10f));
+        StartCoroutine(testChallenges(10f));
     }
+
+    private IEnumerator testChallenges(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        GameSyncManager.Instance.RpcUpdateDecodedHints(1);
+        yield return new WaitForSeconds(delay);
+        GameSyncManager.Instance.RpcUpdateDecodedHints(2);
+        yield return new WaitForSeconds(delay);
+        GameSyncManager.Instance.RpcUpdateDecodedHints(3);
+        yield return new WaitForSeconds(delay);
+        GameSyncManager.Instance.RpcUpdateDecodedHints(4);
+    }
+
 
     private IEnumerator testPotion(float delay)
     {

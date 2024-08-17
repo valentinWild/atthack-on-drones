@@ -60,6 +60,7 @@ public class MixingVial : MonoBehaviour
     private Renderer vialRenderer;
     private Material originalVialMaterial;
     private bool showingPotionMessage = false; // Track whether a potion message is being shown
+    private bool potionCreated = false; 
 
     private void Start()
     {
@@ -128,7 +129,6 @@ public class MixingVial : MonoBehaviour
     private void MixLiquids()
     {
         string potionName = "";
-        bool potionCreated = true;
 
         // Example: Mixing logic based on two liquids
         if (pouredLiquids.Contains("YellowParticle") && pouredLiquids.Contains("RedParticle"))
@@ -137,6 +137,7 @@ public class MixingVial : MonoBehaviour
             potionName = "Attack Potion";
             Debug.Log("Created a new material by mixing Yellow and Red");
             creation.Play();
+            potionCreated = true;
         }
         else if (pouredLiquids.Contains("YellowParticle") && pouredLiquids.Contains("GreenParticle"))
         {
@@ -144,6 +145,7 @@ public class MixingVial : MonoBehaviour
             potionName = "Water";
             Debug.Log("Created a new material by mixing Yellow and Green");
             creation.Play();
+            potionCreated = true;
         }
         else if (pouredLiquids.Contains("BlueParticle") && pouredLiquids.Contains("RedParticle"))
         {
@@ -151,6 +153,7 @@ public class MixingVial : MonoBehaviour
             potionName = "Health Potion";
             Debug.Log("Created a new material by mixing Blue and Red");
             creation.Play();
+            potionCreated = true;
         }
         else if (pouredLiquids.Contains("BlueParticle") && pouredLiquids.Contains("GreenParticle"))
         {
@@ -158,6 +161,7 @@ public class MixingVial : MonoBehaviour
             potionName = "Shield Potion";
             Debug.Log("Created a new material by mixing Blue and Green");
             creation.Play();
+            potionCreated = true;
         }
         else if (pouredLiquids.Contains("BlackParticle") && pouredLiquids.Contains("RedParticle"))
         {
@@ -165,6 +169,7 @@ public class MixingVial : MonoBehaviour
             potionName = "Death Potion";
             Debug.Log("Created a new material by mixing Black and Red");
             creation.Play();
+            potionCreated = true;
         }
         else if (pouredLiquids.Contains("BlackParticle") && pouredLiquids.Contains("BlueParticle"))
         {
@@ -172,9 +177,11 @@ public class MixingVial : MonoBehaviour
             potionName = "Speed Potion";
             Debug.Log("Created a new material by mixing Black and Blue");
             creation.Play();
+            potionCreated = true;
         }
         else if (pouredLiquids.Contains("GoldParticle"))
         {
+            potionCreated = true;
             fluid.GetComponent<Renderer>().material = endPotion;
             potionName = "End Potion";
             Debug.Log("Created a new material by adding Gold");
@@ -204,6 +211,7 @@ public class MixingVial : MonoBehaviour
             Debug.Log("Failed to mix the liquids");
             fail.Play(); // Play failure sound
             potionCreated = false;
+            StartCoroutine(ResetPotion());
         }
 
         if (potionCreated)
