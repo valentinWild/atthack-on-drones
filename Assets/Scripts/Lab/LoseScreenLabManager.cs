@@ -14,7 +14,7 @@ public class LoseScreenLabManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        loseScreenDisplay.gameObject.SetActive(false);
+        //loseScreenDisplay.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -36,6 +36,6 @@ public class LoseScreenLabManager : MonoBehaviour
         string decodedHints = GameSyncManager.Instance.decodedHints.ToString();
         string level = GameSyncManager.Instance.currentLevel.ToString();
         // TODO: drone shot ?
-        playerStats.text = "Decoded hints: " + decodedHints + "Current Level: " + level;
+        playerStats.text = "Decoded hints: " + decodedHints + "@\nCurrent Level: " + level;
     }
 }
