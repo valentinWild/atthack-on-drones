@@ -44,7 +44,7 @@ public class HintDisplayManager : MonoBehaviour
         if (GameSyncManager.Instance)
         {
             GameSyncManager.OnUnlockedHintsChanged += UpdateHintVisibility;
-            GameSyncManager.OnDecodedHintsChanged += UpdateUnlockedHints;
+            GameSyncManager.OnDecodedHintsChanged += UpdateDecodedHints;
         }
     }
 
@@ -54,16 +54,16 @@ public class HintDisplayManager : MonoBehaviour
         if (GameSyncManager.Instance)
         {
             GameSyncManager.OnUnlockedHintsChanged -= UpdateHintVisibility;
-            GameSyncManager.OnDecodedHintsChanged -= UpdateUnlockedHints;
+            GameSyncManager.OnDecodedHintsChanged -= UpdateDecodedHints;
         }
     }
 
-    private void UpdateUnlockedHints(int unlockedHints)
+    private void UpdateDecodedHints(int decodedHints)
     {
-        Debug.Log("UpdateUnlockedHints");
+        Debug.Log("UpdateDecodedHints");
         if (GameSyncManager.Instance)
         {
-            if(unlockedHints == 4)
+            if(decodedHints >= 4)
             {
                 hint1.SetActive(false);
                 hint2.SetActive(false);
