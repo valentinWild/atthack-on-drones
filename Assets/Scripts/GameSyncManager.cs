@@ -51,6 +51,7 @@ public class GameSyncManager : NetworkBehaviour
             runnerHealth = 100;
             decodedHints = 0;
             unlockedHints = 0;
+            shotEnemyDrones = 0;
         }
     }
 
@@ -95,7 +96,7 @@ public class GameSyncManager : NetworkBehaviour
         OnShotEnemyDronesChanged.Invoke(newAmount);
     }
     [Rpc(RpcSources.All, RpcTargets.All)]
-    public void RpcIncreaseRunnerHealth(int amount)
+    public void RpcIncreaseShotEnemyDrones(int amount)
     {
         int newAmount = shotEnemyDrones + amount;
         UpdateShotEnemyDrones(newAmount);

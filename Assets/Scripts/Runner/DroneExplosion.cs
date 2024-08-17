@@ -65,11 +65,14 @@ public class DroneExplosion : MonoBehaviour
         }
 
         Destroy(gameObject);
-
-
         Destroy(explosion, 2f);
 
-        DroneCounter.IncrementExplosionCounter();
+        if(GameSyncManager.Instance) 
+        {
+            GameSyncManager.Instance.RpcIncreaseShotEnemyDrones(1);
+        }
+
+        //DroneCounter.IncrementExplosionCounter();
     }
 
     private IEnumerator SetTemporarlyHealth(float duration)
