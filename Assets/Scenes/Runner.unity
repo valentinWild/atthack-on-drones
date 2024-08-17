@@ -3657,9 +3657,8 @@ GameObject:
   m_Component:
   - component: {fileID: 914380413}
   - component: {fileID: 914380415}
-  - component: {fileID: 914380414}
   m_Layer: 10
-  m_Name: PostProcessingHealthPotion (1)
+  m_Name: PostProcessingWin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3680,102 +3679,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 571944008}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &914380414
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 914380412}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!114 &914380415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3788,7 +3691,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: ef9bd61f62ee055428e7c342cadad078, type: 2}
+  sharedProfile: {fileID: 11400000, guid: e50092ce9a7b2d54c9cc7a9854a5c478, type: 2}
   isGlobal: 1
   blendDistance: 0
   weight: 1
@@ -3806,7 +3709,6 @@ GameObject:
   - component: {fileID: 938975800}
   - component: {fileID: 938975799}
   - component: {fileID: 938975798}
-  - component: {fileID: 938975797}
   - component: {fileID: 938975796}
   m_Layer: 5
   m_Name: WinCanva
@@ -3823,7 +3725,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 938975794}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 6.2}
+  m_LocalPosition: {x: 0, y: 0, z: 5.11}
   m_LocalScale: {x: 0.006367834, y: 0.006367834, z: 0.006367834}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3931,19 +3833,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &938975797
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 938975794}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8c5e922926866e4f87566cbce178363, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  winSound: {fileID: 8300000, guid: acd573f1df3a203429fe8bc4e1afeeb7, type: 3}
 --- !u!114 &938975798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17105,6 +16994,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   winCanvas: {fileID: 938975794}
   winSound: {fileID: 8300000, guid: acd573f1df3a203429fe8bc4e1afeeb7, type: 3}
+  postProcessingWin: {fileID: 914380415}
 --- !u!1 &1561327543
 GameObject:
   m_ObjectHideFlags: 0

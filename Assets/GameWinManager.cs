@@ -1,15 +1,33 @@
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class GameWinManager : MonoBehaviour
 {
     public GameObject winCanvas; // Ziehe hier das Canvas GameObject hinein
     public AudioClip winSound;
+    public PostProcessVolume postProcessingWin;
+
     private AudioSource audioSource;
+    private Vignette vignetteEffect;
+
 
     void Start()
     {
         winCanvas.SetActive(false);
         audioSource = GetComponent<AudioSource>();
+
+        
+        {
+            postProcessingWin.profile.TryGetSettings(out vignetteEffect);
+            if (vignetteEffect != null)
+            {
+                vignetteEffect.active = false;
+            }
+            else
+            {
+                Debug.LogWarning("Vignette-Effekt nicht im PostProcessVolume gefunden.");
+            }
+        }
     }
 
     void Update()
@@ -19,6 +37,8 @@ public class GameWinManager : MonoBehaviour
             winCanvas.SetActive(true);
 
             PlayWinSound();
+
+            ActivateVignetteEffect();
         }
     }
 
@@ -31,6 +51,14 @@ public class GameWinManager : MonoBehaviour
         else
         {
             Debug.LogWarning("AudioSource oder WinSound nicht zugewiesen.");
+        }
+    }
+
+    void ActivateVignetteEffect()
+    {
+        if (vignetteEffect != null)
+        {
+            vignetteEffect.active = true; 
         }
     }
 }
