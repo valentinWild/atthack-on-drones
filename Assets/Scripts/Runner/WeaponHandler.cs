@@ -13,6 +13,8 @@ public class WeaponHandler : MonoBehaviour
     public float fireSpeed = 50f;
     public float defaultReloadTime = 1.5f;
     public float reloadTime = 1.5f;
+    public int shotsPerReloadPeriod = 3;
+    private int shotCounter = 0;
     private bool weaponLoaded = true;
 
     public AudioClip shootSound;
@@ -52,7 +54,11 @@ public class WeaponHandler : MonoBehaviour
         Debug.Log("On Shoot triggered");
         if(weaponLoaded){
             FireBullet();
-            StartCoroutine(ReloadWeapon());
+            shotCounter++;
+            if (shotCounter >= shotsPerReloadPeriod)
+            {
+                StartCoroutine(ReloadWeapon());
+            }
         }
     }
 
@@ -60,6 +66,8 @@ public class WeaponHandler : MonoBehaviour
     {
         if (potionType == "Attack Potion")
         {
+            shotCounter = 0;
+            weaponLoaded = true;
             StartCoroutine(SetTemporarlyReloadTime(10f));
         }
     }
@@ -68,6 +76,7 @@ public class WeaponHandler : MonoBehaviour
     {
         weaponLoaded = false;
         yield return new WaitForSeconds(reloadTime);
+        shotCounter = 0;
         weaponLoaded = true;
     }
 
