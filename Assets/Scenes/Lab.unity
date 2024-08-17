@@ -33615,6 +33615,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1481727235}
     m_Modifications:
+    - target: {fileID: 1319864211600282434, guid: 6adb82ca42282414da7f7e9d915d9944, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 46
+      objectReference: {fileID: 0}
     - target: {fileID: 2901086878083859398, guid: 6adb82ca42282414da7f7e9d915d9944, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -33627,6 +33631,28 @@ PrefabInstance:
       propertyPath: backgroundMusic
       value: 
       objectReference: {fileID: 2100509818}
+    - target: {fileID: 5272270175170639738, guid: 6adb82ca42282414da7f7e9d915d9944, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7060497830726518688, guid: 6adb82ca42282414da7f7e9d915d9944, type: 3}
+      propertyPath: m_text
+      value: Congrats, you decoded all hints and created the golden Potion! This
+        potion helped your friend reach the main server and deactivate the Enemy
+        Drones!
+      objectReference: {fileID: 0}
+    - target: {fileID: 7060497830726518688, guid: 6adb82ca42282414da7f7e9d915d9944, type: 3}
+      propertyPath: m_fontSize
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7060497830726518688, guid: 6adb82ca42282414da7f7e9d915d9944, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7060497830726518688, guid: 6adb82ca42282414da7f7e9d915d9944, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7466662843418321331, guid: 6adb82ca42282414da7f7e9d915d9944, type: 3}
       propertyPath: m_Name
       value: MixingVial
