@@ -2,44 +2,55 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class DroneCounter
+public class DroneCounter
 {
-    private static int droneExplosionCount = 0;
-    private static int collectedDroneCount = 0;
+    public int droneExplosionCount = 0;
+    public int collectedDroneCount = 0;
 
-    public static void RegisterEvents() {
+/*     public void RegisterEvents() {
+
+    } */
+
+    private void OnEnable() {
         if(GameSyncManager.Instance) {
             GameSyncManager.OnCollectedDronesChanged += OnCollectedDronesChanged;
+            GameSyncManager.OnShotEnemyDronesChanged += OnShotEnemyDronesChanged;
         }
     }
 
-    public static void IncrementExplosionCounter()
-    {
-        droneExplosionCount++;
+    private void OnDisable() {
+        if(GameSyncManager.Instance) {
+            GameSyncManager.OnCollectedDronesChanged -= OnCollectedDronesChanged;
+            GameSyncManager.OnShotEnemyDronesChanged -= OnShotEnemyDronesChanged;
+        }
     }
 
-    private static void OnCollectedDronesChanged(int amount) {
+/*     public static void IncrementExplosionCounter()
+    {
+        droneExplosionCount++;
+    } */
+
+    private void OnCollectedDronesChanged(int amount) {
         collectedDroneCount = amount;
     }
 
-    public static int GetExplosionCounter()
+    private void OnShotEnemyDronesChanged(int amount) {
+        droneExplosionCount = amount;
+    }
+
+    public int GetExplosionCounter()
     {
         return droneExplosionCount;
     }
 
-    public static void IncrementCollectedCounter()
+/*     public static void IncrementCollectedCounter()
     {
-        if(GameSyncManager.Instance) 
-        {
-            //collectedDroneCount = GameSyncManager.Instance.collectedHintDrones + 1;
-            GameSyncManager.Instance.RpcIncreaseCollectedHintDrones();
-        }
-    }
 
-    public static int GetCollectedCounter()
+    } */
+
+    public int GetCollectedCounter()
     {
         return collectedDroneCount;
     }
-
 
 }
