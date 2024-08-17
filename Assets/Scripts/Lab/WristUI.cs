@@ -59,10 +59,13 @@ public class WristUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        runnerHP.text = "hp\n100";
-        activePotion.text = "last potion\nnone";
-        friendDrones.text = "friend\ndrones\n0";
-        enemyDrones.text = "enemy\ndrones\n0";
+        if (GameSyncManager.Instance)
+        {
+            runnerHP.text = "hp\n" + GameSyncManager.Instance.runnerHealth.ToString();
+            activePotion.text = "last potion\nnone";
+            friendDrones.text = "friend\ndrones\n" + GameSyncManager.Instance.collectedHintDrones.ToString();
+            enemyDrones.text = "enemy\ndrones\n" + GameSyncManager.Instance.shotEnemyDrones.ToString();
+        } 
     }
 
     // Update is called once per frame

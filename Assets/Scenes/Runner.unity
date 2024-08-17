@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -9531,6 +9531,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   headTransform: {fileID: 571944008}
   leanThreshold: 0.3
+  deadZone: 10
   leanEvent:
     m_PersistentCalls:
       m_Calls:
@@ -17544,9 +17545,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 794f1eafa348cdd458022064d333b4bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialPlayerSpeed: 4
+  initialPlayerSpeed: 6.5
   maximumPlayerSpeed: 30
-  playerSpeedIncreaseRate: 0.1
+  playerSpeedIncreaseRate: 0.6
   jumpHeight: 1
   initialGravityValue: -9.81
   groundLayer:
@@ -18709,6 +18710,10 @@ PrefabInstance:
       propertyPath: shootSound
       value: 
       objectReference: {fileID: 8300000, guid: 27b40c8f72cfc1542895d1134618bf31, type: 3}
+    - target: {fileID: 7813474787334987603, guid: 6bfb6539a4fc4f44588db12d9b5cc83e, type: 3}
+      propertyPath: shotsPerReloadPeriod
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 8577851126520045735, guid: 6bfb6539a4fc4f44588db12d9b5cc83e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

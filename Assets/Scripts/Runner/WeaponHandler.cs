@@ -13,7 +13,7 @@ public class WeaponHandler : MonoBehaviour
     public float fireSpeed = 50f;
     public float defaultReloadTime = 1.5f;
     public float reloadTime = 1.5f;
-    public int shotsPerReloadPeriod = 3;
+    public int shotsPerReloadPeriod = 5;
     private int shotCounter = 0;
     private bool weaponLoaded = true;
 
