@@ -238,7 +238,7 @@ public class LevelSystem : MonoBehaviour
             level = GameSyncManager.Instance.currentLevel;
             completedChallenges = GameSyncManager.Instance.decodedHints;
 
-            UpdateXpUI(); // Initial UI update
+            UpdateXpUI2(); // Initial UI update
             ResetProgressBar();
 
             levelText.text = GameSyncManager.Instance.currentLevel.ToString();
@@ -259,7 +259,7 @@ public class LevelSystem : MonoBehaviour
     private void OnDecodedHintsChanged(int amount)
     {
         completedChallenges = amount;  // Update the progress bar when decoded hints change
-        UpdateXpUI();
+        UpdateXpUI2();
     }
 
     private void OnCurrentLevelChanged(int newLevel)
@@ -273,13 +273,13 @@ public class LevelSystem : MonoBehaviour
     private void UpdateXpUI()
     {
         float xpFraction = currentXp / requiredXp;  // xpFraction ist der Prozentsatz des Fortschritts hier z.B. 1/4 25%....
-        float targetFill = xpFraction; // For frontXpBar //Ziel-Füllstand der frontXpBar, der schrittweise erreicht werden soll
+        float targetFill = xpFraction; // For frontXpBar //Ziel-Fï¿½llstand der frontXpBar, der schrittweise erreicht werden soll
 
         // Gradually move the backXpBar to the new xpFraction
-        backXpBar.fillAmount = Mathf.MoveTowards(backXpBar.fillAmount, xpFraction, Time.deltaTime); //Diese Methode bewegt den aktuellen Wert (backXpBar.fillAmount) allmählich in Richtung des Zielwerts (xpFraction) mit einer Geschwindigkeit, die von Time.deltaTime abhängt
-//backXpBar.fillAmount: Dies ist der aktuelle Füllstand der backXpBar, der schrittweise erhöht wird, bis er den Wert xpFraction erreich
+        backXpBar.fillAmount = Mathf.MoveTowards(backXpBar.fillAmount, targetFill, Time.deltaTime); //Diese Methode bewegt den aktuellen Wert (backXpBar.fillAmount) allmï¿½hlich in Richtung des Zielwerts (xpFraction) mit einer Geschwindigkeit, die von Time.deltaTime abhï¿½ngt
+//backXpBar.fillAmount: Dies ist der aktuelle Fï¿½llstand der backXpBar, der schrittweise erhï¿½ht wird, bis er den Wert xpFraction erreich
 
-        if (backXpBar.fillAmount >= xpFraction) //Überprüfung, ob die backXpBar den Zielwert erreicht hat
+        if (backXpBar.fillAmount >= targetFill) //ï¿½berprï¿½fung, ob die backXpBar den Zielwert erreicht hat
         {
             delayTimer += Time.deltaTime;
 
@@ -288,9 +288,9 @@ public class LevelSystem : MonoBehaviour
                 lerpTimer += Time.deltaTime;
                 frontXpBar.fillAmount = Mathf.MoveTowards(frontXpBar.fillAmount, xpFraction, Time.deltaTime);
 
-                if (Mathf.Abs(frontXpBar.fillAmount - xpFraction) < 0.01f) //Überprüfung, ob die frontXpBar den Zielwert erreicht hat
-//Diese Methode berechnet den absoluten Unterschied zwischen dem aktuellen Füllstand der frontXpBar und dem Zielwert xpFraction.
-//Überprüfung: Wenn dieser Unterschied kleiner als 0.01 ist, wird davon ausgegangen, dass die frontXpBar den Zielwert erreicht hat
+                if (Mathf.Abs(frontXpBar.fillAmount - xpFraction) < 0.01f) //ï¿½berprï¿½fung, ob die frontXpBar den Zielwert erreicht hat
+//Diese Methode berechnet den absoluten Unterschied zwischen dem aktuellen Fï¿½llstand der frontXpBar und dem Zielwert xpFraction.
+//ï¿½berprï¿½fung: Wenn dieser Unterschied kleiner als 0.01 ist, wird davon ausgegangen, dass die frontXpBar den Zielwert erreicht hat
                 {
                     frontXpBar.fillAmount = xpFraction;
                     lerpTimer = 0f;
@@ -302,9 +302,19 @@ public class LevelSystem : MonoBehaviour
         xpText.text = $"{completedChallenges}/{requiredXp}";
     }
 
+    private void UpdateXpUI2()
+    {
+        float xpFraction = currentXp / requiredXp;  // xpFraction ist der Prozentsatz des Fortschritts hier z.B. 1/4 25%....
+        float targetFill = xpFraction; // For frontXpBar //Ziel-Fï¿½llstand der frontXpBar, der schrittweise erreicht werden soll
+
+        frontXpBar.fillAmount = Mathf.MoveTowards(frontXpBar.fillAmount, xpFraction, Time.deltaTime);
+
+        xpText.text = $"{completedChallenges}/{requiredXp}";
+    }
+
     private void ResetProgressBar()
     {
-        // Setze nur die visuellen Elemente zurück
+        // Setze nur die visuellen Elemente zurï¿½ck
     currentXp = 0f;
     frontXpBar.fillAmount = 0f;
     backXpBar.fillAmount = 0f;
