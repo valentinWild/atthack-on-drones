@@ -9,13 +9,13 @@ public class DroneExplosion : MonoBehaviour
    //public AudioClip explosionSound;
 
     [SerializeField]
-    private int defaultDroneHealth = 1;
+    private int defaultDroneHealth = 3;
     [SerializeField]
-    private int decreasedDroneHealth = 1;
+    private int decreasedDroneHealth = 2;
     [SerializeField]
     private float decreasedHealthTime = 10f;
 
-    private float droneHealth = 1;
+    private float droneHealth = 3;
     //private AudioSource audioSource;
 
     private void OnEnable()
