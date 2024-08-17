@@ -59,7 +59,10 @@ public class WristUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        runnerHP.text = "hp\n100";
+        activePotion.text = "last potion\nnone";
+        friendDrones.text = "friend\ndrones\n0";
+        enemyDrones.text = "enemy\ndrones\n0";
     }
 
     // Update is called once per frame
