@@ -37,14 +37,19 @@ public class OrbManager : MonoBehaviour
         if (GameSyncManager.Instance)
         {
             GameSyncManager.OnUnlockedHintsChanged += OnUnlockedHintsChanged;
+            GameSyncManager.OnDecodedHintsChanged += UpdateDecodedHints;
         }
     }
+
+  
 
     private void OnDisable()
     {
         if (GameSyncManager.Instance)
         {
             GameSyncManager.OnUnlockedHintsChanged -= OnUnlockedHintsChanged;
+            GameSyncManager.OnDecodedHintsChanged -= UpdateDecodedHints;
+
         }
     }
 
@@ -57,6 +62,7 @@ public class OrbManager : MonoBehaviour
         correctCodesDecimal = new String[4];
         hintWasDecoded = new bool[4];
         orbStates = new bool[4];
+        orbLights = new Light[4];
 
 
         decodedHints = 0;
@@ -89,6 +95,11 @@ public class OrbManager : MonoBehaviour
         {
             GameSyncManager.Instance.RpcUpdateDecodedHints(decodedHints);
         }
+    }
+
+    private void UpdateDecodedHints(int newAmount)
+    {
+        decodedHints = newAmount;
     }
 
     private void GenerateRandomCorrectCodes()
@@ -245,33 +256,39 @@ public class OrbManager : MonoBehaviour
             Debug.Log($"Checking if entered code matches {BoolArrayToBinaryString(correctCodes[i].code)}");
             if (AreCodesEqual(orbStates, correctCodes[i].code))
             {
-                if (unlockedHints >= i + 1 && !hintWasDecoded[i])  // Ensure the hintCounter is high enough
+                if (GameSyncManager.Instance)
                 {
-                    Debug.Log($"Entered code is correct and hint counter is sufficient ({unlockedHints} >= {i + 1})!");
-                    hintDisplayManager.ChangeHintColor(i, Color.black); // Change hint text color to black
-                    hintWasDecoded[i] = true;
-                    Debug.Log("Hint Number " + i + 1 + " was set to: " + hintWasDecoded[i]);
-                    Debug.Log("New state of decoded hints: " + string.Join(", ", hintWasDecoded));
-                    IncrementDecodedHints();
-                    //todo: turn orbs green
-                    ChangeOrbLightColors(Color.green);
-                    StartCoroutine(ResetLightsAfterDelay(0.3f));
-
-                    // Check if all hints are decoded
-                    if (CheckAllHintsDecoded())
+                    var unlockedHints = GameSyncManager.Instance.unlockedHints;
+                    if (unlockedHints >= i + 1 && !hintWasDecoded[i])  // Ensure the hintCounter is high enough
                     {
-                        TriggerAllHintsDecodedAction();
-                    }
+                        Debug.Log($"Entered code is correct and hint counter is sufficient ({unlockedHints} >= {i + 1})!");
+                        hintDisplayManager.ChangeHintColor(i, Color.black); // Change hint text color to black
+                        hintWasDecoded[i] = true;
+                        Debug.Log("Hint Number " + i + 1 + " was set to: " + hintWasDecoded[i]);
+                        Debug.Log("New state of decoded hints: " + string.Join(", ", hintWasDecoded));
+                        IncrementDecodedHints();
+                        //todo: turn orbs green
+                        ChangeOrbLightColors(Color.green);
+                        StartCoroutine(ResetLightsAfterDelay(0.3f));
 
+                        // Check if all hints are decoded
+                        if (CheckAllHintsDecoded())
+                        {
+                            TriggerAllHintsDecodedAction();
+                        }
+
+                    }
+                    else
+                    {
+                        Debug.Log($"Hint counter is too low to decode hint {i + 1}. Current counter: {unlockedHints}");
+                    }
+                    break;
                 }
-                else
-                {
-                    Debug.Log($"Hint counter is too low to decode hint {i + 1}. Current counter: {unlockedHints}");
-                }
-                break;
+                
             }
         }
     }
+    
     private IEnumerator ResetLightsAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -296,12 +313,12 @@ public class OrbManager : MonoBehaviour
             // Get the ToggleLight script attached to the orb GameObject
             if (orbLight != null)
             {
-                orbLight.color = newColor;  // Use the method inside ToggleLight to change the light color
                 orbLight.enabled = true;
+                orbLight.color = newColor;  // Use the method inside ToggleLight to change the light color
             }
         }
     }
-
+    
 
     private bool CheckAllHintsDecoded()
     {

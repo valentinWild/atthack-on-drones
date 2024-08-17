@@ -54,6 +54,7 @@ public class WristUI : MonoBehaviour
     private void ChangeEnemyDrones(int dronesShot)
     {
         enemyDrones.text = "enemy\ndrones\n" + dronesShot.ToString();
+        Debug.Log("WristUI: Enemy Drones changed to "+ dronesShot.ToString());
     }
 
     // Start is called before the first frame update
