@@ -10,6 +10,21 @@ public class GameWinManager : MonoBehaviour
     private AudioSource winSound;
     private Vignette vignetteEffect;
 
+    private void OnEnable()
+    {
+        if (GameSyncManager.Instance)
+        {
+            GameSyncManager.OnActivePotionChanged += OnActivePotionChanged;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (GameSyncManager.Instance)
+        {
+            GameSyncManager.OnActivePotionChanged -= OnActivePotionChanged;
+        }
+    }
 
     void Start()
     {
@@ -30,18 +45,23 @@ public class GameWinManager : MonoBehaviour
         }
     }
 
+    private void OnActivePotionChanged(string potionType)
+    {
+        if (potionType == "End Potion")
+        {
+            StartCoroutine(ActivateVignetteEffect);
+        }
+    }
+
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            winCanvas.SetActive(true);
-
             PlayWinSound();
 
             ActivateVignetteEffect();
 
             HideCanva();
-        }
+        
     }
 
     void PlayWinSound()
