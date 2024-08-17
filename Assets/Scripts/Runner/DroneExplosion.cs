@@ -38,6 +38,11 @@ public class DroneExplosion : MonoBehaviour
         {
             StartCoroutine(SetTemporarlyHealth(decreasedHealthTime));
         }
+
+        if (potionType == "End Potion")
+        {
+            Destroy(gameObject);
+        }
     }
 
     void OnTriggerEnter(Collider other)
