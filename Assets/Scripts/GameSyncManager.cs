@@ -84,7 +84,8 @@ public class GameSyncManager : NetworkBehaviour
         }
         if (newHealth <= 0)
         {
-            OnRunnerDied.Invoke();
+            Debug.Log("Runner died");
+            OnRunnerDied?.Invoke();
         }
     }
 
