@@ -37,19 +37,18 @@ public class OrbManager : MonoBehaviour
         if (GameSyncManager.Instance)
         {
             GameSyncManager.OnUnlockedHintsChanged += OnUnlockedHintsChanged;
-            GameSyncManager.OnDecodedHintsChanged += UpdateDecodedHints;
+            //GameSyncManager.OnDecodedHintsChanged += UpdateDecodedHints;
         }
     }
 
-  
+
 
     private void OnDisable()
     {
         if (GameSyncManager.Instance)
         {
             GameSyncManager.OnUnlockedHintsChanged -= OnUnlockedHintsChanged;
-            GameSyncManager.OnDecodedHintsChanged -= UpdateDecodedHints;
-
+            //GameSyncManager.OnDecodedHintsChanged -= UpdateDecodedHints;
         }
     }
 
@@ -63,7 +62,6 @@ public class OrbManager : MonoBehaviour
         hintWasDecoded = new bool[4];
         orbStates = new bool[4];
         orbLights = new Light[4];
-
 
         decodedHints = 0;
 
@@ -97,10 +95,6 @@ public class OrbManager : MonoBehaviour
         }
     }
 
-    private void UpdateDecodedHints(int newAmount)
-    {
-        decodedHints = newAmount;
-    }
 
     private void GenerateRandomCorrectCodes()
     {
@@ -182,60 +176,6 @@ public class OrbManager : MonoBehaviour
         }
         return codes;
     }
-    /* Green Light
-    public void UpdateOrbState(int orbIndex, bool isOn)
-    {
-
-        Debug.Log("UpdateOrbState function called in OrbManager");
-        if (orbIndex < 0 || orbIndex >= orbStates.Length)
-        {
-            Debug.LogWarning("Orb index out of bounds.");
-            return;
-        }
-
-        orbStates[orbIndex] = isOn;
-        Debug.Log($"Orb {orbIndex} state updated: {isOn}");
-
-        for (int i = 0; i < correctCodes.Length; i++)
-        {
-            Debug.Log($"Checking if entered code matches {BoolArrayToBinaryString(correctCodes[i].code)}");
-            if (AreCodesEqual(orbStates, correctCodes[i].code))
-            {
-                if (dronesCollected >= i + 1)  // Ensure the hintCounter is high enough
-                {
-                    Debug.Log($"Entered code is correct and hint counter is sufficient ({dronesCollected} >= {i + 1})!");
-
-                    if (!hintWasDecoded[dronesCollected - 1]) // Ensure Hint hasn't been decoded
-                    {
-                        hintWasDecoded[dronesCollected - 1] = true;
-                        IncrementNumberOfDecodedHints();
-                        // Change the color of all orbs to green
-                        ChangeOrbLightColors(Color.green);
-                        hintDisplayManager.ChangeHintColor(i, Color.black); // Change hint text color to black
-                        // Wait a few seconds before resetting the lights
-                        StartCoroutine(ResetLightsAfterDelay(3.0f));
-                    }
-                    else
-                    {
-                        Debug.Log("Hint Number " + i + 1 + " has already been decoded");
-                    }
-
-                    // Check if all hints are decoded
-                    if (CheckAllHintsDecoded())
-                    {
-                        TriggerAllHintsDecodedAction();
-                    }
-                    //wait a few seconds before turning off all lights and reset the color
-                }
-                else
-                {
-                    Debug.Log($"Hint counter is too low to decode hint {i + 1}. Current counter: {dronesCollected}");
-                }
-                break;
-            }
-        }
-    }
-    */
 
     public void UpdateOrbState(int orbIndex, bool isOn)
     {
@@ -256,39 +196,37 @@ public class OrbManager : MonoBehaviour
             Debug.Log($"Checking if entered code matches {BoolArrayToBinaryString(correctCodes[i].code)}");
             if (AreCodesEqual(orbStates, correctCodes[i].code))
             {
-                if (GameSyncManager.Instance)
+
+                if (unlockedHints >= i + 1 && !hintWasDecoded[i])  // Ensure the hintCounter is high enough
                 {
-                    var unlockedHints = GameSyncManager.Instance.unlockedHints;
-                    if (unlockedHints >= i + 1 && !hintWasDecoded[i])  // Ensure the hintCounter is high enough
-                    {
-                        Debug.Log($"Entered code is correct and hint counter is sufficient ({unlockedHints} >= {i + 1})!");
-                        hintDisplayManager.ChangeHintColor(i, Color.black); // Change hint text color to black
-                        hintWasDecoded[i] = true;
-                        Debug.Log("Hint Number " + i + 1 + " was set to: " + hintWasDecoded[i]);
-                        Debug.Log("New state of decoded hints: " + string.Join(", ", hintWasDecoded));
-                        IncrementDecodedHints();
-                        //todo: turn orbs green
-                        ChangeOrbLightColors(Color.green);
-                        StartCoroutine(ResetLightsAfterDelay(0.3f));
+                    Debug.Log($"Entered code is correct and hint counter is sufficient ({unlockedHints} >= {i + 1})!");
+                    hintDisplayManager.ChangeHintColor(i, Color.black); // Change hint text color to black
+                    hintWasDecoded[i] = true;
+                    Debug.Log("Hint Number " + i + 1 + " was set to: " + hintWasDecoded[i]);
+                    Debug.Log("New state of decoded hints: " + string.Join(", ", hintWasDecoded));
+                    IncrementDecodedHints();
+                    //todo: turn orbs green
+                    ChangeOrbLightColors(Color.green);
+                    StartCoroutine(ResetLightsAfterDelay(0.3f));
 
-                        // Check if all hints are decoded
-                        if (CheckAllHintsDecoded())
-                        {
-                            TriggerAllHintsDecodedAction();
-                        }
-
-                    }
-                    else
+                    // Check if all hints are decoded
+                    if (CheckAllHintsDecoded())
                     {
-                        Debug.Log($"Hint counter is too low to decode hint {i + 1}. Current counter: {unlockedHints}");
+                        TriggerAllHintsDecodedAction();
                     }
-                    break;
+
                 }
-                
+                else
+                {
+                    Debug.Log($"Hint counter is too low to decode hint {i + 1}. Current counter: {unlockedHints}");
+                }
+                break;
+
+
             }
         }
     }
-    
+
     private IEnumerator ResetLightsAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -318,7 +256,7 @@ public class OrbManager : MonoBehaviour
             }
         }
     }
-    
+
 
     private bool CheckAllHintsDecoded()
     {
