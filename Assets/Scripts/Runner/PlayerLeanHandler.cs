@@ -91,16 +91,13 @@ public class PlayerLeanHandler : MonoBehaviour
 }
 */
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.Events;
 using System;
-using System.Collections;
 
 public class PlayerLeanHandler : MonoBehaviour
 {
-    public Transform headTransform;
-    public float leanThreshold = 30f; // Angle in degrees for detecting leaning
+    public Transform headTransform;  // Reference to the VR headset transform
+    public float leanThreshold = 15f;  // Angle threshold in degrees for detecting leaning
 
     public static event Action<float> OnLeanValueChanged;
 
@@ -116,12 +113,11 @@ public class PlayerLeanHandler : MonoBehaviour
 
     void Update()
     {
-        // Calculate the tilt angle relative to the vertical axis (world's up direction)
-        Vector3 headRight = headTransform.right; // Local right direction of the head
-        Vector3 worldUp = Vector3.up;
+        // Calculate the local tilt (roll) angle around the Z-axis
+        float tiltAngle = headTransform.localEulerAngles.z;
 
-        // Calculate the angle between the head's right vector and the world up vector
-        float tiltAngle = Vector3.SignedAngle(worldUp, headRight, headTransform.forward);
+        // Adjust the angle so that it ranges from -180 to 180
+        if (tiltAngle > 180) tiltAngle -= 360;
 
         // Determine Lean Value based on tilt angle
         float leanValue = 0f;
@@ -141,7 +137,7 @@ public class PlayerLeanHandler : MonoBehaviour
             OnLeanValueChanged?.Invoke(currentLeanValue);
         }
 
-        if (leanValue == 1 || leanValue == -1)
+        if (leanValue != 0)
         {
             leanEvent.Invoke(leanValue);
         }
