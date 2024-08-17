@@ -14190,8 +14190,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 8300000, guid: acd573f1df3a203429fe8bc4e1afeeb7, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -27796,7 +27796,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   winCanvas: {fileID: 938975794}
-  winSound: {fileID: 8300000, guid: acd573f1df3a203429fe8bc4e1afeeb7, type: 3}
   postProcessingWin: {fileID: 914380415}
   canva: {fileID: 456779208}
 --- !u!1 &1561327543
