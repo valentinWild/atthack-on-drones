@@ -32,6 +32,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if(GameSyncManager.Instance) {
             GameSyncManager.OnRunnerHealthChanged += OnRunnerHealthChanged;
+            //GameSyncManager.OnCollectedDronesChanged += OnCollectedDronesChanged;
         }
     }
 
@@ -39,6 +40,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if(GameSyncManager.Instance) {
             GameSyncManager.OnRunnerHealthChanged -= OnRunnerHealthChanged;
+            //GameSyncManager.OnCollectedDronesChanged -= OnCollectedDronesChanged;
         }
     }
 
@@ -120,6 +122,7 @@ public class PlayerHealth : MonoBehaviour
         UpdateHealthUI();
     }
 
+    /*es müsste auskommentiert sein*/
     public void IncreaseHealth(int level)
     {
         maxHealth += (health * 0.01f)* ((100 - level) * 0.1f);
@@ -136,7 +139,9 @@ public class PlayerHealth : MonoBehaviour
     public void UpdateFriendCounter(int friendCount)
     {
         //Debug.Log("Friend Counter Updated: " + friendCount);
-        friendCounterText.text = "Hints: " + friendCount.ToString();
+        // friendCounterText.text = "Hints: " + friendCount.ToString();
+        int collectedDrones = GameSyncManager.Instance.collectedHintDrones;
+        friendCounterText.text = "Hints: " + collectedDrones.ToString();
     }
 
     public void UpdateEnemyCounter(int enemyCount)
