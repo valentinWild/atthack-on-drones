@@ -6,6 +6,7 @@ public class GameWinManager : MonoBehaviour
     public GameObject winCanvas;
     public PostProcessVolume postProcessingWin;
     public GameObject canva;
+    public ParticleSystem confetti; 
 
     private AudioSource winSound;
     private Vignette vignetteEffect;
@@ -28,6 +29,10 @@ public class GameWinManager : MonoBehaviour
 
     void Start()
     {
+        // particle systems
+        confetti.Stop();
+        confetti.gameObject.SetActive(false);
+
         winCanvas.SetActive(false);
         winSound = GetComponent<AudioSource>();
 
@@ -57,6 +62,10 @@ public class GameWinManager : MonoBehaviour
             ActivateWinCanvas();
             PlayWinSound();
             HideCanva();
+
+            // particle systems
+            confetti.gameObject.SetActive(true);
+            confetti.Play();
         }
     }
 
