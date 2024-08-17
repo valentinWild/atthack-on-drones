@@ -90,18 +90,15 @@ public class PlayerLeanHandler : MonoBehaviour
     }
 }
 */
-
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.Events;
 using System;
-using System.Collections;
 
 public class PlayerLeanHandler : MonoBehaviour
 {
-    public Transform headTransform;
-    public float leanThreshold = 45f; // Angle threshold in degrees
+    public Transform headTransform;  // Reference to the VR headset transform
+    public float leanThreshold = 20f;  // Angle threshold in degrees for detecting leaning
+    public float deadZone = 5f;  // Dead zone around the center to ignore small tilts
 
     public static event Action<float> OnLeanValueChanged;
 
@@ -117,32 +114,32 @@ public class PlayerLeanHandler : MonoBehaviour
 
     void Update()
     {
-        // Calculate the tilt angle around the local z-axis (which determines left/right tilt)
-        float headTiltAngle = Vector3.SignedAngle(headTransform.up, Vector3.up, headTransform.forward);
+        // Calculate the local tilt (roll) angle around the Z-axis
+        float tiltAngle = headTransform.localEulerAngles.z;
+        Debug.Log("Player tilt head: " + tiltAngle);
+        // Adjust the angle so that it ranges from -180 to 180
+        if (tiltAngle > 180) tiltAngle -= 360;
 
-        // Determine the lean value based on the tilt angle
+        // Apply the dead zone filtering
         float leanValue = 0f;
-        if (headTiltAngle > leanThreshold)
+        if (tiltAngle > leanThreshold + deadZone)
         {
             leanValue = 1f; // Leaning to the right
         }
-        else if (headTiltAngle < -leanThreshold)
+        else if (tiltAngle < -leanThreshold - deadZone)
         {
             leanValue = -1f; // Leaning to the left
         }
 
-        // Invoke the lean value change event if the lean value has changed
+        // Trigger the event only if the lean value changes significantly
         if (currentLeanValue != leanValue)
         {
             currentLeanValue = leanValue;
-            OnLeanValueChanged?.Invoke(currentLeanValue);
-        }
-
-        // Invoke the UnityEvent if the player is leaning
-        if (leanValue == 1 || leanValue == -1)
-        {
-            leanEvent.Invoke(leanValue);
+            if (leanValue != 0)
+            {
+                OnLeanValueChanged?.Invoke(currentLeanValue);
+                leanEvent.Invoke(leanValue);
+            }
         }
     }
 }
-

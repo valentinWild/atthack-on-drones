@@ -62,10 +62,13 @@ public class GameWinManager : MonoBehaviour
 
     /*void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+        {
             PlayWinSound();
             ActivateVignetteEffect();
             HideCanva();
             ActivateWinCanvas();
+        }
     }*/
 
     void PlayWinSound()

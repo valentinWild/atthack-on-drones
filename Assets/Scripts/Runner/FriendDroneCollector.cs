@@ -33,6 +33,34 @@ public class FriendDroneCollector : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        if (GameSyncManager.Instance)
+        {
+            GameSyncManager.OnActivePotionChanged += OnActivePotionChanged;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (GameSyncManager.Instance)
+        {
+            GameSyncManager.OnActivePotionChanged -= OnActivePotionChanged;
+        }
+    }
+
+    private void OnActivePotionChanged(string potionType)
+    {
+        if (potionType == "End Potion")
+        {
+            GameObject[] friendDrones = GameObject.FindGameObjectsWithTag(friendTag);
+            foreach (GameObject drone in friendDrones)
+            {
+                Destroy(drone);
+            }
+        }
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {
