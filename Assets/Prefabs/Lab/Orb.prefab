@@ -4990,7 +4990,7 @@ MonoBehaviour:
   zap: {fileID: 0}
   constantBuzz: {fileID: 0}
   orbIndex: 0
-  debounceTime: 1
+  debounceTime: 0.5
 --- !u!54 &3642941046596643898
 Rigidbody:
   m_ObjectHideFlags: 0
