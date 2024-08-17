@@ -49,20 +49,19 @@ public class GameWinManager : MonoBehaviour
     {
         if (potionType == "End Potion")
         {
-            StartCoroutine(ActivateVignetteEffect);
+            ActivateVignetteEffect();
         }
     }
 
-
     void Update()
     {
-            PlayWinSound();
+        PlayWinSound();
 
-            ActivateVignetteEffect();
+        ActivateVignetteEffect();  // This line is correct
 
-            HideCanva();
-        
+        HideCanva();
     }
+
 
     void PlayWinSound()
     {

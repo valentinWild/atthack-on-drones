@@ -6,7 +6,7 @@ public class DroneExplosion : MonoBehaviour
 {
 
     public GameObject droneExplosion;
-    public AudioClip explosionSound;
+   //public AudioClip explosionSound;
 
     [SerializeField]
     private int defaultDroneHealth = 1;
@@ -16,7 +16,7 @@ public class DroneExplosion : MonoBehaviour
     private float decreasedHealthTime = 10f;
 
     private float droneHealth = 1;
-    private AudioSource audioSource;
+    //private AudioSource audioSource;
 
     private void OnEnable()
     {
