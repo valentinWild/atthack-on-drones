@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System;
 
 public class HintDisplayManager : MonoBehaviour
 {
@@ -43,32 +44,51 @@ public class HintDisplayManager : MonoBehaviour
         if (GameSyncManager.Instance)
         {
             GameSyncManager.OnUnlockedHintsChanged += UpdateHintVisibility;
+            GameSyncManager.OnDecodedHintsChanged += UpdateUnlockedHints;
         }
     }
 
+    
     private void OnDisable()
     {
         if (GameSyncManager.Instance)
         {
             GameSyncManager.OnUnlockedHintsChanged -= UpdateHintVisibility;
+            GameSyncManager.OnDecodedHintsChanged -= UpdateUnlockedHints;
+        }
+    }
+
+    private void UpdateUnlockedHints(int unlockedHints)
+    {
+        Debug.Log("UpdateUnlockedHints");
+        if (GameSyncManager.Instance)
+        {
+            if(unlockedHints == 4)
+            {
+                hint1.SetActive(false);
+                hint2.SetActive(false);
+                hint3.SetActive(false);
+                hint4.SetActive(false);
+                displayGuideText.text = "you have unlocked all hints! pour the golden potion to clear the game";
+            }
         }
     }
 
 
-    public void UpdateHintVisibility(int hintCounter)
+    public void UpdateHintVisibility(int visibleHints)
     {
-        Debug.Log($"UpdateHintVisibility called with hintCounter: " + hintCounter);
+        Debug.Log($"Now " + visibleHints + " visible hints");
 
-        if (hintCounter == 0)
+        if (visibleHints == 0)
         {
             displayGuideText.text = "waiting for runner to collect hints...";
         } else
         {
-            displayGuideText.text = "touch the orbs to decipher the codes";
+            displayGuideText.text = "touch the orbs to decipher the codes!";
         }
 
         //Debug.Log("HDM: HintCounter is bigger than 1");
-        if (hintCounter >= 1)
+        if (visibleHints >= 1)
         {
             hint1.SetActive(true);
             hint1Text.text = $"code 1\n{orbManager.correctCodesDecimal[0]}";
@@ -79,7 +99,7 @@ public class HintDisplayManager : MonoBehaviour
         }
 
 
-        if (hintCounter >= 2)
+        if (visibleHints >= 2)
         {
             hint2.SetActive(true);
             hint2Text.text = $"code 2\n{orbManager.correctCodesDecimal[1]}";
@@ -91,7 +111,7 @@ public class HintDisplayManager : MonoBehaviour
         }
 
 
-        if (hintCounter >= 3)
+        if (visibleHints >= 3)
         {
             hint3.SetActive(true);
             hint3Text.text = $"code 3\n{orbManager.correctCodesDecimal[2]}";
@@ -103,7 +123,7 @@ public class HintDisplayManager : MonoBehaviour
         }
 
 
-        if (hintCounter == 4)
+        if (visibleHints == 4)
         {
             hint4.SetActive(true);
             hint4Text.text = $"code 4\n{orbManager.correctCodesDecimal[3]}";
