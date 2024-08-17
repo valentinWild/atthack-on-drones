@@ -54,8 +54,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private UnityEvent<Vector3> turnEvent;
 
-        private Coroutine speedBoostCoroutine;
-
         private void Awake() {
         playerInput = GetComponent<PlayerInput>();
         controller = GetComponent<CharacterController>();
@@ -106,25 +104,19 @@ public class PlayerController : MonoBehaviour
 
             if (potionType == "Speed Potion")
             {
-                if (speedBoostCoroutine != null)
-                {
-                    StopCoroutine(speedBoostCoroutine);
-                }
 
-                speedBoostCoroutine = StartCoroutine(SpeedBoostCoroutine());
+                StartCoroutine(SpeedBoostCoroutine());
             }
         }
 
         private IEnumerator SpeedBoostCoroutine()
         {
-            float originalSpeed = 6.5f; 
+            float originalSpeed = playerSpeed; 
             playerSpeed = 8.5f; 
 
             yield return new WaitForSeconds(10); 
 
             playerSpeed = originalSpeed;
-
-            speedBoostCoroutine = null; 
         }
 
 
