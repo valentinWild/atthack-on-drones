@@ -97,8 +97,8 @@ using System;
 public class PlayerLeanHandler : MonoBehaviour
 {
     public Transform headTransform;  // Reference to the VR headset transform
-    public float leanThreshold = 20f;  // Angle threshold in degrees for detecting leaning
-    public float deadZone = 5f;  // Dead zone around the center to ignore small tilts
+    public float leanThreshold = 90f;  // Angle threshold in degrees for detecting leaning
+    public float deadZone = 70f;  // Dead zone around the center to ignore small tilts
 
     public static event Action<float> OnLeanValueChanged;
 
@@ -112,34 +112,37 @@ public class PlayerLeanHandler : MonoBehaviour
         Debug.Log("Player Leaning Handler started");
     }
 
-    void Update()
+    private void Update()
     {
         // Calculate the local tilt (roll) angle around the Z-axis
         float tiltAngle = headTransform.localEulerAngles.z;
         Debug.Log("Player tilt head: " + tiltAngle);
+        Debug.Log(tiltAngle);
         // Adjust the angle so that it ranges from -180 to 180
         if (tiltAngle > 180) tiltAngle -= 360;
 
         // Apply the dead zone filtering
         float leanValue = 0f;
-        if (tiltAngle > leanThreshold + deadZone)
+        if (tiltAngle < -leanThreshold - deadZone)
         {
             leanValue = 1f; // Leaning to the right
         }
-        else if (tiltAngle < -leanThreshold - deadZone)
+        else if (tiltAngle > leanThreshold + deadZone)
         {
             leanValue = -1f; // Leaning to the left
         }
 
-        // Trigger the event only if the lean value changes significantly
+
         if (currentLeanValue != leanValue)
         {
             currentLeanValue = leanValue;
-            if (leanValue != 0)
-            {
-                OnLeanValueChanged?.Invoke(currentLeanValue);
-                leanEvent.Invoke(leanValue);
-            }
+            //ChangeArrowColors(currentLeanValue);
+            OnLeanValueChanged.Invoke(currentLeanValue);
+        }
+
+        if (leanValue == 1 || leanValue == -1)
+        {
+            leanEvent.Invoke(leanValue);
         }
     }
 }

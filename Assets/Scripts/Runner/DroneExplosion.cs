@@ -11,7 +11,7 @@ public class DroneExplosion : MonoBehaviour
     [SerializeField]
     private int defaultDroneHealth = 3;
     [SerializeField]
-    private int decreasedDroneHealth = 2;
+    private int decreasedDroneHealth = 3;
     [SerializeField]
     private float decreasedHealthTime = 10f;
 

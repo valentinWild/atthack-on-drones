@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -64,7 +64,7 @@ public class LevelSystem : MonoBehaviour
         // This will trigger when the current level changes
         level = newLevel;
         levelText.text = level.ToString();  // Update the level text
-    }*/
+    }
 
     void Start()
     {
@@ -82,7 +82,7 @@ public class LevelSystem : MonoBehaviour
         {
             audioSource = gameObject.AddComponent<AudioSource>();
         } 
-        }*/
+        }
 
         frontXpBar.fillAmount = currentXp / requiredXp;
         backXpBar.fillAmount = currentXp / requiredXp;
@@ -102,7 +102,7 @@ public class LevelSystem : MonoBehaviour
     void Update()
     { 
         /*sollte leer sein
-         */
+         
         if (currentXp >= requiredXp)
         {
             LevelUp();
@@ -147,7 +147,7 @@ public class LevelSystem : MonoBehaviour
 
     public void LevelUp()
 
-    /*// Let the GameSyncManager handle the level-up logic via RPC
+    // Let the GameSyncManager handle the level-up logic via RPC
         if (GameSyncManager.Instance)
         {
             GameSyncManager.Instance.RpcIncreaseLevel();
@@ -158,7 +158,7 @@ public class LevelSystem : MonoBehaviour
         {
             audioSource.PlayOneShot(levelUpSound);
         }
-    }*/ 
+    }
     {
         level++;
         completedChallenges = 0;
@@ -172,9 +172,9 @@ public class LevelSystem : MonoBehaviour
             audioSource.PlayOneShot(levelUpSound);
         }
     }
-}
+} */
 
-/*using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -183,6 +183,7 @@ using TMPro;
 public class LevelSystem : MonoBehaviour
 {
     private int _completedChallenges;
+    public int level;
     public int completedChallenges
     {
         get { return _completedChallenges; }
@@ -230,12 +231,15 @@ public class LevelSystem : MonoBehaviour
 
     private void Start()
     {
+        level = 0;
+
         if (GameSyncManager.Instance)
         {
             level = GameSyncManager.Instance.currentLevel;
             completedChallenges = GameSyncManager.Instance.decodedHints;
 
             UpdateXpUI(); // Initial UI update
+            ResetProgressBar();
 
             levelText.text = GameSyncManager.Instance.currentLevel.ToString();
         }
@@ -255,6 +259,7 @@ public class LevelSystem : MonoBehaviour
     private void OnDecodedHintsChanged(int amount)
     {
         completedChallenges = amount;  // Update the progress bar when decoded hints change
+        UpdateXpUI();
     }
 
     private void OnCurrentLevelChanged(int newLevel)
@@ -313,4 +318,4 @@ public class LevelSystem : MonoBehaviour
             audioSource.PlayOneShot(levelUpSound);
         }
     }
-}*/
+}
