@@ -893,6 +893,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b75e5d635ee197f4b9909a908c82d4ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  runnerHP: {fileID: 6424347530458154822}
+  activePotion: {fileID: 5703801005549630803}
+  enemyDrones: {fileID: 7365875091161462379}
+  friendDrones: {fileID: 5576819518895133745}
 --- !u!1 &9007946565579483684
 GameObject:
   m_ObjectHideFlags: 0
