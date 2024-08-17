@@ -3066,6 +3066,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   intensity: 1000
+  audioSource: {fileID: 767300257}
 --- !u!82 &767300257
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3076,7 +3077,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 79105695c2ed9294984c8212ee35b3d9, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1

@@ -6,7 +6,7 @@ public class DroneExplosion : MonoBehaviour
 {
 
     public GameObject droneExplosion;
-   //public AudioClip explosionSound;
+    public AudioSource audioSource;
 
     [SerializeField]
     private int defaultDroneHealth = 3;
@@ -16,7 +16,7 @@ public class DroneExplosion : MonoBehaviour
     private float decreasedHealthTime = 10f;
 
     private float droneHealth = 3;
-    //private AudioSource audioSource;
+
 
     private void OnEnable()
     {
@@ -30,6 +30,12 @@ public class DroneExplosion : MonoBehaviour
 /*         if(GameSyncManager.Instance) {
             GameSyncManager.OnActivePotionChanged -= OnActivePotionChanged;
         } */
+    }
+
+    private void Start()
+    {
+        // Cache the AudioSource component at the start
+        //audioSource = GetComponent<AudioSource>();
     }
 
     private void OnActivePotionChanged(string potionType)
@@ -63,11 +69,12 @@ public class DroneExplosion : MonoBehaviour
     {
 
         GameObject explosion = Instantiate(droneExplosion, gameObject.transform.position, gameObject.transform.rotation);
-        
-/*         if (explosionSound != null)
+
+        if (audioSource != null)
         {
-            audioSource.PlayOneShot(explosionSound);
-        } */
+            audioSource.Play();
+        }
+
 
         Destroy(gameObject);
         Destroy(explosion, 2f);
