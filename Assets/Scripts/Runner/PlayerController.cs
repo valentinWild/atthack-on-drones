@@ -73,20 +73,38 @@ public class PlayerController : MonoBehaviour
         turnAction.performed += PlayerTurn;
         //leanAction.performed += PlayerTurn;
         jumpAction.performed += PlayerJump;
-    }
+
+            if (GameSyncManager.Instance)
+            {
+                GameSyncManager.OnActivePotionChanged += OnActivePotionChanged;
+            }
+        }
 
     private void OnDisable() {
         turnAction.performed -= PlayerTurn;
         jumpAction.performed -= PlayerJump;
-    }
+
+            if (GameSyncManager.Instance)
+            {
+                GameSyncManager.OnActivePotionChanged -= OnActivePotionChanged;
+            }
+        }
 
     private void Start() {
         gravity = initialGravityValue;
         playerSpeed = initialPlayerSpeed;
     }
 
-    // Method that is called by pressing the left or right arrow key
-    private void PlayerTurn(InputAction.CallbackContext context) {
+    private void OnActivePotionChanged(string potionType)
+        {
+            if (potionType == "End Potion")
+            {
+                playerSpeed = 0;
+            }
+        }
+
+        // Method that is called by pressing the left or right arrow key
+        private void PlayerTurn(InputAction.CallbackContext context) {
         Debug.Log("Player Turn: " + context.ReadValue<float>());
         Vector3? turnPosition = CheckTurn(context.ReadValue<float>());
         if (!turnPosition.HasValue)
