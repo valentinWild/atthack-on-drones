@@ -7534,6 +7534,26 @@ PrefabInstance:
       propertyPath: currentDecimalText
       value: 
       objectReference: {fileID: 1965761164}
+    - target: {fileID: 7144758473183370346, guid: e9a23873313c052459c3f0f1f80ebd75, type: 3}
+      propertyPath: orbLights.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7144758473183370346, guid: e9a23873313c052459c3f0f1f80ebd75, type: 3}
+      propertyPath: orbLights.Array.data[0]
+      value: 
+      objectReference: {fileID: 415165506}
+    - target: {fileID: 7144758473183370346, guid: e9a23873313c052459c3f0f1f80ebd75, type: 3}
+      propertyPath: orbLights.Array.data[1]
+      value: 
+      objectReference: {fileID: 415165507}
+    - target: {fileID: 7144758473183370346, guid: e9a23873313c052459c3f0f1f80ebd75, type: 3}
+      propertyPath: orbLights.Array.data[2]
+      value: 
+      objectReference: {fileID: 415165505}
+    - target: {fileID: 7144758473183370346, guid: e9a23873313c052459c3f0f1f80ebd75, type: 3}
+      propertyPath: orbLights.Array.data[3]
+      value: 
+      objectReference: {fileID: 415165508}
     - target: {fileID: 8201826039759979897, guid: e9a23873313c052459c3f0f1f80ebd75, type: 3}
       propertyPath: m_Name
       value: OrbManager
@@ -7551,6 +7571,26 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9a23873313c052459c3f0f1f80ebd75, type: 3}
+--- !u!108 &415165505 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 846203101194616376, guid: e9a23873313c052459c3f0f1f80ebd75, type: 3}
+  m_PrefabInstance: {fileID: 415165504}
+  m_PrefabAsset: {fileID: 0}
+--- !u!108 &415165506 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 2457988247446604426, guid: e9a23873313c052459c3f0f1f80ebd75, type: 3}
+  m_PrefabInstance: {fileID: 415165504}
+  m_PrefabAsset: {fileID: 0}
+--- !u!108 &415165507 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 5089914088121785599, guid: e9a23873313c052459c3f0f1f80ebd75, type: 3}
+  m_PrefabInstance: {fileID: 415165504}
+  m_PrefabAsset: {fileID: 0}
+--- !u!108 &415165508 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 7089934206241758444, guid: e9a23873313c052459c3f0f1f80ebd75, type: 3}
+  m_PrefabInstance: {fileID: 415165504}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &419052034
 GameObject:
   m_ObjectHideFlags: 0
