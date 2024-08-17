@@ -66,6 +66,8 @@ public class WeaponHandler : MonoBehaviour
     {
         if (potionType == "Attack Potion")
         {
+            shotCounter = 0;
+            weaponLoaded = true;
             StartCoroutine(SetTemporarlyReloadTime(10f));
         }
     }
@@ -74,6 +76,7 @@ public class WeaponHandler : MonoBehaviour
     {
         weaponLoaded = false;
         yield return new WaitForSeconds(reloadTime);
+        shotCounter = 0;
         weaponLoaded = true;
     }
 

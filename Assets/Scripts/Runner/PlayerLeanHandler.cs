@@ -101,7 +101,7 @@ using System.Collections;
 public class PlayerLeanHandler : MonoBehaviour
 {
     public Transform headTransform;
-    public float leanThreshold = 10f; // Angle threshold in degrees
+    public float leanThreshold = 20f; // Angle threshold in degrees
 
     public static event Action<float> OnLeanValueChanged;
 
