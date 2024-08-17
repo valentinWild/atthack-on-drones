@@ -90,7 +90,6 @@ public class PlayerLeanHandler : MonoBehaviour
     }
 }
 */
-
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -101,7 +100,7 @@ using System.Collections;
 public class PlayerLeanHandler : MonoBehaviour
 {
     public Transform headTransform;
-    public float leanThreshold = 20f; // Angle threshold in degrees
+    public float leanThreshold = 30f; // Angle in degrees for detecting leaning
 
     public static event Action<float> OnLeanValueChanged;
 
@@ -117,32 +116,34 @@ public class PlayerLeanHandler : MonoBehaviour
 
     void Update()
     {
-        // Calculate the tilt angle around the local z-axis (which determines left/right tilt)
-        float headTiltAngle = Vector3.SignedAngle(headTransform.up, Vector3.up, headTransform.forward);
+        // Calculate the tilt angle relative to the vertical axis (world's up direction)
+        Vector3 headRight = headTransform.right; // Local right direction of the head
+        Vector3 worldUp = Vector3.up;
 
-        // Determine the lean value based on the tilt angle
+        // Calculate the angle between the head's right vector and the world up vector
+        float tiltAngle = Vector3.SignedAngle(worldUp, headRight, headTransform.forward);
+
+        // Determine Lean Value based on tilt angle
         float leanValue = 0f;
-        if (headTiltAngle > leanThreshold)
+        if (tiltAngle > leanThreshold)
         {
             leanValue = 1f; // Leaning to the right
         }
-        else if (headTiltAngle < -leanThreshold)
+        else if (tiltAngle < -leanThreshold)
         {
             leanValue = -1f; // Leaning to the left
         }
 
-        // Invoke the lean value change event if the lean value has changed
+        // Trigger the event only if lean value changes
         if (currentLeanValue != leanValue)
         {
             currentLeanValue = leanValue;
             OnLeanValueChanged?.Invoke(currentLeanValue);
         }
 
-        // Invoke the UnityEvent if the player is leaning
         if (leanValue == 1 || leanValue == -1)
         {
             leanEvent.Invoke(leanValue);
         }
     }
 }
-
