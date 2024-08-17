@@ -3,19 +3,18 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class GameWinManager : MonoBehaviour
 {
-    public GameObject winCanvas; // Ziehe hier das Canvas GameObject hinein
-    public AudioClip winSound;
+    public GameObject winCanvas;
     public PostProcessVolume postProcessingWin;
     public GameObject canva;
 
-    private AudioSource audioSource;
+    private AudioSource winSound;
     private Vignette vignetteEffect;
 
 
     void Start()
     {
         winCanvas.SetActive(false);
-        audioSource = GetComponent<AudioSource>();
+        winSound = GetComponent<AudioSource>();
 
         
         {
@@ -47,9 +46,9 @@ public class GameWinManager : MonoBehaviour
 
     void PlayWinSound()
     {
-        if (audioSource != null && winSound != null)
+        if (winSound != null)
         {
-            audioSource.PlayOneShot(winSound);
+            winSound.Play();
         }
         else
         {
