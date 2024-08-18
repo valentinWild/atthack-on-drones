@@ -64,13 +64,12 @@ public class LevelSystem : MonoBehaviour
             StartCoroutine(UpdateXpUICoroutine());
             ResetProgressBar();
 
-            levelText.text = GameSyncManager.Instance.currentLevel.ToString();
-        }
+            if (audioSource == null)
+            {
+                audioSource = gameObject.AddComponent<AudioSource>();
+            }
 
-        audioSource = GetComponent<AudioSource>();
-        if (audioSource == null)
-        {
-            audioSource = gameObject.AddComponent<AudioSource>();
+            levelText.text = GameSyncManager.Instance.currentLevel.ToString();
         }
     }
 
@@ -82,7 +81,14 @@ public class LevelSystem : MonoBehaviour
     private void OnDecodedHintsChanged(int amount)
     {
         completedChallenges = amount;
+
+        if (levelUpSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(levelUpSound);
+        }
+
         StartCoroutine(UpdateXpUICoroutine());
+       
     }
 
     private void OnCurrentLevelChanged(int newLevel)
