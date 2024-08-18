@@ -156,7 +156,18 @@ public class PlayerController : MonoBehaviour
             fadeInOutScript.setColor(Color.red);
             StartCoroutine(fadeInOutScript.FadeInAndOut());
         }
-        StartCoroutine(TurnPlayerWithDelay(0.5f,targetDirection, direction, turnPosition));
+
+            AudioSource audioSource = GetComponent<AudioSource>();
+            if (audioSource != null && audioSource.clip != null)
+            {
+                audioSource.Play();
+            }
+            else
+            {
+                Debug.LogWarning("AudioSource or AudioClip is missing!");
+            }
+
+            StartCoroutine(TurnPlayerWithDelay(0.5f,targetDirection, direction, turnPosition));
      }
 
     private void PlayerJump(InputAction.CallbackContext context) {
