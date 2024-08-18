@@ -51,6 +51,11 @@ public class PlayerController : MonoBehaviour
 
     private CharacterController controller;
 
+    private AudioSource audioSource;
+
+    public AudioClip speedPotionSound;
+    public AudioClip wallCollisionSound;
+
     [SerializeField]
     private UnityEvent<Vector3> turnEvent;
 
@@ -93,9 +98,15 @@ public class PlayerController : MonoBehaviour
     private void Start() {
         gravity = initialGravityValue;
         playerSpeed = initialPlayerSpeed;
-    }
+        
+            if (audioSource == null)
+            {
+                audioSource = gameObject.AddComponent<AudioSource>();
+            }
 
-    private void OnActivePotionChanged(string potionType)
+        }
+
+        private void OnActivePotionChanged(string potionType)
         {
             if (potionType == "End Potion")
             {
@@ -104,24 +115,56 @@ public class PlayerController : MonoBehaviour
 
             if (potionType == "Speed Potion")
             {
-
+                if (audioSource != null && speedPotionSound != null)
+                {
+                    audioSource.PlayOneShot(speedPotionSound);
+                }
                 StartCoroutine(SpeedBoostCoroutine());
             }
         }
 
-        private IEnumerator SpeedBoostCoroutine()
-        {
-            float originalSpeed = playerSpeed; 
-            playerSpeed = 8.5f; 
+            private IEnumerator SpeedBoostCoroutine()
+            {
+                float originalSpeed = playerSpeed;
+                playerSpeed = 8.5f;
 
-            yield return new WaitForSeconds(10); 
+                // Play the speed potion sound and set its volume to full
+                if (audioSource != null && speedPotionSound != null)
+                {
+                    audioSource.clip = speedPotionSound;
+                    audioSource.volume = 1.0f; // Set the volume to full
+                    audioSource.Play();
+                }
 
-            playerSpeed = originalSpeed;
-        }
+                // Wait for 8 seconds while the sound plays at full volume
+                yield return new WaitForSeconds(8f);
+
+                // Gradually decrease the volume over 1 second
+                float fadeDuration = 1f; // 1 second to fade out
+                float fadeOutStartTime = Time.time;
+
+                while (Time.time < fadeOutStartTime + fadeDuration)
+                {
+                    if (audioSource != null)
+                    {
+                        audioSource.volume = Mathf.Lerp(1.0f, 0.0f, (Time.time - fadeOutStartTime) / fadeDuration);
+                    }
+                    yield return null;
+                }
+
+                // Stop the sound completely after 10 seconds
+                if (audioSource != null)
+                {
+                    audioSource.Stop();
+                }
+
+                // Reset player speed to original
+                playerSpeed = originalSpeed;
+            }
 
 
-        // Method that is called by pressing the left or right arrow key
-        private void PlayerTurn(InputAction.CallbackContext context) {
+            // Method that is called by pressing the left or right arrow key
+            private void PlayerTurn(InputAction.CallbackContext context) {
         Debug.Log("Player Turn: " + context.ReadValue<float>());
         Vector3? turnPosition = CheckTurn(context.ReadValue<float>());
         if (!turnPosition.HasValue)
@@ -157,14 +200,9 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(fadeInOutScript.FadeInAndOut());
         }
 
-            AudioSource audioSource = GetComponent<AudioSource>();
-            if (audioSource != null && audioSource.clip != null)
+            if (audioSource != null && wallCollisionSound != null)
             {
-                audioSource.Play();
-            }
-            else
-            {
-                Debug.LogWarning("AudioSource or AudioClip is missing!");
+                audioSource.PlayOneShot(wallCollisionSound);
             }
 
             StartCoroutine(TurnPlayerWithDelay(0.5f,targetDirection, direction, turnPosition));

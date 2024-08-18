@@ -17971,6 +17971,8 @@ MonoBehaviour:
     m_Bits: 512
   takeDamageScript: {fileID: 767300255}
   fadeCanvas: {fileID: 533763304}
+  speedPotionSound: {fileID: 8300000, guid: cbb29038ed27de14b933e65a2ad6b91b, type: 3}
+  wallCollisionSound: {fileID: 8300000, guid: 79105695c2ed9294984c8212ee35b3d9, type: 3}
   turnEvent:
     m_PersistentCalls:
       m_Calls:
@@ -18068,7 +18070,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 79105695c2ed9294984c8212ee35b3d9, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

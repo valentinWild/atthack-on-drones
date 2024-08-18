@@ -6,8 +6,8 @@ public class PotionManager : MonoBehaviour
 {
 
     private void Start() {
-        //StartCoroutine(testPotion(10f));
-        StartCoroutine(testChallenges(10f));
+        StartCoroutine(testPotion(10f));
+        //StartCoroutine(testChallenges(10f));
     }
 
     private IEnumerator testChallenges(float delay)
@@ -33,6 +33,8 @@ public class PotionManager : MonoBehaviour
         GameSyncManager.Instance.RpcSetRunnerPotion("Shield Potion");
         yield return new WaitForSeconds(delay);
         GameSyncManager.Instance.RpcSetRunnerPotion("Attack Potion");
+        yield return new WaitForSeconds(delay);
+        GameSyncManager.Instance.RpcSetRunnerPotion("Speed Potion");
     }
 
 
