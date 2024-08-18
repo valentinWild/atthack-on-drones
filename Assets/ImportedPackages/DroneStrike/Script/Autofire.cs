@@ -21,6 +21,22 @@ public class Autofire : MonoBehaviour
     private Coroutine fireCoroutine;
     private Transform playerTransform;
 
+    private void OnEnable()
+    {
+        if (GameSyncManager.Instance)
+        {
+            GameSyncManager.OnActivePotionChanged += OnActivePotionChanged;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (GameSyncManager.Instance)
+        {
+            GameSyncManager.OnActivePotionChanged -= OnActivePotionChanged;
+        }
+    }
+
     private void Start()
     {
         // Suche das PlayerObject in der Szene und speichere seinen Transform
@@ -36,6 +52,25 @@ public class Autofire : MonoBehaviour
 
         //Shooting starts 5 seconds later
         Invoke("StartFiring", 8f);
+    }
+
+    private void OnActivePotionChanged(string potionType)
+    {
+        if (potionType == "End Potion")
+        {
+            
+            isHit = true;
+
+            
+            if (fireCoroutine != null)
+            {
+                StopCoroutine(fireCoroutine);
+            }
+
+            DestroyAllProjectiles();
+
+            Debug.Log("End Potion activated. All drones have stopped shooting.");
+        }
     }
 
     private void StartFiring()
