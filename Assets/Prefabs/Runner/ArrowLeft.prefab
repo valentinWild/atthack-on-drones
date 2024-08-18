@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 273690297792961863}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -147,7 +147,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3454261565207502440}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Arrow (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -600,7 +600,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3749885272319866283}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Arrow (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -634,7 +634,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6231409004138038453}
   - component: {fileID: 1279683445901271355}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: ArrowLeft
   m_TagString: Arrow
   m_Icon: {fileID: 0}

@@ -43,13 +43,31 @@ public class SceneSelectionController : MonoBehaviour
     {
         spawner = FindObjectOfType<BasicSpawner>();
 
-        startText.gameObject.SetActive(true);
-        waitText.gameObject.SetActive(false);
+        if(startText.gameObject)
+        {
+            startText.gameObject.SetActive(true);
+        }
+        if(waitText.gameObject)
+        {
+            waitText.gameObject.SetActive(false);
+        }
 
-        labButton.gameObject.SetActive(true);
-        runnerButton.gameObject.SetActive(true);
-        startButtonLab.gameObject.SetActive(false);
-        startButtonRunner.gameObject.SetActive(false);
+        if(labButton.gameObject)
+        {
+            labButton.gameObject.SetActive(true);
+        }
+        if(runnerButton.gameObject)
+        {
+            runnerButton.gameObject.SetActive(true);
+        }
+        if(startButtonLab.gameObject)
+        {
+            startButtonLab.gameObject.SetActive(true);
+        }
+        if(startButtonRunner.gameObject)
+        {
+            startButtonRunner.gameObject.SetActive(false);
+        }
     }
 
     public void SetHost(bool isHost)

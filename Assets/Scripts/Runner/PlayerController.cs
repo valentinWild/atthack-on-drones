@@ -126,7 +126,7 @@ public class PlayerController : MonoBehaviour
             private IEnumerator SpeedBoostCoroutine()
             {
                 float originalSpeed = playerSpeed;
-                playerSpeed = 8.5f;
+                playerSpeed = 9f;
 
                 // Play the speed potion sound and set its volume to full
                 if (audioSource != null && speedPotionSound != null)
