@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
-public class DeathPotionManager : MonoBehaviour
+public class AttackPotionEffectController : MonoBehaviour
 {
+
     public float intensity = 0;
     public int activePriority = 1;
     public int defaultPriority = 0;
 
     PostProcessVolume _volume;
     Vignette _vignette;
-
 
     private void OnEnable()
     {
@@ -28,6 +28,7 @@ public class DeathPotionManager : MonoBehaviour
             GameSyncManager.OnActivePotionChanged -= OnActivePotionChanged;
         }
     }
+
 
     void Start()
     {
@@ -48,8 +49,10 @@ public class DeathPotionManager : MonoBehaviour
 
     private void OnActivePotionChanged(string potionType)
     {
-        if (potionType == "Death Potion")
+        if (potionType == "Attack Potion")
         {
+            StartCoroutine(ActivateAttackPotionEffect());
+
             AudioSource audioSource = GetComponent<AudioSource>();
             if (audioSource != null && audioSource.clip != null)
             {
@@ -59,11 +62,11 @@ public class DeathPotionManager : MonoBehaviour
             {
                 Debug.LogWarning("AudioSource or AudioClip is missing!");
             }
-            StartCoroutine(ActivateDeathPotionEffect());
+            
         }
     }
 
-    public IEnumerator ActivateDeathPotionEffect()
+    public IEnumerator ActivateAttackPotionEffect()
     {
         intensity = 0.8f;
 
