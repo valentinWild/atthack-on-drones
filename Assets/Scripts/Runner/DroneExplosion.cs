@@ -6,7 +6,7 @@ public class DroneExplosion : MonoBehaviour
 {
 
     public GameObject droneExplosion;
-    public AudioSource audioSource;
+    //public AudioSource audioSource;
 
     [SerializeField]
     private int defaultDroneHealth = 3;
@@ -67,14 +67,20 @@ public class DroneExplosion : MonoBehaviour
     
     void TriggerExplosion()
     {
+        ExplosionAudioController audioController = FindObjectOfType<ExplosionAudioController>();
+
+        if (audioController != null)
+        {
+            audioController.PlayExplosionSound();
+        }
 
         GameObject explosion = Instantiate(droneExplosion, gameObject.transform.position, gameObject.transform.rotation);
 
-        if (audioSource != null)
+        /*if (audioSource != null)
         {
             audioSource.Play();
         }
-
+        */
 
         Destroy(gameObject);
         Destroy(explosion, 2f);
