@@ -3334,7 +3334,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   intensity: 1000
-  potionActivateSound: {fileID: 8300000, guid: 0208021dcbb0c3e40a925fa61adb4d7d, type: 3}
 --- !u!82 &800551086
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3345,7 +3344,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 2b799b6047639764384ba2447301172d, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1

@@ -11,9 +11,6 @@ public class HealthPotionEffectController : MonoBehaviour
     PostProcessVolume _volume;
     Vignette _vignette;
 
-    public AudioClip potionActivateSound;
-    private AudioSource audioSource; 
-
     private void OnEnable()
     {
         if (GameSyncManager.Instance)
@@ -44,18 +41,22 @@ public class HealthPotionEffectController : MonoBehaviour
         {
             _vignette.enabled.Override(false);
         }
-
-        audioSource = GetComponent<AudioSource>();
-        if (audioSource == null)
-        {
-            audioSource = gameObject.AddComponent<AudioSource>();
-        }
     }
 
     private void OnActivePotionChanged(string potionType)
     {
         if (potionType == "Health Potion")
         {
+            AudioSource audioSource = GetComponent<AudioSource>();
+            if (audioSource != null && audioSource.clip != null)
+            {
+                audioSource.Play();
+            }
+            else
+            {
+                Debug.LogWarning("AudioSource or AudioClip is missing!");
+            }
+
             StartCoroutine(TakeHealthPotionEffect());
         }
     }
@@ -63,11 +64,6 @@ public class HealthPotionEffectController : MonoBehaviour
     public IEnumerator TakeHealthPotionEffect()
     {
         intensity = 0.4f;
-
-        if (potionActivateSound != null)
-        {
-            audioSource.PlayOneShot(potionActivateSound);
-        }
 
         _vignette.enabled.Override(true);
         _vignette.intensity.Override(intensity);
