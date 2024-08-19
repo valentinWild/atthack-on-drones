@@ -42,6 +42,8 @@ public class SceneSelectionController : MonoBehaviour
     private void Start()
     {
         spawner = FindObjectOfType<BasicSpawner>();
+        startButtonLab.gameObject.SetActive(false);
+        startButtonRunner.gameObject.SetActive(false);
 
         if(startText.gameObject)
         {
@@ -60,6 +62,7 @@ public class SceneSelectionController : MonoBehaviour
         {
             runnerButton.gameObject.SetActive(true);
         }
+        /*
         if(startButtonLab.gameObject)
         {
             startButtonLab.gameObject.SetActive(true);
@@ -67,7 +70,7 @@ public class SceneSelectionController : MonoBehaviour
         if(startButtonRunner.gameObject)
         {
             startButtonRunner.gameObject.SetActive(false);
-        }
+        }*/
     }
 
     public void SetHost(bool isHost)
