@@ -34330,6 +34330,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1105528080754600916, guid: b3927cf0737916b47aca049f8f99e2f1, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1105528080754600916, guid: b3927cf0737916b47aca049f8f99e2f1, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1105528080754600916, guid: b3927cf0737916b47aca049f8f99e2f1, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1105528080754600916, guid: b3927cf0737916b47aca049f8f99e2f1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -34377,10 +34389,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1964952449192687697, guid: b3927cf0737916b47aca049f8f99e2f1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2007019519081253855, guid: b3927cf0737916b47aca049f8f99e2f1, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1065698434}
+    - target: {fileID: 4189592562576261679, guid: b3927cf0737916b47aca049f8f99e2f1, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4767274080479487403, guid: b3927cf0737916b47aca049f8f99e2f1, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 55
+      objectReference: {fileID: 0}
     - target: {fileID: 5001754511423581122, guid: b3927cf0737916b47aca049f8f99e2f1, type: 3}
       propertyPath: lose
       value: 
@@ -34409,6 +34433,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1993083392}
+    - target: {fileID: 8160489469801224493, guid: b3927cf0737916b47aca049f8f99e2f1, type: 3}
+      propertyPath: m_RenderMode
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5001754511423581122, guid: b3927cf0737916b47aca049f8f99e2f1, type: 3}
     m_RemovedGameObjects: []
