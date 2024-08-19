@@ -7,6 +7,8 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class WeaponHandler : MonoBehaviour
 {
 
+    public XRBaseController rightController;
+
     public InputActionReference shootAction;
     public GameObject bullet;
     public Transform spawnPoint;
@@ -54,6 +56,11 @@ public class WeaponHandler : MonoBehaviour
         Debug.Log("On Shoot triggered");
         if(weaponLoaded){
             FireBullet();
+            if (rightController)
+            {
+                rightController.SendHapticImpulse(0.5f, 0.5f);
+            }
+            
             shotCounter++;
             if (shotCounter >= shotsPerReloadPeriod)
             {

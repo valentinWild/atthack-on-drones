@@ -19307,6 +19307,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: 27b40c8f72cfc1542895d1134618bf31, type: 3}
     - target: {fileID: 7813474787334987603, guid: 6bfb6539a4fc4f44588db12d9b5cc83e, type: 3}
+      propertyPath: rightController
+      value: 
+      objectReference: {fileID: 87144048}
+    - target: {fileID: 7813474787334987603, guid: 6bfb6539a4fc4f44588db12d9b5cc83e, type: 3}
       propertyPath: shotsPerReloadPeriod
       value: 5
       objectReference: {fileID: 0}
