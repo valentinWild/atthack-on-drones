@@ -817,7 +817,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'You let your teammate get killed by the drones! Game over. '
+  m_text: 'GAME OVER!
+
+
+    You let your teammate get killed by the drones'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -844,8 +847,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25
-  m_fontSizeBase: 25
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1230,6 +1233,8 @@ MonoBehaviour:
   playerStats: {fileID: 5006288435034216631}
   tryAgainButton: {fileID: 2007019519081253855}
   quitGameButton: {fileID: 7396817708964520819}
+  lose: {fileID: 0}
+  backgroundMusic: {fileID: 0}
 --- !u!114 &4487210332148842460
 MonoBehaviour:
   m_ObjectHideFlags: 0
