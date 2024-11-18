@@ -17,6 +17,8 @@ public class LoseScreenLabManager : MonoBehaviour
     void Start()
     {
         loseScreenDisplay.gameObject.SetActive(false);
+        tryAgainButton.gameObject.SetActive(false);
+        quitGameButton.gameObject.SetActive(false);
     }
 
    private void OnEnable()
