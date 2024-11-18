@@ -45,9 +45,9 @@ public class LoseScreenLabManager : MonoBehaviour
         {
             string decodedHints = GameSyncManager.Instance.decodedHints.ToString();
             string shotEnenemyDrones = GameSyncManager.Instance.shotEnemyDrones.ToString();
-            string level = GameSyncManager.Instance.currentLevel.ToString();
+            //string level = GameSyncManager.Instance.currentLevel.ToString();
             // TODO: drone shot ?
-            playerStats.text = "Decoded hints: " + decodedHints + "@\nShot Drones: " + shotEnenemyDrones + "@\nCurrent Level: " + level;
+            playerStats.text = "Decoded hints: " + decodedHints + "@\nShot Drones: " + shotEnenemyDrones;
         }   
     }
 }
